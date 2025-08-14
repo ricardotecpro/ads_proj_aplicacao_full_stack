@@ -1,6 +1,6 @@
 # Full Stack
 
-### ** Construindo o Ecossistema To-Do List**
+## ** Construindo o Ecossistema To-Do List**
 
 **Visão Geral da Arquitetura:**
 Este guia aborda a construção de um sistema completo, composto por:
