@@ -30,7 +30,7 @@ ng version
 No terminal:
 
 ```bash
-ng new todolist-web
+ng new listatarefas-web
 ```
 
 Responda às perguntas:
@@ -44,7 +44,7 @@ Abra a pasta criada no VS Code.
 ### Gerando a Estrutura
 
 ```bash
-cd todolist-web
+cd listatarefas-web
 
 # Modelo de dados
 ng generate interface models/tarefa
@@ -171,7 +171,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'todolist-web';
+  title = 'listatarefas-web';
 }
 ```
 

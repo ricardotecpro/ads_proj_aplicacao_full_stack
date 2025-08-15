@@ -33,7 +33,7 @@ Por exemplo, para obter todas as tarefas, o frontend faz uma requisição `GET` 
 backend/
 │── src/
 │   ├── main/
-│   │   ├── java/com/example/todolist/
+│   │   ├── java/com/example/listatarefas/
 │   │   │   ├── model/Task.java
 │   │   │   ├── repository/TaskRepository.java
 │   │   │   ├── controller/TaskController.java
@@ -51,7 +51,7 @@ No diretório `src/main/resources`, configure o arquivo `application.properties`
 
 ```properties
 # Configuração do banco de dados H2
-spring.datasource.url=jdbc:h2:mem:todolist
+spring.datasource.url=jdbc:h2:mem:listatarefas
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
@@ -153,7 +153,7 @@ mvn spring-boot:run
 Acesse o console H2:
 
 - URL: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:todolist`
+- JDBC URL: `jdbc:h2:mem:listatarefas`
 - Usuário: `sa`
 - Senha: (deixe em branco)
 

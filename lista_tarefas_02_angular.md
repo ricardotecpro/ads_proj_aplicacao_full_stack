@@ -22,7 +22,7 @@ ng version
 Navegue até o diretório onde você armazena seus projetos (fora da pasta da API) e execute o comando para criar uma nova aplicação:
 
 ```bash
-ng new todolist-web
+ng new lista-tarefas-web
 ```
 
 O Angular CLI fará algumas perguntas durante a configuração:
@@ -32,14 +32,14 @@ O Angular CLI fará algumas perguntas durante a configuração:
   - `Which stylesheet format would you like to use?` (Qual formato de folha de estilos?): **CSS**
     *(Manteremos a opção padrão e mais simples.)*
 
-Aguarde o Angular CLI criar a pasta `todolist-web` e instalar todas as dependências. Depois, abra este novo projeto em seu editor de código (VS Code é altamente recomendado).
+Aguarde o Angular CLI criar a pasta `lista-tarefas-web` e instalar todas as dependências. Depois, abra este novo projeto em seu editor de código (VS Code é altamente recomendado).
 
 ### 3\. Gerando os Blocos de Construção
 
 Com o projeto criado, vamos usar o Angular CLI para gerar os arquivos essenciais da nossa aplicação. Navegue até a pasta do projeto no terminal:
 
 ```bash
-cd todolist-web
+cd lista-tarefas-web
 ```
 
 Agora, execute os seguintes comandos:
@@ -202,7 +202,7 @@ import { TaskListComponent } from './components/task-list/task-list.component'; 
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'todolist-web';
+  title = 'lista-tarefas-web';
 }
 ```
 
@@ -393,7 +393,7 @@ Por fim, adicione um pouco de CSS em `src/app/components/task-list/task-list.com
 Chegou a hora de ver tudo funcionando junto.
 
 1.  **Garanta que sua API Spring Boot esteja rodando.**
-2.  Abra um terminal na pasta do projeto Angular (`todolist-web`) e execute:
+2.  Abra um terminal na pasta do projeto Angular (`lista-tarefas-web`) e execute:
 
 <!-- end list -->
 

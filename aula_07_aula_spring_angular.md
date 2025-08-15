@@ -20,7 +20,7 @@ Este projeto é um sistema de lista de tarefas (**Todo List**) no estilo **Kanba
 backend/
 │── src/
 │   ├── main/
-│   │   ├── java/com/example/todolist/
+│   │   ├── java/com/example/listatarefas/
 │   │   │   ├── model/Task.java
 │   │   │   ├── repository/TaskRepository.java
 │   │   │   ├── controller/TaskController.java
@@ -68,7 +68,7 @@ No diretório `src/main/resources`, configure o arquivo `application.properties`
 
 ```properties
 # Banco de dados para desenvolvimento
-spring.datasource.url=jdbc:mysql://localhost:3306/todolist
+spring.datasource.url=jdbc:mysql://localhost:3306/listatarefas
 spring.datasource.username=root
 spring.datasource.password=root
 spring.jpa.hibernate.ddl-auto=update
@@ -166,13 +166,13 @@ public class TaskController {
 2. Crie um novo projeto:
     
     ```sh
-    ng new todolist-frontend
+    ng new listatarefas-frontend
     ```
     
 3. Entre no diretório do projeto:
     
     ```sh
-    cd todolist-frontend
+    cd listatarefas-frontend
     ```
     
 

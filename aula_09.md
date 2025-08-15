@@ -39,7 +39,7 @@ todo-list/
 ```sh
 mkdir todo-list && cd todo-list
 mkdir backend && cd backend
-mvn archetype:generate -DgroupId=com.example.todolist -DartifactId=backend -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+mvn archetype:generate -DgroupId=com.example.listatarefas -DartifactId=backend -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 cd backend
 ```
 
@@ -51,7 +51,7 @@ cd backend
 
 ```properties
 # Configuração do banco de dados H2
-spring.datasource.url=jdbc:h2:mem:todolist
+spring.datasource.url=jdbc:h2:mem:listatarefas
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
@@ -67,7 +67,7 @@ spring.h2.console.path=/h2-console
 
 ## **📌 3.3 Criando o Modelo (M - Model)**
 
-📄 **Arquivo:** `backend/src/main/java/com/example/todolist/model/Task.java`
+📄 **Arquivo:** `backend/src/main/java/com/example/listatarefas/model/Task.java`
 
 ```java
 @Entity
@@ -87,7 +87,7 @@ public class Task {
 
 ## **📌 3.4 Criando o Repositório (Acesso ao Banco de Dados)**
 
-📄 **Arquivo:** `backend/src/main/java/com/example/todolist/repository/TaskRepository.java`
+📄 **Arquivo:** `backend/src/main/java/com/example/listatarefas/repository/TaskRepository.java`
 
 ```java
 @Repository
@@ -99,7 +99,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
 ## **📌 3.5 Criando o Controlador (C - Controller)**
 
-📄 **Arquivo:** `backend/src/main/java/com/example/todolist/controller/TaskController.java`
+📄 **Arquivo:** `backend/src/main/java/com/example/listatarefas/controller/TaskController.java`
 
 ```java
 @RestController
@@ -136,7 +136,7 @@ public class TaskController {
 
 ## **📌 3.6 Populando o Banco com Dados Iniciais**
 
-📄 **Arquivo:** `backend/src/main/java/com/example/todolist/config/DataLoader.java`
+📄 **Arquivo:** `backend/src/main/java/com/example/listatarefas/config/DataLoader.java`
 
 ```java
 @Component

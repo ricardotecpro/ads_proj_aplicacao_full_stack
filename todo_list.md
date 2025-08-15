@@ -1,4 +1,4 @@
-# API REST de lista de tarefas (todolist) com frontend em React e backend em Node.js
+# API REST de lista de tarefas (listatarefas) com frontend em React e backend em Node.js
 
 ### Aqui estão os frameworks recomendados:
 
