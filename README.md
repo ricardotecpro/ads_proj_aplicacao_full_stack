@@ -1,6 +1,6 @@
-# **Guia de Aula: Construindo um Ecossistema Full Stack Completo**
+# 🚀 Guia de Aula: Construindo um Ecossistema Full Stack Completo
 
-## **Visão Geral da Arquitetura**
+## 🗺️ Visão Geral da Arquitetura
 
 Neste projeto, construiremos um sistema completo de "Lista de Tarefas" (To-Do List), demonstrando como diferentes aplicações cliente podem consumir uma única fonte de dados central (API). A arquitetura final será:
 
@@ -11,23 +11,23 @@ Neste projeto, construiremos um sistema completo de "Lista de Tarefas" (To-Do Li
     3.  Uma aplicação **Mobile** nativa com Android e Jetpack Compose.
   * **Um Painel de Controle:** Um script PowerShell para automação e gerenciamento do ambiente.
 
-### **Diagrama da Arquitetura**
+### Diagrama da Arquitetura
 
 ```mermaid
 graph TD
-    subgraph "Gerenciamento e Automação"
-        Script["🛠 Painel de Controle (manage.ps1)"]
+    subgraph "🎛️ Gerenciamento e Automação"
+        Script["🛠️ Painel de Controle (manage.ps1)"]
     end
 
-    subgraph "Clientes (Frontends)"
+    subgraph "📱 Clientes (Frontends)"
         Web["💻 Frontend Web (Angular)"]
-        Desktop["🖥 Frontend Desktop (JavaFX)"]
+        Desktop["🖥️ Frontend Desktop (JavaFX)"]
         Mobile["📱 Frontend Mobile (Android)"]
     end
 
-    subgraph "Serviços (Backend)"
-        API["⚙️ Backend API (Spring Boot)"]
-        DB[("🗄 Banco de Dados Em Memória H2")]
+    subgraph "⚙️ Serviços (Backend)"
+        API["🔌 Backend API (Spring Boot)"]
+        DB[("🗄️ Banco de Dados Em Memória H2")]
     end
 
     %% Conexões de Dados
@@ -46,18 +46,18 @@ graph TD
 
 -----
 
-### **Módulo 1: A Fundação – Backend com Spring Boot (`listadetarefas-api`)**
+## ⚙️ Módulo 1: A Fundação – Backend com Spring Boot (`listadetarefas-api`)
 
 **Objetivo:** Criar o serviço central que irá gerenciar os dados das tarefas, servindo como a única fonte de verdade para todos os clientes.
 
-#### **Ferramentas Necessárias**
+### 🛠️ Ferramentas Necessárias
 
   * **Java Development Kit (JDK):** Versão 17 ou superior.
   * **Apache Maven:** Ferramenta de automação de build.
   * **IDE (Ambiente de Desenvolvimento):** IntelliJ IDEA ou Eclipse.
   * **Cliente REST:** Postman ou Insomnia (para testes).
 
-#### **Passo 1: Criação e Configuração do Projeto**
+### \#\#\# 📂 Passo 1: Criação do Projeto
 
 1.  Acesse o **Spring Initializr** ([https://start.spring.io](https://start.spring.io)).
 2.  Preencha os metadados do projeto:
@@ -68,88 +68,155 @@ graph TD
       * **Artifact:** `listadetarefas-api`
       * **Package name:** `br.com.curso.listadetarefas.api`
 3.  Adicione as seguintes dependências (`Dependencies`):
-      * `Spring Web`: Para criar aplicações web e APIs REST.
-      * `Spring Data JPA`: Para persistência de dados em bancos SQL.
-      * `H2 Database`: Um banco de dados em memória, ótimo para desenvolvimento.
-      * `Lombok`: Para reduzir código repetitivo (getters, setters, etc.).
-4.  Clique em **GENERATE** para baixar o projeto.
-5.  Descompacte o arquivo e abra o projeto na sua IDE.
-6.  Abra o arquivo `src/main/resources/application.properties` e adicione as seguintes linhas:
-    ```properties
-    # Permite que o servidor aceite conexões de qualquer endereço de rede da máquina.
-    server.address=0.0.0.0
+      * `Spring Web`, `Spring Data JPA`, `H2 Database`, `Lombok`.
+4.  Clique em **GENERATE**, baixe o projeto, descompacte-o e abra na sua IDE.
 
-    # Habilita o console web do H2
-    spring.h2.console.enabled=true
-    # Define o caminho para acessar o console
-    spring.h2.console.path=/h2-console
+#### Estrutura Inicial de Pastas
 
-    # Configurações do Datasource para H2
-    spring.datasource.url=jdbc:h2:mem:testdb
-    spring.datasource.driverClassName=org.h2.Driver
-    spring.datasource.username=sa
-    spring.datasource.password=
-    spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-    ```
+Após criar o projeto, sua estrutura de pastas principal será:
 
-#### **Passo 2: Desenvolvimento do Código-Fonte**
+```
+listadetarefas-api/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── br/com/curso/listadetarefas/api/
+│       │       └── ListadetarefasApiApplication.java
+│       └── resources/
+│           └── application.properties
+└── pom.xml
+```
 
-Crie um novo pacote `tarefa` dentro de `br.com.curso.listadetarefas.api` para organizar as classes relacionadas.
+### \#\#\# ⚙️ Passo 2: Configuração do Projeto
 
-**1. `Tarefa.java` (Entidade)**
-Esta classe é o modelo dos nossos dados.
+Abra o arquivo `src/main/resources/application.properties` e substitua seu conteúdo por este:
+
+```properties
+# Permite que o servidor aceite conexões de qualquer endereço de rede da máquina.
+server.address=0.0.0.0
+
+# Habilita o console web do H2
+spring.h2.console.enabled=true
+# Define o caminho para acessar o console
+spring.h2.console.path=/h2-console
+
+# Configurações do Datasource para H2
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+```
+
+### \#\#\# 📝 Passo 3: Modelagem dos Dados
+
+Vamos definir a estrutura da nossa tabela de tarefas.
+
+#### Diagrama Entidade-Relacionamento (ER)
+
+```mermaid
+erDiagram
+    TB_TAREFAS {
+        BIGINT id PK "Auto-incremento"
+        VARCHAR descricao
+        BOOLEAN concluida
+    }
+```
+
+1.  Dentro de `src/main/java/br/com/curso/listadetarefas/api`, crie um novo pacote chamado `tarefa`.
+2.  Dentro do pacote `tarefa`, crie a classe `Tarefa.java`.
+
+<!-- end list -->
 
 ```java
+// src/main/java/br/com/curso/listadetarefas/api/tarefa/Tarefa.java
 package br.com.curso.listadetarefas.api.tarefa;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data // Anotação do Lombok que gera Getters, Setters, toString, etc.
-@Entity // Marca esta classe como uma entidade JPA (será uma tabela no banco de dados).
-@Table(name = "tb_tarefas") // Define o nome da tabela.
+@Data
+@Entity
+@Table(name = "tb_tarefas")
 public class Tarefa {
-    @Id // Marca o campo 'id' como a chave primária.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Configura o 'id' para ser autoincrementado.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
     private boolean concluida;
 }
 ```
 
-**2. `TarefaRepository.java` (Repositório)**
-Esta interface é a camada de acesso aos dados. O Spring Data JPA implementará os métodos de CRUD automaticamente.
+#### Estrutura de Pastas Após a Criação do Modelo
+
+```
+api/
+└── src/main/java/br/com/curso/listadetarefas/api/
+    ├── tarefa/
+    │   └── Tarefa.java  # <- Arquivo criado
+    └── ListadetarefasApiApplication.java
+```
+
+### \#\#\# 🏗️ Passo 4: Construção das Camadas de Serviço
+
+Agora, criaremos as classes que formam a arquitetura da nossa API: `Repository` (acesso a dados), `Service` (regras de negócio) e `Controller` (endpoints HTTP).
+
+#### Diagrama de Classes
+
+```mermaid
+classDiagram
+    TarefaController ..> TarefaService : Usa
+    TarefaService ..> TarefaRepository : Usa
+    TarefaRepository ..> Tarefa : Gerencia
+    class TarefaController {
+        +List~Tarefa~ listarTarefas()
+        +Tarefa criarTarefa(Tarefa)
+        +ResponseEntity~Tarefa~ atualizarTarefa(Long, Tarefa)
+        +ResponseEntity~Void~ deletarTarefa(Long)
+    }
+    class TarefaService {
+        +List~Tarefa~ listarTodas()
+        +Tarefa criar(Tarefa)
+        +Tarefa atualizar(Long, Tarefa)
+        +void deletar(Long)
+    }
+    class TarefaRepository {
+        <<Interface>>
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
+    }
+```
+
+1.  Dentro do pacote `tarefa`, crie as seguintes classes e interfaces:
+
+**`TarefaRepository.java`**
 
 ```java
 package br.com.curso.listadetarefas.api.tarefa;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
-// Estendemos JpaRepository, informando a entidade (Tarefa) e o tipo da chave primária (Long).
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 }
 ```
 
-**3. `TarefaService.java` (Serviço)**
-Esta classe contém a lógica de negócio da aplicação.
+**`TarefaService.java`**
 
 ```java
 package br.com.curso.listadetarefas.api.tarefa;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service // Marca a classe como um serviço gerenciado pelo Spring.
+@Service
 public class TarefaService {
-    @Autowired // Injeção de dependência: O Spring fornecerá uma instância de TarefaRepository.
+    @Autowired
     private TarefaRepository tarefaRepository;
 
     public List<Tarefa> listarTodas() { return tarefaRepository.findAll(); }
     public Tarefa criar(Tarefa tarefa) { return tarefaRepository.save(tarefa); }
     public Tarefa atualizar(Long id, Tarefa tarefaAtualizada) {
-        // Padrão funcional moderno: busca a tarefa, se encontrar (map), atualiza e salva.
-        // Se não encontrar, lança uma exceção.
         return tarefaRepository.findById(id)
             .map(tarefaExistente -> {
                 tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
@@ -166,716 +233,845 @@ public class TarefaService {
 }
 ```
 
-**4. `TarefaController.java` (Controlador REST)**
-Esta classe expõe os endpoints HTTP que os clientes irão consumir.
+**`TarefaController.java`**
 
 ```java
 package br.com.curso.listadetarefas.api.tarefa;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController // Especialização de @Controller para criar APIs RESTful.
-@RequestMapping("/api/tarefas") // Mapeia todas as requisições para este Controller para o caminho /api/tarefas.
-@CrossOrigin(origins = "*") // Permite que requisições de qualquer origem acessem esta API.
+@RestController
+@RequestMapping("/api/tarefas")
+@CrossOrigin(origins = "*")
 public class TarefaController {
     @Autowired
     private TarefaService tarefaService;
 
     @GetMapping
     public List<Tarefa> listarTarefas() { return tarefaService.listarTodas(); }
-
     @PostMapping
     public Tarefa criarTarefa(@RequestBody Tarefa tarefa) { return tarefaService.criar(tarefa); }
-
     @PutMapping("/{id}")
     public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
         try {
             Tarefa atualizada = tarefaService.atualizar(id, tarefa);
-            return ResponseEntity.ok(atualizada); // Retorna HTTP 200 OK.
+            return ResponseEntity.ok(atualizada);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build(); // Retorna HTTP 404 Not Found.
+            return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
         try {
             tarefaService.deletar(id);
-            return ResponseEntity.noContent().build(); // Retorna HTTP 204 No Content.
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build(); // Retorna HTTP 404 Not Found.
+            return ResponseEntity.notFound().build();
         }
     }
 }
 ```
 
-#### **Passo 3: Execução e Teste da API**
+#### Estrutura de Pastas Final do Backend
 
-1.  **Executar a Aplicação:**
+```
+api/
+└── src/main/java/br/com/curso/listadetarefas/api/
+    ├── tarefa/
+    │   ├── Tarefa.java
+    │   ├── TarefaController.java
+    │   ├── TarefaRepository.java
+    │   └── TarefaService.java
+    └── ListadetarefasApiApplication.java
+```
 
-      * Na sua IDE, encontre a classe `ListadetarefasApiApplication.java` e execute o método `main`.
-      * Alternativamente, abra um terminal na raiz do projeto e execute: `./mvnw spring-boot:run`
-      * Você verá no console que o servidor Tomcat iniciou na porta `8080`.
+### \#\#\# ✅ Passo 5: Execução e Teste da API
 
-2.  **Testar com um Cliente REST (Postman/Insomnia):**
+#### Diagrama de Casos de Uso da API
 
-      * **Boas Práticas:** Testar a API de forma isolada é fundamental. Isso garante que a lógica do backend está correta antes de construir qualquer interface, facilitando a depuração.
-      * **Procedimento de Teste (Ciclo CRUD):**
-        1.  **Criar Tarefa (POST):**
-              * **Método:** `POST`
-              * **URL:** `http://localhost:8080/api/tarefas`
-              * **Body (JSON):** `{ "descricao": "Testar a API", "concluida": false }`
-              * **Verificação:** A resposta deve ser `200 OK` e o corpo deve conter a tarefa criada com um `id`.
-        2.  **Listar Tarefas (GET):**
-              * **Método:** `GET`
-              * **URL:** `http://localhost:8080/api/tarefas`
-              * **Verificação:** A resposta deve ser `200 OK` e o corpo deve ser um array JSON contendo a tarefa criada no passo anterior.
-        3.  **Atualizar Tarefa (PUT):**
-              * **Método:** `PUT`
-              * **URL:** `http://localhost:8080/api/tarefas/1` (use o `id` da tarefa criada)
-              * **Body (JSON):** `{ "descricao": "Testar a API com sucesso!", "concluida": true }`
-              * **Verificação:** A resposta deve ser `200 OK` e o corpo deve mostrar os dados atualizados.
-        4.  **Deletar Tarefa (DELETE):**
-              * **Método:** `DELETE`
-              * **URL:** `http://localhost:8080/api/tarefas/1`
-              * **Verificação:** A resposta deve ser `204 No Content` (sucesso, sem corpo de resposta).
-        5.  **Verificação Final (GET):**
-              * **Método:** `GET`
-              * **URL:** `http://localhost:8080/api/tarefas`
-              * **Verificação:** A resposta deve ser `200 OK` e o corpo deve ser um array JSON vazio `[]`.
+```mermaid
+usecaseDiagram
+    Usuário as "Usuário (via Cliente)"
+    package "Sistema de Tarefas" {
+        usecase "Listar todas as tarefas" as UC1
+        usecase "Adicionar nova tarefa" as UC2
+        usecase "Atualizar uma tarefa" as UC3
+        usecase "Deletar uma tarefa" as UC4
+    }
+    Usuário --> UC1
+    Usuário --> UC2
+    Usuário --> UC3
+    Usuário --> UC4
+```
 
-#### **Passo 4: Acessando e Testando com o Console H2**
+1.  **Execute a Aplicação:**
 
-Com o console H2 habilitado, podemos inspecionar o estado do banco de dados em memória diretamente pelo navegador, o que é uma ferramenta de depuração poderosa.
+      * Na sua IDE, execute a classe `ListadetarefasApiApplication.java`.
+      * Ou, via terminal na raiz do projeto: `./mvnw spring-boot:run`
 
-1.  **Crie algumas tarefas:** Use o cliente REST (Postman/Insomnia) para criar 2 ou 3 tarefas, como no passo anterior. Não as delete ainda.
+2.  **Teste com Cliente REST (ex: Postman):**
 
-2.  **Acesse o Console H2:**
+      * Use um cliente REST para fazer requisições para `http://localhost:8080/api/tarefas` e verifique todas as operações de CRUD (GET, POST, PUT, DELETE) como detalhado no guia anterior.
 
-      * Com a sua aplicação Spring Boot ainda em execução, abra seu navegador e acesse a URL: `http://localhost:8080/h2-console`
+3.  **Teste com o Console H2:**
 
-3.  **Configure a Conexão:**
-
-      * Você verá uma tela de login do H2. Preencha os campos exatamente como configurado no `application.properties`.
-      * **Driver Class:** `org.h2.Driver`
-      * **JDBC URL:** `jdbc:h2:mem:testdb`
-      * **User Name:** `sa`
-      * **Password:** (deixe em branco)
-
-4.  **Conecte e Explore:**
-
-      * Clique em **Connect**.
-      * Você verá uma interface web onde pode interagir com o banco de dados.
-      * No painel esquerdo, você verá a tabela `TB_TAREFAS` que foi criada pela anotação `@Entity`.
-      * No campo de texto principal, você pode executar queries SQL. Para ver os dados que você inseriu via API, execute:
-        ```sql
-        SELECT * FROM TB_TAREFAS;
-        ```
-      * Clique em **Run**. O resultado mostrará uma tabela com as tarefas que você criou.
-
-5.  **Boas Práticas e Utilidade:**
-
-      * **Verificação de Estado:** O console H2 é perfeito para verificar se suas operações de `save`, `update` e `delete` estão funcionando como esperado, diretamente no banco.
-      * **Depuração de Queries Complexas:** Se você estivesse usando queries customizadas (com `@Query` no repositório), poderia testar o SQL diretamente aqui.
-      * **Entendimento do Schema:** Ajuda a visualizar como o JPA traduziu suas entidades Java em tabelas e colunas SQL.
+      * Com a API rodando, acesse `http://localhost:8080/h2-console` no navegador.
+      * Use as seguintes credenciais para logar:
+          * **JDBC URL:** `jdbc:h2:mem:testdb`
+          * **User Name:** `sa`
+          * **Password:** (em branco)
+      * Após criar tarefas via API, execute o comando SQL `SELECT * FROM TB_TAREFAS;` para ver os dados diretamente no banco.
 
 -----
 
-### **Módulo 2: Cliente Web com Angular (`listadetarefas-web`)**
+## 💻 Módulo 2: Cliente Web com Angular (`listadetarefas-web`)
 
-**Objetivo:** Criar uma interface web moderna e reativa (Single-Page Application) para interagir com a API.
+**Objetivo:** Criar uma interface web moderna e reativa para interagir com a API.
 
-#### **Ferramentas Necessárias**
+### 🛠️ Ferramentas Necessárias
 
-  * **Node.js e npm:** Ambiente de execução e gerenciador de pacotes para JavaScript.
-  * **Angular CLI:** Interface de linha de comando para projetos Angular. (`npm install -g @angular/cli`)
-  * **Editor de Código:** Visual Studio Code (recomendado).
+  * **Node.js e npm:** Ambiente de execução e gerenciador de pacotes.
+  * **Angular CLI:** (`npm install -g @angular/cli`)
+  * **Editor de Código:** Visual Studio Code.
 
-#### **Passo 1: Criação e Configuração do Projeto**
+### \#\#\# 📂 Passo 1: Criação do Projeto
 
-1.  Abra um terminal e execute o comando para criar um novo projeto Angular.
+1.  No terminal, crie o projeto:
     ```bash
-    # Cria um projeto usando componentes standalone (moderno) e CSS puro.
     ng new listadetarefas-web --standalone --style=css
     ```
-2.  Navegue para a pasta do projeto.
-    ```bash
-    cd listadetarefas-web
-    ```
-3.  Gere os artefatos necessários (modelo, serviço e componente).
+2.  Navegue até a pasta `cd listadetarefas-web`.
+3.  Gere os arquivos necessários:
     ```bash
     ng generate interface models/tarefa
     ng generate service services/tarefa
     ng generate component components/task-list
     ```
-4.  Configure o projeto para permitir requisições HTTP. Abra `src/app/app.config.ts` e adicione `provideHttpClient`.
-    ```typescript
-    // src/app/app.config.ts
-    import { ApplicationConfig } from '@angular/core';
-    import { provideRouter } from '@angular/router';
-    import { routes } from './app.routes';
-    import { provideHttpClient, withFetch } from '@angular/common/http'; // Importe
 
-    export const appConfig: ApplicationConfig = {
-      providers: [
-        provideRouter(routes),
-        provideHttpClient(withFetch()) // Adicione o provider
-      ]
-    };
-    ```
+#### Estrutura de Pastas Após Geração
 
-#### **Passo 2: Desenvolvimento do Código-Fonte**
-
-**1. `src/app/models/tarefa.ts` (Interface)**
-Define a estrutura de dados da tarefa no frontend.
-
-```typescript
-export interface Tarefa {
-  id?: number; // Opcional ao criar, presente ao receber da API.
-  descricao: string;
-  concluida: boolean;
-  editando?: boolean; // Propriedade de controle de UI, não existe no backend.
-}
+```
+listadetarefas-web/
+└── src/
+    └── app/
+        ├── components/
+        │   └── task-list/
+        │       ├── task-list.component.css
+        │       ├── task-list.component.html
+        │       └── task-list.component.ts
+        ├── models/
+        │   └── tarefa.ts
+        └── services/
+            └── tarefa.service.ts
 ```
 
-**2. `src/app/services/tarefa.service.ts` (Serviço)**
-Responsável por toda a comunicação com a API backend.
+### \#\#\# ✍️ Passo 2: Codificação do Cliente Web
+
+Siga os passos e use os códigos fornecidos no guia anterior para os seguintes arquivos:
+
+  * `src/app/models/tarefa.ts`
+  * `src/app/services/tarefa.service.ts`
+  * `src/app/components/task-list/task-list.component.ts`
+  * `src/app/components/task-list/task-list.component.html`
+  * `src/app/components/task-list/task-list.component.css` (use a versão melhorada e com variáveis).
+
+### \#\#\# 🔗 Passo 3: Integração Final
+
+Para corrigir o erro `'app-task-list' is not a known element'`, integre o componente principal:
+
+1.  **Configure o HttpClient:** Verifique se `provideHttpClient(withFetch())` está em `src/app/app.config.ts`.
+2.  **Importe o Componente:** Altere o `src/app/app.component.ts` para importar e usar o `TaskListComponent`:
+
+<!-- end list -->
 
 ```typescript
-// src/app/services/tarefa.service.ts
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Tarefa } from '../models/tarefa';
-
-@Injectable({ providedIn: 'root' })
-export class TarefaService {
-  private apiUrl = 'http://localhost:8080/api/tarefas';
-
-  constructor(private http: HttpClient) { }
-
-  getTarefas(): Observable<Tarefa[]> { return this.http.get<Tarefa[]>(this.apiUrl); }
-  addTarefa(tarefa: Tarefa): Observable<Tarefa> { return this.http.post<Tarefa>(this.apiUrl, tarefa); }
-  updateTarefa(tarefa: Tarefa): Observable<Tarefa> { return this.http.put<Tarefa>(`${this.apiUrl}/${tarefa.id}`, tarefa); }
-  deleteTarefa(id: number): Observable<void> { return this.http.delete<void>(`${this.apiUrl}/${id}`); }
-}
-```
-
-**3. `src/app/components/task-list/task-list.component.ts` (Lógica do Componente)**
-
-```typescript
-// src/app/components/task-list/task-list.component.ts
-import { Component, OnInit } from '@angular/core';
-import { TarefaService } from '../../services/tarefa.service';
-import { Tarefa } from '../../models/tarefa';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+// src/app/app.component.ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { TaskListComponent } from './components/task-list/task-list.component';
 
 @Component({
-  selector: 'app-task-list',
+  selector: 'app-root',
   standalone: true,
-  imports: [ CommonModule, FormsModule ], // Módulos para diretivas (*ngFor) e formulários (ngModel).
-  templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.css'
+  imports: [ RouterOutlet, TaskListComponent ], // Importado aqui
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
-export class TaskListComponent implements OnInit {
-  tarefas: Tarefa[] = [];
-  novaTarefa: Tarefa = { descricao: '', concluida: false };
-  private descricaoOriginal: string = '';
-
-  constructor(private tarefaService: TarefaService) { }
-
-  ngOnInit(): void { this.carregarTarefas(); }
-
-  carregarTarefas(): void {
-    this.tarefaService.getTarefas().subscribe(data => { this.tarefas = data; });
-  }
-
-  adicionarTarefa(): void {
-    if (this.novaTarefa.descricao.trim() === '') return;
-    this.tarefaService.addTarefa(this.novaTarefa).subscribe(data => {
-      this.tarefas.push(data);
-      this.novaTarefa = { descricao: '', concluida: false }; // Limpa o campo.
-    });
-  }
-
-  atualizarTarefa(tarefa: Tarefa): void {
-    this.tarefaService.updateTarefa(tarefa).subscribe();
-  }
-
-  deletarTarefa(id: number | undefined): void {
-    if (id === undefined) return;
-    this.tarefaService.deleteTarefa(id).subscribe(() => {
-      this.tarefas = this.tarefas.filter(t => t.id !== id);
-    });
-  }
-
-  // Métodos para controle da UI de edição
-  iniciarEdicao(tarefa: Tarefa): void {
-    this.descricaoOriginal = tarefa.descricao;
-    tarefa.editando = true;
-  }
-
-  salvarEdicao(tarefa: Tarefa): void {
-    tarefa.editando = false;
-    if (tarefa.descricao.trim() === '') {
-      tarefa.descricao = this.descricaoOriginal; // Restaura se o campo ficar vazio.
-    } else {
-      this.atualizarTarefa(tarefa);
-    }
-  }
-
-  cancelarEdicao(tarefa: Tarefa): void {
-    tarefa.descricao = this.descricaoOriginal;
-    tarefa.editando = false;
-  }
-}
+export class AppComponent { }
 ```
 
-**4. `src/app/components/task-list/task-list.component.html` (Template)**
+3.  **Atualize o Template Principal:** Limpe o `src/app/app.component.html` e adicione apenas:
+
+<!-- end list -->
 
 ```html
-<div class="container">
-  <h1>Minha Lista de Tarefas (Web)</h1>
-
-  <form class="form-add" (ngSubmit)="adicionarTarefa()">
-    <input type="text" placeholder="O que precisa ser feito?" [(ngModel)]="novaTarefa.descricao" name="descricao" required>
-    <button type="submit">Adicionar</button>
-  </form>
-
-  <ul class="task-list">
-    <li *ngFor="let tarefa of tarefas">
-      <input type="checkbox" [(ngModel)]="tarefa.concluida" (change)="atualizarTarefa(tarefa)">
-
-      <span *ngIf="!tarefa.editando" (dblclick)="iniciarEdicao(tarefa)" [ngClass]="{'completed': tarefa.concluida}">
-        {{ tarefa.descricao }}
-      </span>
-
-      <input *ngIf="tarefa.editando" type="text" [(ngModel)]="tarefa.descricao"
-             (blur)="salvarEdicao(tarefa)"
-             (keyup.enter)="salvarEdicao(tarefa)"
-             (keyup.escape)="cancelarEdicao(tarefa)"
-             class="edit-input" autofocus>
-
-      <button class="delete-btn" (click)="deletarTarefa(tarefa.id)">×</button>
-    </li>
-  </ul>
-</div>
+<app-task-list></app-task-list>
 ```
 
-**5. `src/app/components/task-list/task-list.component.css` (Estilos)**
+### \#\#\# ✅ Passo 4: Execução e Teste
 
-```css
-/* ========================================
-  Váriaveis de Cores para fácil customização
-  ========================================
-*/
-:host {
-  --cor-primaria: #007bff;
-  --cor-sucesso: #28a745;
-  --cor-perigo: #dc3545;
-  --cor-fundo: #f4f7f6;
-  --cor-container: #ffffff;
-  --cor-texto: #333;
-  --cor-texto-claro: #888;
-  --cor-borda: #dee2e6;
-  --sombra-caixa: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* ========================================
-  Estilo do Container Principal
-  ========================================
-*/
-.container {
-  max-width: 650px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background-color: var(--cor-container);
-  border-radius: 12px;
-  box-shadow: var(--sombra-caixa);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-h1 {
-  text-align: center;
-  color: var(--cor-texto);
-  margin-bottom: 2rem;
-  font-weight: 600;
-}
-
-/* ========================================
-  Formulário para Adicionar Tarefas
-  ========================================
-*/
-.form-add {
-  display: flex;
-  margin-bottom: 2rem;
-}
-
-.form-add input[type="text"] {
-  flex-grow: 1;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: 8px 0 0 8px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  outline: none;
-}
-
-.form-add input[type="text"]:focus {
-  border-color: var(--cor-primaria);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-}
-
-.form-add button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
-  background-color: var(--cor-primaria);
-  color: white;
-  cursor: pointer;
-  border-radius: 0 8px 8px 0;
-  transition: background-color 0.2s ease;
-}
-
-.form-add button:hover {
-  background-color: #0056b3;
-}
-
-/* ========================================
-  Lista de Tarefas
-  ========================================
-*/
-.task-list {
-  list-style: none;
-  padding: 0;
-}
-
-.task-list li {
-  display: flex;
-  align-items: center;
-  padding: 1rem 0.5rem;
-  border-bottom: 1px solid #f0f0f0;
-  transition: background-color 0.2s ease;
-}
-
-.task-list li:last-child {
-  border-bottom: none;
-}
-
-.task-list li:hover {
-  background-color: #fafafa;
-}
-
-/* Checkbox */
-.task-list input[type="checkbox"] {
-  margin-right: 1rem;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-}
-
-/* Span com o texto da tarefa e campo de edição */
-.task-list li span,
-.task-list li .edit-input {
-  flex-grow: 1;
-  color: var(--cor-texto);
-  transition: color 0.3s ease;
-}
-
-.task-list li span {
-  cursor: pointer;
-}
-
-/* Estilo para tarefas concluídas */
-.task-list li span.completed {
-  text-decoration: line-through;
-  color: var(--cor-texto-claro);
-}
-
-/* Campo de input para edição */
-.edit-input {
-  padding: 0.4rem;
-  font-size: 1rem;
-  border: 1px solid var(--cor-primaria);
-  border-radius: 4px;
-  outline: none;
-}
-
-
-/* Botão de Deletar */
-.delete-btn {
-  border: none;
-  background: transparent;
-  color: #ccc;
-  cursor: pointer;
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 0 0.5rem;
-  margin-left: 1rem;
-  opacity: 0.5;
-  transition: color 0.2s ease, opacity 0.2s ease;
-}
-
-.task-list li:hover .delete-btn {
-  opacity: 1;
-}
-
-.delete-btn:hover {
-  color: var(--cor-perigo);
-}
-```
-
-#### **Passo 3: Integração do Componente Principal**
-
-1.  Importe e declare o `TaskListComponent` no componente raiz `AppComponent`. **Esta etapa corrige o erro `'app-task-list' is not a known element'`.**
-    ```typescript
-    // src/app/app.component.ts
-    import { Component } from '@angular/core';
-    import { RouterOutlet } from '@angular/router';
-    // 1. IMPORTE o seu componente aqui
-    import { TaskListComponent } from './components/task-list/task-list.component';
-
-    @Component({
-      selector: 'app-root',
-      standalone: true,
-      imports: [
-        RouterOutlet,
-        TaskListComponent // 2. ADICIONE o componente ao array de imports
-      ],
-      templateUrl: './app.component.html',
-      styleUrl: './app.component.css'
-    })
-    export class AppComponent {
-      title = 'listadetarefas-web';
-    }
-    ```
-2.  Substitua o conteúdo de `src/app/app.component.html` para usar seu novo componente.
-    ```html
-    <app-task-list></app-task-list>
-    ```
-
-#### **Passo 4: Execução e Teste da Aplicação Web**
-
-1.  **Pré-requisito:** A API backend (`listadetarefas-api`) deve estar em execução.
-2.  **Executar a Aplicação:**
-      * No terminal, na raiz do projeto `listadetarefas-web`, execute:
-        ```bash
-        ng serve --open
-        ```
-      * O navegador abrirá automaticamente em `http://localhost:4200`.
-3.  **Teste Manual e Depuração:**
-      * **Boas Práticas:** Use as ferramentas de desenvolvedor do navegador (F12) para depurar. A aba **Network** mostra todas as requisições HTTP feitas para a API, permitindo verificar se os dados estão sendo enviados e recebidos corretamente. A aba **Console** exibe erros de JavaScript.
-      * **Procedimento de Teste:**
-        1.  A página carregou e a lista está vazia?
-        2.  Digite uma nova tarefa no campo de texto e clique em "Adicionar". A tarefa apareceu na lista?
-        3.  Marque o checkbox da tarefa. O texto foi riscado?
-        4.  Clique duas vezes no texto da tarefa. O campo de edição apareceu? Altere o texto e pressione Enter. A alteração foi salva?
-        5.  Clique no "X" para deletar a tarefa. Ela sumiu da lista?
-        6.  Recarregue a página (F5). As tarefas que não foram deletadas continuam lá? (Isso testa se os dados estão vindo da API no carregamento inicial).
+1.  **Pré-requisito:** A API backend deve estar rodando.
+2.  **Execute:** No terminal (na pasta `listadetarefas-web`), rode `ng serve --open`.
+3.  **Teste:** Abra as ferramentas de desenvolvedor do navegador (F12) e teste todas as funcionalidades: adicionar, editar com duplo clique, marcar como concluída e deletar.
 
 -----
 
-### **Módulo 3: Cliente Desktop com JavaFX (`listadetarefas-desktop`)**
+## 🖥️ Módulo 3: Cliente Desktop com JavaFX (`listadetarefas-desktop`)
 
-*Neste módulo, o foco será na lógica de serviço, que é a parte mais crítica da integração.*
+**Objetivo:** Criar uma aplicação desktop nativa e funcional que consome a API backend.
 
-#### **Ferramentas Necessárias**
+### 🛠️ Ferramentas Necessárias
 
-  * **Java Development Kit (JDK):** Versão 17 ou superior, com JavaFX SDK.
-  * **Apache Maven**
-  * **IDE:** IntelliJ IDEA ou Eclipse com suporte a JavaFX.
+  * **Java Development Kit (JDK):** Versão 17 ou superior.
+  * **IDE:** IntelliJ IDEA ou VS Code com o "Extension Pack for Java".
 
-#### **Passo 1: Criação e Configuração do Projeto**
+### \#\#\# 📂 Passo 1: Criação e Configuração do Projeto
 
-1.  Crie um **projeto Maven** na sua IDE.
-      * `GroupId`: `br.com.curso`
-      * `ArtifactId`: `listadetarefas-desktop`
-2.  Configure o `pom.xml` para incluir as dependências do **JavaFX** e do **Jackson Databind** (para manipulação de JSON).
-3.  Crie o arquivo `module-info.java` em `src/main/java` para declarar as dependências do sistema de módulos do Java, como `requires javafx.controls;` e `opens br.com.curso.listadetarefas.desktop to javafx.fxml;`.
+1.  **Crie um projeto Maven** na sua IDE para `listadetarefas-desktop` (siga as instruções detalhadas do guia anterior para IntelliJ ou VS Code).
+2.  **Substitua o `pom.xml`** pelo código completo fornecido no guia anterior, que inclui JavaFX, Jackson e o `maven-shade-plugin`.
+3.  **Crie o arquivo `module-info.java`** em `src/main/java` com a versão final e corrigida, contendo todos os `requires`, `opens` e `exports` necessários.
 
-#### **Passo 2: Desenvolvimento do Serviço de API**
+### \#\#\# 🏗️ Passo 2: Estrutura de Código e UI
 
-**`TarefaApiService.java`**
-Esta classe encapsula toda a comunicação com a API backend usando o cliente HTTP moderno do Java.
+Siga os passos e use os códigos completos e detalhados do guia anterior para criar a estrutura final.
 
-```java
-package br.com.curso.listadetarefas.desktop;
+#### Diagrama de Classes do Cliente Desktop
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Collections;
-import java.util.List;
-
-public class TarefaApiService {
-    private final HttpClient client = HttpClient.newHttpClient();
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String API_URL = "http://localhost:8080/api/tarefas";
-
-    public List<Tarefa> listarTarefas() {
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(API_URL)).GET().build();
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200) {
-                return objectMapper.readValue(response.body(), new TypeReference<>() {});
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyList();
+```mermaid
+classDiagram
+    MainApp --|> Application
+    MainApp ..> MainViewController : Carrega
+    MainViewController ..> TarefaApiService : Usa
+    TarefaApiService ..> Tarefa : Manipula
+    class MainApp {
+        +start(Stage)
     }
-
-    public void deletarTarefa(Long id) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(API_URL + "/" + id))
-                    .DELETE()
-                    .build();
-            client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    class MainViewController {
+        -TableView~Tarefa~ tabelaTarefas
+        +initialize()
+        +adicionarTarefa()
+        +atualizarListaDeTarefas()
     }
-    // ... incluir os outros métodos (adicionarTarefa, atualizarTarefa)
-}
+    class TarefaApiService {
+        +List~Tarefa~ listarTarefas()
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
+    }
 ```
 
-  * **Boas Práticas:** Em uma aplicação JavaFX, as chamadas para os métodos desta classe devem ser feitas em uma thread separada para não congelar a interface do usuário (UI). Utilize a classe `javafx.concurrent.Task` para executar operações de rede em segundo plano e atualizar a UI na thread principal quando os dados chegarem.
+#### Estrutura de Pastas e Arquivos Final do Desktop
 
-#### **Passo 3: Execução e Teste**
+```
+listadetarefas-desktop/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   ├── br/com/curso/listadetarefas/desktop/
+│       │   │   ├── Launcher.java
+│       │   │   ├── MainApp.java
+│       │   │   ├── MainViewController.java
+│       │   │   ├── Tarefa.java
+│       │   │   └── TarefaApiService.java
+│       │   └── module-info.java
+│       └── resources/
+│           └── br/com/curso/listadetarefas/desktop/
+│               └── MainView.fxml
+└── pom.xml
+```
 
-1.  **Pré-requisito:** A API backend (`listadetarefas-api`) deve estar em execução.
-2.  **Construir o Projeto:**
-      * No terminal, na raiz do projeto `listadetarefas-desktop`, execute:
-        ```bash
-        mvn clean package
-        ```
-      * Isso gerará um arquivo `.jar` executável na pasta `target`.
-3.  **Executar a Aplicação:**
-    ```bash
-    java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar
-    ```
-4.  **Teste Manual:**
-      * Realize o mesmo roteiro de testes do cliente web: adicione, edite, marque como concluída e delete tarefas.
-      * **Depuração:** Fique de olho no console onde você executou o comando `java -jar`. Erros de conexão ou de processamento de dados (stack traces) aparecerão lá, ajudando a diagnosticar problemas.
+### \#\#\# ✅ Passo 3: Construção e Teste
+
+1.  **Pré-requisito:** A API backend deve estar rodando.
+2.  **Construa:** No terminal, na raiz do projeto, rode `mvn clean package`.
+3.  **Execute:** Rode o JAR gerado: `java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar`.
+4.  **Teste:** Verifique todas as funcionalidades: adicionar, deletar, atualizar a lista, e editar a descrição com duplo clique.
 
 -----
 
-### **Módulo 4: Cliente Mobile com Android (`listadetarefas-android`)**
+## 📱 Módulo 4: Cliente Mobile com Android (`listadetarefas-android`)
 
-#### **Ferramentas Necessárias**
+**Objetivo:** Completar o ecossistema com um cliente Android nativo e moderno, utilizando as melhores práticas recomendadas pelo Google, como Jetpack Compose e ViewModel.
 
-  * **Android Studio:** A IDE oficial para desenvolvimento Android.
+### 🛠️ Ferramentas Necessárias
+
+  * **Android Studio:** A IDE oficial para desenvolvimento Android (versão "Hedgehog" ou mais recente).
   * **Android SDK:** Instalado via Android Studio.
   * **Emulador Android (AVD)** ou um dispositivo físico.
 
-#### **Passo 1: Criação e Configuração do Projeto**
+### \#\#\# 📂 Passo 1: Criação do Projeto
 
-1.  No **Android Studio**, crie um novo projeto com o template **Empty Activity (Compose)**.
-2.  Configure o projeto:
-      * `Name`: `listadetarefas-android`
-      * `Package name`: `br.com.curso.listadetarefas.android`
-3.  Adicione as dependências de `Retrofit`, `Gson`, `ViewModel`, `Coroutines` e `Compose` ao arquivo `build.gradle.kts (Module :app)`.
-4.  No arquivo `AndroidManifest.xml`, adicione as permissões de rede.
-    ```xml
+1.  No **Android Studio**, vá em **File \> New \> New Project...**.
+2.  Selecione o template **Empty Activity** (com o logo do Compose).
+3.  Configure o projeto:
+      * **Name:** `listadetarefas-android`
+      * **Package name:** `br.com.curso.listadetarefas.android`
+      * **Minimum SDK:** API 24 ou superior.
+4.  Clique em **Finish**.
+
+#### Estrutura Inicial de Pastas
+
+O Android Studio gerará uma estrutura complexa. Focaremos na pasta principal do nosso código:
+
+```
+listadetarefas-android/
+└── app/
+    └── src/
+        └── main/
+            ├── java/
+            │   └── br/com/curso/listadetarefas/android/
+            │       └── MainActivity.kt
+            └── AndroidManifest.xml
+```
+
+### \#\#\# ⚙️ Passo 2: Configuração do Projeto
+
+1.  **Adicionar Dependências:** Abra o arquivo `app/build.gradle.kts` e adicione as dependências para Retrofit (cliente HTTP) e Gson (conversor JSON) na seção `dependencies { ... }`.
+2.  **Adicionar Permissões de Rede:** Abra o arquivo `app/src/main/AndroidManifest.xml` e adicione a permissão de internet e a permissão para tráfego de texto limpo (necessário para `localhost` em desenvolvimento).
+
+<!-- end list -->
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ...>
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         ...
         android:usesCleartextTraffic="true"> ...
     </application>
-    ```
+</manifest>
+```
 
-#### **Passo 2: Configuração do Ambiente de Rede**
+### \#\#\# 🔗 Passo 3: Configuração da Rede para o Emulador
 
-  * **Boas Práticas:** O emulador Android roda em sua própria máquina virtual com um endereço de rede separado. `localhost` ou `127.0.0.1` dentro do emulador refere-se ao próprio emulador, não à sua máquina. Para conectar à API que está rodando no seu computador, você precisa criar um túnel reverso.
-
-<!-- end list -->
-
-1.  **Pré-requisito:** A API backend (`listadetarefas-api`) deve estar em execução com `server.address=0.0.0.0`.
-2.  Execute o seguinte comando no terminal (com o emulador já rodando):
+1.  **Pré-requisito:** A API backend deve estar rodando com `server.address=0.0.0.0`.
+2.  **Crie o Túnel Reverso:** Com o emulador Android em execução, abra um terminal e execute o comando:
     ```bash
     adb reverse tcp:8080 tcp:8080
     ```
-    Isso redireciona o tráfego da porta 8080 do emulador para a porta 8080 da sua máquina.
+      * **Explicação:** Este comando redireciona as requisições feitas para a porta `8080` do emulador para a porta `8080` da sua máquina (onde a API está rodando).
 
-#### **Passo 3: Desenvolvimento do Código-Fonte**
+### \#\#\# ✍️ Passo 4: Codificação da Camada de Dados e Rede
 
-*O código para `Tarefa.kt`, `TarefaApiService.kt`, `RetrofitClient.kt`, `TarefaViewModel.kt` e `MainActivity.kt` é o mesmo da versão anterior. As boas práticas (ViewModel, StateFlow, Coroutines, etc.) já estão aplicadas.*
+1.  Dentro do pacote `br.com.curso.listadetarefas.android`, crie os seguintes arquivos Kotlin:
 
-#### **Passo 4: Execução e Teste**
+**`Tarefa.kt` (Modelo de Dados)**
 
-1.  **Executar a Aplicação:**
-      * No Android Studio, selecione o emulador desejado e clique no botão "Run 'app'" (ícone de play).
-2.  **Teste Manual e Depuração:**
-      * **Ferramenta Principal:** **Logcat**. A janela do Logcat no Android Studio é sua melhor amiga. Ela exibe todos os logs do sistema e do seu aplicativo (`Log.e`, `Log.d`, etc.), incluindo exceções e erros de rede. Use filtros para ver apenas os logs da sua aplicação.
-      * **Procedimento de Teste:**
-        1.  O aplicativo abriu? A lista está vazia com a mensagem "Nenhuma tarefa encontrada"?
-        2.  Adicione uma nova tarefa. Ela apareceu na lista?
-        3.  Toque no checkbox. A tarefa foi marcada/desmarcada?
-        4.  Toque no texto da tarefa. A caixa de diálogo para edição abriu? Edite e salve.
-        5.  Toque no ícone da lixeira. A tarefa foi removida?
-        6.  Arraste a lista para baixo (pull-to-refresh). A lista é atualizada a partir da API?
+```kotlin
+package br.com.curso.listadetarefas.android
+// data class gera automaticamente getters, setters, equals, etc.
+data class Tarefa(
+    val id: Long?,
+    var descricao: String?,
+    var concluida: Boolean
+)
+```
+
+**`TarefaApiService.kt` (Interface da API)**
+
+```kotlin
+package br.com.curso.listadetarefas.android
+import retrofit2.Response
+import retrofit2.http.*
+
+interface TarefaApiService {
+    @GET("tarefas")
+    suspend fun getTarefas(): List<Tarefa>
+    @POST("tarefas")
+    suspend fun addTarefa(@Body tarefa: Tarefa): Tarefa
+    @PUT("tarefas/{id}")
+    suspend fun updateTarefa(@Path("id") id: Long, @Body tarefa: Tarefa): Tarefa
+    @DELETE("tarefas/{id}")
+    suspend fun deleteTarefa(@Path("id") id: Long): Response<Void>
+}
+```
+
+**`RetrofitClient.kt` (Cliente HTTP)**
+
+```kotlin
+package br.com.curso.listadetarefas.android
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object RetrofitClient {
+    // 127.0.0.1 é o endereço de localhost para o emulador Android (após o adb reverse).
+    private const val BASE_URL = "http://127.0.0.1:8080/api/"
+    val instance: TarefaApiService by lazy {
+        val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        val httpClient = OkHttpClient.Builder().addInterceptor(logging).build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient)
+            .build()
+        retrofit.create(TarefaApiService::class.java)
+    }
+}
+```
+
+#### Estrutura de Pastas Após a Criação da Rede
+
+```
+android/
+└── app/src/main/java/br/com/curso/listadetarefas/android/
+    ├── MainActivity.kt
+    ├── RetrofitClient.kt     # <- Arquivo criado
+    ├── Tarefa.kt             # <- Arquivo criado
+    └── TarefaApiService.kt   # <- Arquivo criado
+```
+
+### \#\#\# 🏗️ Passo 5: Construção do ViewModel e da UI com Compose
+
+#### Diagrama de Classes do Cliente Mobile
+
+```mermaid
+classDiagram
+    MainActivity ..> TarefaViewModel : Observa
+    TarefaViewModel ..> RetrofitClient : Usa
+    RetrofitClient ..> TarefaApiService : Cria
+    TarefaViewModel ..> Tarefa : Gerencia Estado (UiState)
+    class MainActivity {
+        +TarefaApp() Composable
+    }
+    class TarefaViewModel {
+        -StateFlow~TarefaUiState~ uiState
+        +carregarTarefas()
+        +adicionarTarefa(String)
+        +updateTarefa(Tarefa)
+        +deleteTarefa(Long)
+    }
+    class RetrofitClient {
+        <<Object>>
+        +TarefaApiService instance
+    }
+    class TarefaApiService {
+        <<Interface>>
+    }
+```
+
+1.  Crie o arquivo `TarefaViewModel.kt` e substitua o conteúdo de `MainActivity.kt`.
+
+**`TarefaViewModel.kt`**
+
+```kotlin
+// Cole o código completo da classe TarefaViewModel do guia anterior aqui.
+// Ele contém a classe TarefaUiState e a lógica para carregar, adicionar,
+// atualizar e deletar tarefas usando Coroutines.
+package br.com.curso.listadetarefas.android
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+data class TarefaUiState(
+    val tarefas: List<Tarefa> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+class TarefaViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(TarefaUiState())
+    val uiState: StateFlow<TarefaUiState> = _uiState.asStateFlow()
+    private val TAG = "TarefaViewModel"
+
+    init { carregarTarefas() }
+
+    fun carregarTarefas() {
+        _uiState.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            try {
+                val tarefasDaApi = withContext(Dispatchers.IO) { RetrofitClient.instance.getTarefas() }
+                _uiState.update { it.copy(isLoading = false, tarefas = tarefasDaApi, error = null) }
+            } catch (e: Exception) {
+                Log.e(TAG, "Falha ao carregar tarefas", e)
+                _uiState.update { it.copy(isLoading = false, error = "Falha ao carregar tarefas") }
+            }
+        }
+    }
+    fun adicionarTarefa(descricao: String) {
+        viewModelScope.launch {
+            try {
+                val tarefaAdicionada = withContext(Dispatchers.IO) {
+                    RetrofitClient.instance.addTarefa(Tarefa(id = null, descricao = descricao, concluida = false))
+                }
+                _uiState.update { it.copy(tarefas = it.tarefas + tarefaAdicionada) }
+            } catch (e: Exception) { Log.e(TAG, "Falha ao adicionar tarefa", e) }
+        }
+    }
+    fun updateTarefa(tarefa: Tarefa) {
+        viewModelScope.launch {
+            try {
+                tarefa.id?.let {
+                    val tarefaAtualizada = withContext(Dispatchers.IO) { RetrofitClient.instance.updateTarefa(it, tarefa) }
+                    _uiState.update { currentState ->
+                        currentState.copy(tarefas = currentState.tarefas.map { t -> if (t.id == tarefaAtualizada.id) tarefaAtualizada else t })
+                    }
+                }
+            } catch (e: Exception) { Log.e(TAG, "Falha ao atualizar tarefa", e) }
+        }
+    }
+    fun deleteTarefa(id: Long?) {
+        viewModelScope.launch {
+            try {
+                id?.let {
+                    withContext(Dispatchers.IO) { RetrofitClient.instance.deleteTarefa(it) }
+                    _uiState.update { currentState -> currentState.copy(tarefas = currentState.tarefas.filter { t -> t.id != id }) }
+                }
+            } catch (e: Exception) { Log.e(TAG, "Falha ao deletar tarefa", e) }
+        }
+    }
+}
+```
+
+**`MainActivity.kt`**
+
+```kotlin
+// Cole o código completo da MainActivity do guia anterior aqui.
+// Ele contém todos os Composables para renderizar a tela: TarefaApp,
+// TarefaScreen, TarefaItem e EditTaskDialog.
+@file:OptIn(ExperimentalMaterial3Api::class)
+package br.com.curso.listadetarefas.android
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.curso.listadetarefas.android.ui.theme.listadetarefasAndroidTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            listadetarefasAndroidTheme {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    TarefaApp()
+                }
+            }
+        }
+    }
+}
+@Composable
+fun TarefaApp(tarefaViewModel: TarefaViewModel = viewModel()) {
+    val uiState by tarefaViewModel.uiState.collectAsState()
+    var tarefaParaEditar by remember { mutableStateOf<Tarefa?>(null) }
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = uiState.isLoading,
+        onRefresh = { tarefaViewModel.carregarTarefas() }
+    )
+    Scaffold(topBar = { TopAppBar(title = { Text("To-Do List Android") }) }) { paddingValues ->
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues).pullRefresh(pullRefreshState)) {
+            if (uiState.error != null) {
+                Text(text = "Erro: ${uiState.error}", modifier = Modifier.align(Alignment.Center), textAlign = TextAlign.Center)
+            } else {
+                TarefaScreen(
+                    tarefas = uiState.tarefas,
+                    isLoading = uiState.isLoading,
+                    onAddTask = tarefaViewModel::adicionarTarefa,
+                    onUpdateTask = tarefaViewModel::updateTarefa,
+                    onDeleteTask = tarefaViewModel::deleteTarefa,
+                    onTaskClick = { tarefa -> tarefaParaEditar = tarefa }
+                )
+            }
+            PullRefreshIndicator(
+                refreshing = uiState.isLoading,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+            tarefaParaEditar?.let { tarefa ->
+                EditTaskDialog(
+                    tarefa = tarefa,
+                    onDismiss = { tarefaParaEditar = null },
+                    onSave = { novaDescricao ->
+                        val tarefaAtualizada = tarefa.copy(descricao = novaDescricao)
+                        tarefaViewModel.updateTarefa(tarefaAtualizada)
+                        tarefaParaEditar = null
+                    }
+                )
+            }
+        }
+    }
+}
+@Composable
+fun TarefaScreen(tarefas: List<Tarefa>, isLoading: Boolean, onAddTask: (String) -> Unit, onUpdateTask: (Tarefa) -> Unit, onDeleteTask: (Long?) -> Unit, onTaskClick: (Tarefa) -> Unit) {
+    var textoNovaTarefa by remember { mutableStateOf("") }
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            OutlinedTextField(value = textoNovaTarefa, onValueChange = { textoNovaTarefa = it }, label = { Text("Nova tarefa") }, modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = {
+                if (textoNovaTarefa.isNotBlank()) {
+                    onAddTask(textoNovaTarefa)
+                    textoNovaTarefa = ""
+                }
+            }) { Text("Add") }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        if (isLoading && tarefas.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else if (tarefas.isEmpty()) {
+            Text(text = "Nenhuma tarefa encontrada.\nPuxe para atualizar ou adicione uma nova!", modifier = Modifier.fillMaxWidth().padding(top = 32.dp), textAlign = TextAlign.Center)
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(tarefas, key = { it.id!! }) { tarefa ->
+                    TarefaItem(
+                        tarefa = tarefa,
+                        onCheckedChange = { isChecked -> onUpdateTask(tarefa.copy(concluida = isChecked)) },
+                        onDeleteClick = { onDeleteTask(tarefa.id) },
+                        onTaskClick = { onTaskClick(tarefa) }
+                    )
+                    Divider()
+                }
+            }
+        }
+    }
+}
+@Composable
+fun TarefaItem(tarefa: Tarefa, onCheckedChange: (Boolean) -> Unit, onDeleteClick: () -> Unit, onTaskClick: () -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth().clickable { onTaskClick() }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Checkbox(checked = tarefa.concluida, onCheckedChange = onCheckedChange)
+        Text(
+            text = tarefa.descricao ?: "",
+            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+            style = if (tarefa.concluida) LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough) else LocalTextStyle.current
+        )
+        IconButton(onClick = onDeleteClick) {
+            Icon(Icons.Filled.Delete, contentDescription = "Deletar Tarefa")
+        }
+    }
+}
+@Composable
+fun EditTaskDialog(tarefa: Tarefa, onDismiss: () -> Unit, onSave: (String) -> Unit) {
+    var textoEditado by remember { mutableStateOf(tarefa.descricao ?: "") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Editar Tarefa") },
+        text = { OutlinedTextField(value = textoEditado, onValueChange = { textoEditado = it }, label = { Text("Descrição") }, modifier = Modifier.fillMaxWidth()) },
+        confirmButton = { Button(onClick = { if (textoEditado.isNotBlank()) { onSave(textoEditado) } }) { Text("Salvar") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } }
+    )
+}
+```
+
+### \#\#\# ✅ Passo 6: Execução e Teste
+
+1.  **Execute a Aplicação:** No Android Studio, selecione o emulador e clique no botão "Run 'app'".
+2.  **Teste e Depure:**
+      * **Ferramenta Principal:** **Logcat**. Use a janela do Logcat no Android Studio para ver logs da aplicação, erros de rede e exceções.
+      * **Roteiro de Teste:**
+        1.  Adicione, edite (tocando na descrição), marque como concluída e delete tarefas.
+        2.  Arraste a lista para baixo para testar a funcionalidade de "Puxar para Atualizar".
 
 -----
 
-### **Módulo 5: Automação com PowerShell (`manage.ps1`)**
+## 🤖 Módulo 5: Automação com PowerShell (`manage.ps1`)
 
-#### **Ferramentas Necessárias**
+**Objetivo:** Criar um painel de controle centralizado para gerenciar todo o ecossistema (iniciar/parar serviços) de forma rápida e fácil.
+
+### 🛠️ Ferramentas Necessárias
 
   * **Windows Terminal** ou **PowerShell**.
 
-#### **Passo 1: Preparação**
+### \#\#\# 📂 Passo 1: Estrutura Final e Configuração
 
-1.  Crie um arquivo chamado **`manage.ps1`** na **pasta raiz** que contém todos os seus projetos (ex: `C:\Projetos\ToDoList\`).
-2.  Habilite a execução de scripts no seu sistema. Abra o PowerShell como **Administrador** e execute uma única vez:
+1.  Na **pasta raiz** que contém todos os 4 projetos, crie o arquivo `manage.ps1`.
+2.  **Habilite a Execução de Scripts:** Abra o PowerShell como **Administrador** e execute (apenas uma vez):
     ```powershell
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     ```
 
-#### **Passo 2: Código do Script de Automação**
+#### Estrutura de Pastas Final do Projeto Completo
 
-*Cole o código PowerShell corrigido e melhorado da versão anterior do guia. Ele usa `$PSScriptRoot` para ser portátil e os nomes corretos dos projetos.*
+```
+projeto-todolist/
+├── listadetarefas-api/
+├── listadetarefas-web/
+├── listadetarefas-desktop/
+├── listadetarefas-android/
+└── manage.ps1  # <- Script de automação
+```
 
-#### **Passo 3: Execução e Teste do Painel**
+### \#\#\# 📜 Passo 2: O Script de Automação
 
-1.  Abra o terminal na pasta raiz onde o script `manage.ps1` foi salvo.
-2.  Execute o script:
-    ```powershell
-    .\manage.ps1
-    ```
-3.  **Teste do Script:**
-      * O objetivo aqui é testar se o próprio painel de controle funciona.
-      * **Procedimento de Teste:**
-        1.  Use a opção **1** para iniciar a API. Verifique no Gerenciador de Tarefas se um processo `java.exe` iniciou. Verifique o status no painel.
-        2.  Use a opção **2** para parar a API. O processo `java.exe` foi encerrado?
-        3.  Use a opção **A** para iniciar o emulador.
-        4.  Use a opção **G** para criar o túnel adb.
-        5.  Use a opção **9** para iniciar todos os serviços. Verifique se a API, o servidor web do Angular e a aplicação desktop iniciaram corretamente.
-        6.  Use a opção **10** para parar tudo e verifique se todos os processos foram encerrados.
+Copie o código abaixo para o seu arquivo `manage.ps1`. Ele está corrigido para usar os nomes corretos dos projetos e é portátil.
+
+```powershell
+# Cole o código completo e corrigido do manage.ps1 do guia anterior aqui.
+# Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
+# --- CONFIGURAÇÕES GLOBAIS ---
+$basePath = $PSScriptRoot
+$apiPath = "$basePath\listadetarefas-api"
+$webPath = "$basePath\listadetarefas-web"
+$desktopPath = "$basePath\listadetarefas-desktop"
+$androidPath = "$basePath\listadetarefas-android"
+$sdkPath = "C:\Users\$env:UserName\AppData\Local\Android\Sdk"
+$emulatorPath = "$sdkPath\emulator"
+$platformToolsPath = "$sdkPath\platform-tools"
+$emulatorName = "Medium_Phone"
+$apiJar = Get-Item "$apiPath\target\listadetarefas-api-*.jar"
+$desktopJar = Get-Item "$desktopPath\target\listadetarefas-desktop-*.jar"
+$androidPackage = "br.com.curso.listadetarefas.android"
+$desktopWindowTitle = "Minha Lista de Tarefas (Desktop)"
+# --- FUNÇÕES AUXILIARES ---
+function Get-ServiceStatus($serviceName) {
+    switch ($serviceName) {
+        'api'     { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue) { return "RUNNING" } else { return "STOPPED" } }
+        'web'     { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction SilentlyContinue) { return "RUNNING" } else { return "STOPPED" } }
+        'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle }) { return "RUNNING" } else { return "STOPPED" } }
+        'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } else { return "STOPPED" } }
+        'emulator'{ if ((& "$platformToolsPath\adb.exe" devices) -like "*device*") { return "RUNNING" } else { return "STOPPED" } }
+    }
+}
+function Start-Service($serviceName) {
+    Write-Host "`nTentando iniciar serviço: $serviceName..." -ForegroundColor Yellow
+    switch ($serviceName) {
+        'api' {
+            if (!$apiJar.Exists) {
+                $choice = Read-Host "Arquivo JAR da API não encontrado. Deseja executar '.\mvnw.cmd clean package' agora? (s/n)"
+                if ($choice -eq 's') {
+                    Push-Location $apiPath; Write-Host "Construindo API..."; & ".\mvnw.cmd" clean package; Pop-Location
+                    $apiJar = Get-Item "$apiPath\target\listadetarefas-api-*.jar"
+                } else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return }
+            }
+            Start-Process java -ArgumentList "-jar", $apiJar.FullName
+        }
+        'web' {
+            Push-Location $webPath; Start-Process powershell -ArgumentList "-Command", "ng serve --open"; Pop-Location
+        }
+        'desktop' {
+            if (!$desktopJar.Exists) {
+                $choice = Read-Host "Arquivo JAR do Desktop não encontrado. Deseja executar '.\mvnw.cmd clean package' agora? (s/n)"
+                if ($choice -eq 's') {
+                    Push-Location $desktopPath; Write-Host "Construindo App Desktop..."; & ".\mvnw.cmd" clean package; Pop-Location
+                    $desktopJar = Get-Item "$desktopPath\target\listadetarefas-desktop-*.jar"
+                } else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return }
+            }
+            Start-Process java -ArgumentList "-jar", $desktopJar.FullName
+        }
+        'android' {
+            & "$platformToolsPath\adb.exe" shell am start -n "$androidPackage/$androidPackage.MainActivity"
+        }
+        'emulator' {
+            Push-Location $emulatorPath; Start-Process ".\emulator.exe" -ArgumentList "-avd", $emulatorName; Pop-Location
+        }
+    }
+    Write-Host "Comando de início enviado para '$serviceName'." -ForegroundColor Green
+    Start-Sleep -Seconds 3
+}
+function Stop-Service($serviceName) {
+    Write-Host "`nParando serviço: $serviceName..." -ForegroundColor Yellow
+    switch ($serviceName) {
+        'api'     { $p = Get-NetTCPConnection -LocalPort 8080 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
+        'web'     { $p = Get-NetTCPConnection -LocalPort 4200 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
+        'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle } | Stop-Process -Force }
+        'android' { & "$platformToolsPath\adb.exe" shell am force-stop $androidPackage }
+        'emulator'{ & "$platformToolsPath\adb.exe" emu kill }
+    }
+}
+# --- LÓGICA PRINCIPAL (LOOP DO MENU) ---
+while ($true) {
+    Clear-Host
+    Write-Host "=================================================" -ForegroundColor Cyan
+    Write-Host "     PAINEL DE CONTROLE - PROJETO TO-DO LIST     " -ForegroundColor Cyan
+    Write-Host "================================================="
+    Write-Host ""
+    $statusApi = Get-ServiceStatus 'api'
+    $statusWeb = Get-ServiceStatus 'web'
+    $statusDesktop = Get-ServiceStatus 'desktop'
+    $statusEmulator = Get-ServiceStatus 'emulator'
+    $statusAndroid = if ($statusEmulator -eq 'RUNNING') { Get-ServiceStatus 'android' } else { "OFFLINE" }
+    Write-Host "STATUS ATUAL:"
+    Write-Host "  Emulador Android:" -NoNewline; Write-Host " `t`t$statusEmulator" -ForegroundColor $(if ($statusEmulator -eq 'RUNNING') { 'Green' } else { 'Red' })
+    Write-Host "  API Backend (Porta 8080):" -NoNewline; Write-Host " `t$statusApi" -ForegroundColor $(if ($statusApi -eq 'RUNNING') { 'Green' } else { 'Red' })
+    Write-Host "  Servidor Web (Porta 4200):" -NoNewline; Write-Host "`t$statusWeb" -ForegroundColor $(if ($statusWeb -eq 'RUNNING') { 'Green' } else { 'Red' })
+    Write-Host "  App Desktop:" -NoNewline; Write-Host " `t`t`t$statusDesktop" -ForegroundColor $(if ($statusDesktop -eq 'RUNNING') { 'Green' } else { 'Red' })
+    Write-Host "  App Android (no emulador):" -NoNewline; Write-Host "`t$statusAndroid" -ForegroundColor $(if ($statusAndroid -eq 'RUNNING') { 'Green' } else { 'Red' })
+    Write-Host ""
+    Write-Host "--- OPÇÕES ---" -ForegroundColor Yellow
+    Write-Host " AMBIENTE ANDROID `t`t GERAL"
+    Write-Host "  A. Iniciar Emulador `t 9. Iniciar TUDO (exceto emulador)"
+    Write-Host "  B. Parar Emulador `t`t 10. Parar TUDO (exceto emulador)"
+    Write-Host "  G. Criar Túnel (adb reverse)`t Q. Sair"
+    Write-Host "---------------- `t----------------"
+    Write-Host " API Backend: `t`t App Web:"
+    Write-Host "  1. Iniciar API `t 3. Iniciar Web"
+    Write-Host "  2. Parar API `t`t 4. Parar Web"
+    Write-Host "---------------- `t----------------"
+    Write-Host " App Desktop: `t`t App Android:"
+    Write-Host "  5. Iniciar Desktop `t 7. Iniciar App"
+    Write-Host "  6. Parar Desktop `t`t 8. Parar App"
+    Write-Host ""
+    $choice = Read-Host "Digite sua opção e pressione Enter"
+    switch ($choice) {
+        'a' { Start-Service 'emulator' }
+        'b' { Stop-Service 'emulator' }
+        'g' { & "$platformToolsPath\adb.exe" reverse tcp:8080 tcp:8080; Write-Host "Túnel adb reverse tcp:8080 tcp:8080 criado." -ForegroundColor Green; Start-Sleep 2 }
+        '1' { Start-Service 'api' }
+        '2' { Stop-Service 'api' }
+        '3' { Start-Service 'web' }
+        '4' { Stop-Service 'web' }
+        '5' { Start-Service 'desktop' }
+        '6' { Stop-Service 'desktop' }
+        '7' { Start-Service 'android' }
+        '8' { Stop-Service 'android' }
+        '9' { Start-Service 'api'; Start-Service 'web'; Start-Service 'desktop'; Start-Service 'android' }
+        '10'{ Stop-Service 'api'; Stop-Service 'web'; Stop-Service 'desktop'; Stop-Service 'android' }
+        'q' { Write-Host "Saindo..."; break }
+        default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep -Seconds 2 }
+    }
+}
+```
+
+### \#\#\# ✅ Passo 3: Teste do Painel de Controle
+
+1.  Abra o terminal na pasta raiz do projeto.
+2.  Execute o script: `.\manage.ps1`
+3.  Teste as opções do menu (Iniciar API, Parar API, Iniciar TUDO, etc.) para garantir que o painel está gerenciando todos os componentes do ecossistema corretamente.
 
 -----
 
-### **Módulo 6: Conclusão e Próximos Passos**
+## 🎉 Módulo 6: Conclusão e Próximos Passos
 
-**Parabéns\!** Ao final deste guia, você terá construído e testado um ecossistema de software completo e funcional, aplicando conceitos de:
+**Parabéns\!** Ao final deste guia, você construiu e testou um ecossistema de software completo e funcional, aplicando conceitos de:
 
-  * **Arquitetura de API-First:** Projetando um backend robusto que serve múltiplos clientes.
-  * **Desenvolvimento Full-Stack:** Conectando um backend Java a um frontend web moderno.
-  * **Desenvolvimento Multiplataforma:** Reutilizando a mesma API para aplicações Web, Desktop e Mobile.
-  * **Automação e DevOps Básico:** Simplificando o gerenciamento do ambiente de desenvolvimento com scripts.
+  * **🔌 Backend:** Criação de uma API REST robusta com Spring Boot.
+  * **💻 Frontend:** Desenvolvimento de um cliente web reativo com Angular.
+  * **🌍 Multiplataforma:** Extensão do sistema para clientes Desktop (JavaFX) e Mobile (Android).
+  * **🤖 Automação:** Otimização do fluxo de trabalho com um painel de controle em PowerShell.
+  * **🛠️ DevOps Básico:** Gerenciamento de um ambiente de desenvolvimento complexo.
 
-**Desafios Futuros (Próximos Passos):**
+### 🚀 Desafios Futuros (Próximos Passos):
 
-  * **Segurança:** Implemente autenticação na API com `Spring Security` e `JWT`.
-  * **Comunicação em Tempo Real:** Use `WebSockets` para sincronização automática entre os clientes.
-  * **Testes Automatizados:** Escreva testes unitários e de integração para a API (`JUnit`/`Mockito`) e testes de UI para os frontends (`Jasmine`/`Karma`/`Espresso`).
-  * **Deployment:** Empacote suas aplicações com **Docker** e faça o deploy em um provedor de nuvem.
+  * **🔒 Segurança:** Implemente autenticação na API com `Spring Security` e `JWT`.
+  * **🔄 Comunicação em Tempo Real:** Use `WebSockets` para sincronização automática entre os clientes.
+  * **🧪 Testes Automatizados:** Escreva testes unitários e de integração para a API (`JUnit`/`Mockito`) e testes de UI para os frontends (`Jasmine`/`Karma`/`Espresso`).
+  * **☁️ Deployment:** Empacote suas aplicações com **Docker** e faça o deploy em um provedor de nuvem como Heroku, AWS ou Google Cloud.
