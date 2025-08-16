@@ -1059,7 +1059,8 @@ fun EditTaskDialog(tarefa: Tarefa, onDismiss: () -> Unit, onSave: (String) -> Un
 }
 ```
 
-Passo 1: Garantir que a API está a ser executada e o túnel de rede está ativo
+### \#\#\# ✅ Passo 1: Garantir que a API está a ser executada e o túnel de rede está ativo
+
 Antes de iniciar a aplicação Android, é essencial que a API já esteja a ser executada.
 
 Use a opção 1 no seu painel de controlo para Iniciar a API.
@@ -1068,10 +1069,11 @@ Confirme que o status da "API Backend" muda para RUNNING.
 
 Use a opção 7 para Iniciar a App Android. O script irá executar automaticamente o comando adb reverse, que cria a ponte de rede necessária.
 
-Passo 2: Permitir Tráfego de Rede no Android (Configuração Essencial)
+### \#\#\# ✅ Passo 2: Permitir Tráfego de Rede no Android (Configuração Essencial)
+
 Por defeito, as versões mais recentes do Android bloqueiam a comunicação com endereços que não sejam seguros (não-HTTPS), como é o caso do nosso ambiente de desenvolvimento local. Precisamos de dizer explicitamente à aplicação que esta comunicação é permitida.
 
-1. Crie um novo ficheiro de configuração:
+### \#\#\# ✅ Passo 3: Crie um novo ficheiro de configuração:
 
 Na estrutura de pastas do seu projeto Android, navegue para app/src/main/res.
 
@@ -1079,29 +1081,31 @@ Crie uma nova pasta chamada xml.
 
 Dentro da pasta xml, crie um novo ficheiro chamado network_security_config.xml.
 
-2. Adicione o seguinte conteúdo a network_security_config.xml:
+### \#\#\# ✅ Passo 4: Adicione o seguinte conteúdo a network_security_config.xml:
 
-XML
-
+```XML
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">127.0.0.1</domain>
     </domain-config>
 </network-security-config>
-3. Atualize o AndroidManifest.xml:
+```
+
+### \#\#\# ✅ Passo 5: Atualize o AndroidManifest.xml:
 
 Abra o ficheiro app/src/main/AndroidManifest.xml.
 
 Adicione a seguinte linha dentro da tag <application>:
 
-XML
-
+```XML
 <application
     ...
     android:networkSecurityConfig="@xml/network_security_config">
     ...
 </application>
+```
+
 Depois de fazer estas alterações no projeto Android, compile e execute a aplicação novamente através do painel de controle. 
 
 
@@ -1145,10 +1149,9 @@ projeto-todolist/
 
 ### \#\#\# 📜 Passo 2: O Script de Automação
 
-Copie o código abaixo para o seu arquivo `listadetarefas-painel.ps1`. Ele deve usar os nomes corretos dos projetos e é portátil.
+Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
 
-# Cole o código completo e corrigido do listadetarefas-painel.ps1 do guia anterior aqui.
-# Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
+Copie o código abaixo para o seu arquivo `listadetarefas-painel.ps1`. Ele deve usar os nomes corretos dos projetos e é portátil.
 
 ```powershell
 <#
