@@ -1,4 +1,4 @@
-# 🚀 Guia de Aula: Construindo um Ecossistema Full Stack Completo
+# 🚀 Construindo um Sistema Full Stack Completo v2
 
 ## 🗺️ Visão Geral da Arquitetura
 
@@ -1475,3 +1475,8 @@ while ($true) {
   * **🔄 Comunicação em Tempo Real:** Use `WebSockets` para sincronização automática entre os clientes.
   * **🧪 Testes Automatizados:** Escreva testes unitários e de integração para a API (`JUnit`/`Mockito`) e testes de UI para os frontends (`Jasmine`/`Karma`/`Espresso`).
   * **☁️ Deployment:** Empacote suas aplicações com **Docker** e faça o deploy em um provedor de nuvem como Heroku, AWS ou Google Cloud.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

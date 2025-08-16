@@ -44,3 +44,8 @@ $desktopWindowTitle = "Minha Lista de Tarefas (Desktop)"
 1.  Abra o terminal na pasta raiz do projeto.
 2.  Execute o script: `.\manage.ps1`
 3.  Teste as opções do menu (Iniciar API, Parar API, Iniciar TUDO, etc.) para garantir que o painel está gerenciando todos os componentes do ecossistema corretamente.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

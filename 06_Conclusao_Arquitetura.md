@@ -22,3 +22,8 @@
 
 4.  **Segurança:**
     * A API está totalmente aberta. Implementar segurança com Spring Security e JWT (JSON Web Tokens) para proteger os endpoints, exigindo autenticação para realizar operações de escrita (POST, PUT, DELETE). Os clientes precisariam ser adaptados para armazenar o token e enviá-lo a cada requisição.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

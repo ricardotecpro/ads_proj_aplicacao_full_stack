@@ -171,3 +171,8 @@ public class RestExceptionHandler {
 }
 ```
 * Agora, os blocos `try-catch` podem ser removidos do `TarefaController`.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

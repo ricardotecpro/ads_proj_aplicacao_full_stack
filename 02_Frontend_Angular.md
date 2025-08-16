@@ -106,4 +106,9 @@ export class TaskListComponent implements OnInit {
       this.tarefaService.updateTarefa(tarefa).subscribe();
   }
 }
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+
+
 ```

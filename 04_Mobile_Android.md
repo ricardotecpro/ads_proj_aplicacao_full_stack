@@ -84,3 +84,8 @@ fun TarefaItemSwipeable(
 }
 ```
 * O `ViewModel` não precisa de alterações, pois a View (`MainActivity`) continua chamando os mesmos métodos de negócio. A mudança é puramente na camada de UI.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

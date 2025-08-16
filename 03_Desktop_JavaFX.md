@@ -41,3 +41,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 * **Manutenção da Edição por Duplo Clique:** A implementação anterior, que usa `TextFieldTableCell` e `setOnEditCommit`, já é uma boa prática e deve ser mantida, pois oferece um atalho rápido para o usuário. O menu de contexto serve como uma alternativa mais explícita.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+
