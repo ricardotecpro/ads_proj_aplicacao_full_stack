@@ -1,4 +1,4 @@
-# 🚀 Construindo um Sistema Full Stack Completo v2
+# 🚀 Sistema Full Stack Completo v2
 
 ## 🗺️ Visão Geral da Arquitetura
 

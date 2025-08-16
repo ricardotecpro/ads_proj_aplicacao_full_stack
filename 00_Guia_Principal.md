@@ -1,4 +1,4 @@
-# 🏛️ Guia Arquitetural: Refatorando o Ecossistema Full Stack v3
+# 🏛️ Guia Arquitetural: Refatorando o Sistema Full Stack v3
 
 ## 🎯 Visão Geral e Objetivos da Refatoração
 Este guia assume o papel de uma revisão de arquitetura e engenharia de software sobre o projeto "Lista de Tarefas". O objetivo não é apenas construir, mas refatorar e aprimorar a solução existente, aplicando princípios de **Clean Code**, **SOLID** e padrões de design modernos como **DTOs (Data Transfer Objects)** e **MVVM (Model-View-ViewModel)**.
@@ -11,7 +11,7 @@ A arquitetura geral de serviços e clientes permanece, mas refinaremos as camada
 ```mermaid
 graph TD
     subgraph "🎛️ Gerenciamento e Automação"
-        Script["🛠️ Painel de Controle (manage.ps1)"]
+        Script["🛠️ Painel de Controle (listadetarefas-painel.ps1)"]
     end
 
     subgraph "📱 Clientes (Frontends)"
