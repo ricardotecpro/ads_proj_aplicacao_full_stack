@@ -16,7 +16,7 @@ Neste projeto, construiremos um sistema completo de "Lista de Tarefas" (To-Do Li
 ```mermaid
 graph TD
     subgraph "🎛️ Gerenciamento e Automação"
-        Script["🛠️ Painel de Controle (manage.ps1)"]
+        Script["🛠️ Painel de Controle (listadetarefas-painel.ps1)"]
     end
 
     subgraph "📱 Clientes (Frontends)"
@@ -531,18 +531,124 @@ listadetarefas-android/
 ### \#\#\# ⚙️ Passo 2: Configuração do Projeto
 
 1.  **Adicionar Dependências:** Abra o arquivo `app/build.gradle.kts` e adicione as dependências para Retrofit (cliente HTTP) e Gson (conversor JSON) na seção `dependencies { ... }`.
-2.  **Adicionar Permissões de Rede:** Abra o arquivo `app/src/main/AndroidManifest.xml` e adicione a permissão de internet e a permissão para tráfego de texto limpo (necessário para `localhost` em desenvolvimento).
 
-<!-- end list -->
+```kts
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    namespace = "br.com.curso.listadetarefas.android"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "br.com.curso.listadetarefas.android"
+        // --- CORREÇÃO AQUI ---
+        minSdk = 26 // Alterado de 24 para 26 para suportar ícones adaptativos
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose = true
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+    // --- Dependências Principais do AndroidX ---
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+
+    // --- Jetpack Compose ---
+    val composeBom = platform("androidx.compose:compose-bom:2024.02.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
+
+    // --- ViewModel com Compose ---
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    // --- Networking: Retrofit e OkHttp ---
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // --- Testes ---
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+```
+
+2.  **Adicionar Permissões de Rede:** Abra o arquivo `app/src/main/AndroidManifest.xml` e adicione a permissão de internet e a permissão para tráfego de texto limpo (necessário para `localhost` em desenvolvimento).
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<manifest ...>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        ...
-        android:usesCleartextTraffic="true"> ...
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.Listadetarefasandroid">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Listadetarefasandroid">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>
 ```
 
@@ -738,9 +844,6 @@ class TarefaViewModel : ViewModel() {
 **`MainActivity.kt`**
 
 ```kotlin
-// Cole o código completo da MainActivity do guia anterior aqui.
-// Ele contém todos os Composables para renderizar a tela: TarefaApp,
-// TarefaScreen, TarefaItem e EditTaskDialog.
 @file:OptIn(ExperimentalMaterial3Api::class)
 package br.com.curso.listadetarefas.android
 
@@ -753,13 +856,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+// --- REMOVER IMPORTS ANTIGOS ---
+// import androidx.compose.material.pullrefresh.PullRefreshIndicator
+// import androidx.compose.material.pullrefresh.pullRefresh
+// import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
+// --- ADICIONAR NOVO IMPORT DO MATERIAL 3 ---
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -778,19 +886,45 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun TarefaApp(tarefaViewModel: TarefaViewModel = viewModel()) {
     val uiState by tarefaViewModel.uiState.collectAsState()
     var tarefaParaEditar by remember { mutableStateOf<Tarefa?>(null) }
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = uiState.isLoading,
-        onRefresh = { tarefaViewModel.carregarTarefas() }
-    )
+
+    // --- MUDANÇA: Usar o rememberPullToRefreshState do Material 3 ---
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    // Lógica para lidar com a atualização
+    if (pullToRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            tarefaViewModel.carregarTarefas()
+        }
+    }
+
+    // Lógica para parar a animação de refresh quando o carregamento terminar
+    LaunchedEffect(uiState.isLoading) {
+        if (!uiState.isLoading) {
+            pullToRefreshState.endRefresh()
+        }
+    }
+
     Scaffold(topBar = { TopAppBar(title = { Text("To-Do List Android") }) }) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues).pullRefresh(pullRefreshState)) {
+        // --- MUDANÇA: Usar PullToRefreshBox ---
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .nestedScroll(pullToRefreshState.nestedScrollConnection)
+        ) {
             if (uiState.error != null) {
-                Text(text = "Erro: ${uiState.error}", modifier = Modifier.align(Alignment.Center), textAlign = TextAlign.Center)
+                Text(
+                    text = "Erro: ${uiState.error}",
+                    modifier = Modifier.align(Alignment.Center),
+                    textAlign = TextAlign.Center
+                )
             } else {
+                // O conteúdo da tela (a lista) vai aqui dentro
                 TarefaScreen(
                     tarefas = uiState.tarefas,
                     isLoading = uiState.isLoading,
@@ -800,11 +934,14 @@ fun TarefaApp(tarefaViewModel: TarefaViewModel = viewModel()) {
                     onTaskClick = { tarefa -> tarefaParaEditar = tarefa }
                 )
             }
-            PullRefreshIndicator(
-                refreshing = uiState.isLoading,
-                state = pullRefreshState,
+
+            // O indicador de refresh agora é o PullToRefreshContainer
+            PullToRefreshContainer(
+                state = pullToRefreshState,
                 modifier = Modifier.align(Alignment.TopCenter)
             )
+
+            // O diálogo de edição permanece o mesmo
             tarefaParaEditar?.let { tarefa ->
                 EditTaskDialog(
                     tarefa = tarefa,
@@ -819,12 +956,25 @@ fun TarefaApp(tarefaViewModel: TarefaViewModel = viewModel()) {
         }
     }
 }
+
 @Composable
-fun TarefaScreen(tarefas: List<Tarefa>, isLoading: Boolean, onAddTask: (String) -> Unit, onUpdateTask: (Tarefa) -> Unit, onDeleteTask: (Long?) -> Unit, onTaskClick: (Tarefa) -> Unit) {
+fun TarefaScreen(
+    tarefas: List<Tarefa>,
+    isLoading: Boolean,
+    onAddTask: (String) -> Unit,
+    onUpdateTask: (Tarefa) -> Unit,
+    onDeleteTask: (Long?) -> Unit,
+    onTaskClick: (Tarefa) -> Unit
+) {
     var textoNovaTarefa by remember { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            OutlinedTextField(value = textoNovaTarefa, onValueChange = { textoNovaTarefa = it }, label = { Text("Nova tarefa") }, modifier = Modifier.weight(1f))
+            OutlinedTextField(
+                value = textoNovaTarefa,
+                onValueChange = { textoNovaTarefa = it },
+                label = { Text("Nova tarefa") },
+                modifier = Modifier.weight(1f)
+            )
             Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = {
                 if (textoNovaTarefa.isNotBlank()) {
@@ -834,12 +984,17 @@ fun TarefaScreen(tarefas: List<Tarefa>, isLoading: Boolean, onAddTask: (String) 
             }) { Text("Add") }
         }
         Spacer(modifier = Modifier.height(16.dp))
+        // A lógica de exibição (loading, lista vazia, lista com itens) permanece a mesma
         if (isLoading && tarefas.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         } else if (tarefas.isEmpty()) {
-            Text(text = "Nenhuma tarefa encontrada.\nPuxe para atualizar ou adicione uma nova!", modifier = Modifier.fillMaxWidth().padding(top = 32.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "Nenhuma tarefa encontrada.\nPuxe para atualizar ou adicione uma nova!",
+                modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                textAlign = TextAlign.Center
+            )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(tarefas, key = { it.id!! }) { tarefa ->
@@ -855,13 +1010,27 @@ fun TarefaScreen(tarefas: List<Tarefa>, isLoading: Boolean, onAddTask: (String) 
         }
     }
 }
+
 @Composable
-fun TarefaItem(tarefa: Tarefa, onCheckedChange: (Boolean) -> Unit, onDeleteClick: () -> Unit, onTaskClick: () -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth().clickable { onTaskClick() }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+fun TarefaItem(
+    tarefa: Tarefa,
+    onCheckedChange: (Boolean) -> Unit,
+    onDeleteClick: () -> Unit,
+    onTaskClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onTaskClick() }
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Checkbox(checked = tarefa.concluida, onCheckedChange = onCheckedChange)
         Text(
             text = tarefa.descricao ?: "",
-            modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 8.dp),
             style = if (tarefa.concluida) LocalTextStyle.current.copy(textDecoration = TextDecoration.LineThrough) else LocalTextStyle.current
         )
         IconButton(onClick = onDeleteClick) {
@@ -869,18 +1038,72 @@ fun TarefaItem(tarefa: Tarefa, onCheckedChange: (Boolean) -> Unit, onDeleteClick
         }
     }
 }
+
 @Composable
 fun EditTaskDialog(tarefa: Tarefa, onDismiss: () -> Unit, onSave: (String) -> Unit) {
     var textoEditado by remember { mutableStateOf(tarefa.descricao ?: "") }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Editar Tarefa") },
-        text = { OutlinedTextField(value = textoEditado, onValueChange = { textoEditado = it }, label = { Text("Descrição") }, modifier = Modifier.fillMaxWidth()) },
+        text = {
+            OutlinedTextField(
+                value = textoEditado,
+                onValueChange = { textoEditado = it },
+                label = { Text("Descrição") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        },
         confirmButton = { Button(onClick = { if (textoEditado.isNotBlank()) { onSave(textoEditado) } }) { Text("Salvar") } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } }
     )
 }
 ```
+
+Passo 1: Garantir que a API está a ser executada e o túnel de rede está ativo
+Antes de iniciar a aplicação Android, é essencial que a API já esteja a ser executada.
+
+Use a opção 1 no seu painel de controlo para Iniciar a API.
+
+Confirme que o status da "API Backend" muda para RUNNING.
+
+Use a opção 7 para Iniciar a App Android. O script irá executar automaticamente o comando adb reverse, que cria a ponte de rede necessária.
+
+Passo 2: Permitir Tráfego de Rede no Android (Configuração Essencial)
+Por defeito, as versões mais recentes do Android bloqueiam a comunicação com endereços que não sejam seguros (não-HTTPS), como é o caso do nosso ambiente de desenvolvimento local. Precisamos de dizer explicitamente à aplicação que esta comunicação é permitida.
+
+1. Crie um novo ficheiro de configuração:
+
+Na estrutura de pastas do seu projeto Android, navegue para app/src/main/res.
+
+Crie uma nova pasta chamada xml.
+
+Dentro da pasta xml, crie um novo ficheiro chamado network_security_config.xml.
+
+2. Adicione o seguinte conteúdo a network_security_config.xml:
+
+XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
+3. Atualize o AndroidManifest.xml:
+
+Abra o ficheiro app/src/main/AndroidManifest.xml.
+
+Adicione a seguinte linha dentro da tag <application>:
+
+XML
+
+<application
+    ...
+    android:networkSecurityConfig="@xml/network_security_config">
+    ...
+</application>
+Depois de fazer estas alterações no projeto Android, compile e execute a aplicação novamente através do painel de controle. 
+
 
 ### \#\#\# ✅ Passo 6: Execução e Teste
 
@@ -893,7 +1116,7 @@ fun EditTaskDialog(tarefa: Tarefa, onDismiss: () -> Unit, onSave: (String) -> Un
 
 -----
 
-## 🤖 Módulo 5: Automação com PowerShell (`manage.ps1`)
+## 🤖 Módulo 5: Automação com PowerShell (`listadetarefas-painel.ps1`)
 
 **Objetivo:** Criar um painel de controle centralizado para gerenciar todo o ecossistema (iniciar/parar serviços) de forma rápida e fácil.
 
@@ -903,7 +1126,7 @@ fun EditTaskDialog(tarefa: Tarefa, onDismiss: () -> Unit, onSave: (String) -> Un
 
 ### \#\#\# 📂 Passo 1: Estrutura Final e Configuração
 
-1.  Na **pasta raiz** que contém todos os 4 projetos, crie o arquivo `manage.ps1`.
+1.  Na **pasta raiz** que contém todos os 4 projetos, crie o arquivo `listadetarefas-painel.ps1`.
 2.  **Habilite a Execução de Scripts:** Abra o PowerShell como **Administrador** e execute (apenas uma vez):
     ```powershell
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -917,124 +1140,278 @@ projeto-todolist/
 ├── listadetarefas-web/
 ├── listadetarefas-desktop/
 ├── listadetarefas-android/
-└── manage.ps1  # <- Script de automação
+└── listadetarefas-painel.ps1  # <- Script de automação
 ```
 
 ### \#\#\# 📜 Passo 2: O Script de Automação
 
-Copie o código abaixo para o seu arquivo `manage.ps1`. Ele está corrigido para usar os nomes corretos dos projetos e é portátil.
+Copie o código abaixo para o seu arquivo `listadetarefas-painel.ps1`. Ele deve usar os nomes corretos dos projetos e é portátil.
+
+# Cole o código completo e corrigido do listadetarefas-painel.ps1 do guia anterior aqui.
+# Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
 
 ```powershell
-# Cole o código completo e corrigido do manage.ps1 do guia anterior aqui.
-# Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
+<#
+.SYNOPSIS
+    Painel de controle para gerenciar o projeto To-Do List (API, Web, Desktop, Android).
+.DESCRIPTION
+    Este script PowerShell fornece um menu interativo para iniciar, parar, construir e depurar
+    os diferentes componentes do projeto. Ele detecta automaticamente o status de cada serviço
+    e torna o ambiente de desenvolvimento mais produtivo.
+.VERSION
+    9.4 - Corrigida a lógica de exibição de status no menu
+#>
+
+# Força o uso do protocolo TLS 1.2 para compatibilidade com downloads HTTPS (ex: Maven Wrapper).
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+#==============================================================================
 # --- CONFIGURAÇÕES GLOBAIS ---
+#==============================================================================
+
 $basePath = $PSScriptRoot
-$apiPath = "$basePath\listadetarefas-api"
-$webPath = "$basePath\listadetarefas-web"
-$desktopPath = "$basePath\listadetarefas-desktop"
-$androidPath = "$basePath\listadetarefas-android"
-$sdkPath = "C:\Users\$env:UserName\AppData\Local\Android\Sdk"
-$emulatorPath = "$sdkPath\emulator"
-$platformToolsPath = "$sdkPath\platform-tools"
+$apiPath = Join-Path $basePath "listadetarefas-api"
+$webPath = Join-Path $basePath "listadetarefas-web"
+$desktopPath = Join-Path $basePath "listadetarefas-desktop"
+$androidPath = Join-Path $basePath "listadetarefas-android"
+
+# --- VALIDAÇÃO DE CAMINHOS ---
+$projectPaths = @{ "API" = $apiPath; "Web" = $webPath; "Desktop" = $desktopPath; "Android" = $androidPath }
+$pathsAreValid = $true
+foreach ($project in $projectPaths.Keys) {
+    if (-not (Test-Path $projectPaths[$project])) {
+        Write-Host "ERRO: O diretório do projeto '$project' não foi encontrado em '$($projectPaths[$project])'" -ForegroundColor Red
+        $pathsAreValid = $false
+    }
+}
+if (-not $pathsAreValid) { Read-Host "`nVerifique os nomes das pastas. Pressione Enter para sair."; exit }
+
+# --- CONFIGURAÇÕES ANDROID ---
+$sdkPath = Join-Path $env:LOCALAPPDATA "Android\Sdk"
+$emulatorPath = Join-Path $sdkPath "emulator"
+$platformToolsPath = Join-Path $sdkPath "platform-tools"
 $emulatorName = "Medium_Phone"
-$apiJar = Get-Item "$apiPath\target\listadetarefas-api-*.jar"
-$desktopJar = Get-Item "$desktopPath\target\listadetarefas-desktop-*.jar"
+
+# --- CONFIGURAÇÕES DOS ARTEFATOS ---
+$apiJar = Join-Path $apiPath "target\listadetarefas-api-0.0.1-SNAPSHOT.jar"
+$desktopJar = Join-Path $desktopPath "target\listadetarefas-desktop-1.0-SNAPSHOT.jar"
 $androidPackage = "br.com.curso.listadetarefas.android"
 $desktopWindowTitle = "Minha Lista de Tarefas (Desktop)"
+$webUrl = "http://localhost:3000"
+
+#==============================================================================
 # --- FUNÇÕES AUXILIARES ---
+#==============================================================================
+
 function Get-ServiceStatus($serviceName) {
-    switch ($serviceName) {
-        'api'     { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue) { return "RUNNING" } else { return "STOPPED" } }
-        'web'     { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction SilentlyContinue) { return "RUNNING" } else { return "STOPPED" } }
-        'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle }) { return "RUNNING" } else { return "STOPPED" } }
-        'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } else { return "STOPPED" } }
-        'emulator'{ if ((& "$platformToolsPath\adb.exe" devices) -like "*device*") { return "RUNNING" } else { return "STOPPED" } }
+    try {
+        switch ($serviceName) {
+            'api' { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            'web' { if (Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction Stop | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" }) { return "RUNNING" } }
+            'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } }
+            'emulator' { if ((& "$platformToolsPath\adb.exe" devices) -like "*`tdevice*") { return "RUNNING" } }
+        }
     }
+    catch { return "STOPPED" }
+    return "STOPPED"
 }
-function Start-Service($serviceName) {
+
+function Wait-For-AdbDevice {
+    param([int]$TimeoutSeconds = 60)
+    if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') { return $true }
+    Write-Host "Aguardando um emulador/dispositivo ficar online..." -ForegroundColor Cyan
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    while ($stopwatch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
+        if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') {
+            Write-Host "`nDispositivo detectado." -ForegroundColor Green; $stopwatch.Stop(); Start-Sleep 1; return $true
+        }
+        Write-Host "." -NoNewline; Start-Sleep 2
+    }
+    $stopwatch.Stop(); Write-Host "`nTempo esgotado!" -ForegroundColor Red; return $false
+}
+
+function Ensure-BuildArtifact {
+    param([string]$ArtifactPath, [string]$ProjectPath, [string[]]$BuildCommand, [string]$BuildToolName)
+    if (!(Test-Path $ArtifactPath)) {
+        $choice = Read-Host "Artefato de build não encontrado em '$ArtifactPath'. Deseja construir agora? (s/n)"
+        if ($choice -eq 's') {
+            Push-Location $ProjectPath
+            Write-Host "Construindo em '$ProjectPath'..." -ForegroundColor Cyan
+            if ($BuildToolName -eq "mvnw.cmd" -and -not (Test-Path ".\pom.xml")) {
+                Write-Host "ERRO CRÍTICO: 'pom.xml' não encontrado em '$ProjectPath'." -ForegroundColor Red
+                Pop-Location; Start-Sleep 3; return $false
+            }
+            $executableCommand = $null
+            if ($BuildToolName -eq "ng") {
+                if (Get-Command ng -ErrorAction SilentlyContinue) { $executableCommand = "ng" } 
+                else { Write-Host "ERRO: O comando 'ng' (Angular CLI) não foi encontrado." -ForegroundColor Red }
+            }
+            else {
+                if ((Test-Path ".\$BuildToolName") -and (Test-Path ".\.mvn\wrapper")) { $executableCommand = ".\$BuildToolName" }
+                elseif (Get-Command mvn -ErrorAction SilentlyContinue) { $executableCommand = "mvn"; Write-Host "AVISO: Usando Maven global ('mvn')." -ForegroundColor Yellow }
+                else { Write-Host "ERRO: Nenhuma ferramenta de build do Maven foi encontrada." -ForegroundColor Red }
+            }
+            if (-not $executableCommand) { Pop-Location; Start-Sleep 2; return $false }
+            try { & $executableCommand $BuildCommand *>&1 | ForEach-Object { Write-Host $_ } } catch { Write-Host "`nERRO DE BUILD" -ForegroundColor Red; Pop-Location; Start-Sleep 2; return $false }
+            if ($LASTEXITCODE -ne 0) { Write-Host "`nERRO DE BUILD (código: $LASTEXITCODE)." -ForegroundColor Red; Pop-Location; Start-Sleep 2; return $false }
+            Pop-Location
+            if (!(Test-Path $ArtifactPath)) { Write-Host "Build concluído, mas o artefato '$ArtifactPath' não foi encontrado." -ForegroundColor Red; Start-Sleep 2; return $false }
+        }
+        else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return $false }
+    }
+    return $true
+}
+
+#==============================================================================
+# --- FUNÇÕES DE GERENCIAMENTO DE SERVIÇOS ---
+#==============================================================================
+
+function Start-Service($serviceName, [switch]$ColdBoot) {
+    if ($serviceName -in @('web', 'desktop', 'android')) {
+        if ((Get-ServiceStatus 'api') -eq 'STOPPED') {
+            $confirm = Read-Host "AVISO: A API está parada. Deseja iniciá-la primeiro? (s/n)"
+            if ($confirm -eq 's') { if (-not (Start-Service 'api')) { Write-Host "Falha ao iniciar API." -ForegroundColor Red; Start-Sleep 2; return $false } }
+            else { Write-Host "AVISO: '$serviceName' pode não funcionar sem a API." -ForegroundColor Yellow }
+        }
+    }
     Write-Host "`nTentando iniciar serviço: $serviceName..." -ForegroundColor Yellow
+    $commandExecuted = $false
     switch ($serviceName) {
         'api' {
-            if (!$apiJar.Exists) {
-                $choice = Read-Host "Arquivo JAR da API não encontrado. Deseja executar '.\mvnw.cmd clean package' agora? (s/n)"
-                if ($choice -eq 's') {
-                    Push-Location $apiPath; Write-Host "Construindo API..."; & ".\mvnw.cmd" clean package; Pop-Location
-                    $apiJar = Get-Item "$apiPath\target\listadetarefas-api-*.jar"
-                } else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return }
-            }
-            Start-Process java -ArgumentList "-jar", $apiJar.FullName
+            if (-not (Ensure-BuildArtifact -ArtifactPath $apiJar -ProjectPath $apiPath -BuildCommand @("clean", "package") -BuildToolName "mvnw.cmd")) { break }
+            Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title API-Backend && java -jar `"`"$apiJar`"`"`"" -WorkingDirectory $apiPath
+            $commandExecuted = $true
         }
         'web' {
-            Push-Location $webPath; Start-Process powershell -ArgumentList "-Command", "ng serve --open"; Pop-Location
+            if (-not (Ensure-BuildArtifact -ArtifactPath (Join-Path $webPath "dist") -ProjectPath $webPath -BuildCommand "build" -BuildToolName "ng")) { break }
+            Push-Location $webPath; Start-Process npx -ArgumentList "serve", "dist\listadetarefas-web\browser"; Pop-Location
+            $commandExecuted = $true
         }
         'desktop' {
-            if (!$desktopJar.Exists) {
-                $choice = Read-Host "Arquivo JAR do Desktop não encontrado. Deseja executar '.\mvnw.cmd clean package' agora? (s/n)"
-                if ($choice -eq 's') {
-                    Push-Location $desktopPath; Write-Host "Construindo App Desktop..."; & ".\mvnw.cmd" clean package; Pop-Location
-                    $desktopJar = Get-Item "$desktopPath\target\listadetarefas-desktop-*.jar"
-                } else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return }
-            }
-            Start-Process java -ArgumentList "-jar", $desktopJar.FullName
+            if (-not (Ensure-BuildArtifact -ArtifactPath $desktopJar -ProjectPath $desktopPath -BuildCommand @("clean", "package") -BuildToolName "mvnw.cmd")) { break }
+            Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title App-Desktop && java -jar `"`"$desktopJar`"`"`"" -WorkingDirectory $desktopPath
+            $commandExecuted = $true
         }
         'android' {
-            & "$platformToolsPath\adb.exe" shell am start -n "$androidPackage/$androidPackage.MainActivity"
+            if (-not (Wait-For-AdbDevice)) { Write-Host "Nenhum emulador/dispositivo detectado." -ForegroundColor Red; Start-Sleep 2; return $false }
+            Write-Host "Criando túnel de rede (adb reverse)..." -ForegroundColor Cyan
+            & "$platformToolsPath\adb.exe" reverse tcp:8080 tcp:8080
+            Write-Host "Iniciando App Android..."; & "$platformToolsPath\adb.exe" shell am start -n "$androidPackage/$androidPackage.MainActivity"
+            $commandExecuted = $true
         }
         'emulator' {
-            Push-Location $emulatorPath; Start-Process ".\emulator.exe" -ArgumentList "-avd", $emulatorName; Pop-Location
+            if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') { Write-Host "Emulador já parece estar rodando." -ForegroundColor Green; return $true }
+            $arguments = "-avd", $emulatorName
+            if ($ColdBoot) { $arguments += "-no-snapshot-load"; Write-Host "Iniciando emulador em modo Cold Boot..." -ForegroundColor Yellow }
+            Push-Location $emulatorPath; Start-Process ".\emulator.exe" -ArgumentList $arguments; Pop-Location
+            if (Wait-For-AdbDevice) { return $true } else { return $false }
         }
     }
-    Write-Host "Comando de início enviado para '$serviceName'." -ForegroundColor Green
-    Start-Sleep -Seconds 3
+    if (-not $commandExecuted -and $serviceName -ne 'emulator') { Write-Host "Falha no pré-requisito para '$serviceName'." -ForegroundColor Red; Start-Sleep 2; return $false }
+    Write-Host "Comando de início enviado. Verificando status..." -ForegroundColor Green
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    while ($stopwatch.Elapsed.TotalSeconds -lt 45) {
+        if ((Get-ServiceStatus $serviceName) -eq 'RUNNING') { Write-Host "`nServiço '$serviceName' parece estar rodando." -ForegroundColor Green; return $true }
+        Write-Host "." -NoNewline; Start-Sleep 2
+    }
+    if ($serviceName -ne 'emulator') { Write-Host "`nERRO: Serviço '$serviceName' não iniciou corretamente." -ForegroundColor Red; Start-Sleep 2 }
+    return $false
 }
+
 function Stop-Service($serviceName) {
     Write-Host "`nParando serviço: $serviceName..." -ForegroundColor Yellow
     switch ($serviceName) {
-        'api'     { $p = Get-NetTCPConnection -LocalPort 8080 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
-        'web'     { $p = Get-NetTCPConnection -LocalPort 4200 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
-        'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle } | Stop-Process -Force }
+        'api' { $p = Get-NetTCPConnection -LocalPort 8080 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
+        'web' { $p = Get-NetTCPConnection -LocalPort 3000 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
+        'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" } | Stop-Process -Force }
         'android' { & "$platformToolsPath\adb.exe" shell am force-stop $androidPackage }
-        'emulator'{ & "$platformToolsPath\adb.exe" emu kill }
+        'emulator' { & "$platformToolsPath\adb.exe" emu kill }
     }
+    Write-Host "Comando de parada enviado." -ForegroundColor Green; Start-Sleep 1
 }
-# --- LÓGICA PRINCIPAL (LOOP DO MENU) ---
-while ($true) {
+
+function Clean-Project {
+    Clear-Host; Write-Host "--- LIMPANDO CACHES E BUILDS ---" -ForegroundColor Yellow
+    Write-Host "`nLimpando API..." -ForegroundColor Cyan; Push-Location $apiPath; & ".\mvnw.cmd" clean; Pop-Location
+    Write-Host "`nLimpando Desktop..." -ForegroundColor Cyan; Push-Location $desktopPath; & ".\mvnw.cmd" clean; Pop-Location
+    Write-Host "`nLimpando Web..." -ForegroundColor Cyan
+    $angularCache = Join-Path $webPath ".angular"; $angularDist = Join-Path $webPath "dist"
+    if (Test-Path $angularCache) { Remove-Item -Recurse -Force $angularCache }
+    if (Test-Path $angularDist) { Remove-Item -Recurse -Force $angularDist }
+    Write-Host "`n--- LIMPEZA CONCLUÍDA ---" -ForegroundColor Green; Read-Host "Pressione Enter..."
+}
+
+#==============================================================================
+# --- FERRAMENTAS DE DEBUG (ANDROID) ---
+#==============================================================================
+
+function Invoke-AdbTool($toolName) {
+    if (-not (Wait-For-AdbDevice)) { Read-Host "`nOperação ADB cancelada. Pressione Enter..."; return }
+    Clear-Host; Write-Host "--- Ferramenta ADB: $toolName ---" -ForegroundColor Yellow
+    switch ($toolName) {
+        'reset' { & "$platformToolsPath\adb.exe" kill-server; & "$platformToolsPath\adb.exe" start-server }
+        'devices' { & "$platformToolsPath\adb.exe" devices }
+        'logcat' {
+            Write-Host "Iniciando logcat... Feche a nova janela para parar."
+            $command = "& `"$platformToolsPath\adb.exe`" logcat '*:S' `"$androidPackage:V`""
+            Start-Process powershell -ArgumentList "-NoExit", "-Command", $command; return
+        }
+        'reverse' {
+            & "$platformToolsPath\adb.exe" reverse tcp:8080 tcp:8080
+            Write-Host "Verificando túneis:"; & "$platformToolsPath\adb.exe" reverse --list
+        }
+    }
+    Read-Host "`nPressione Enter para voltar ao menu"
+}
+
+#==============================================================================
+# --- INTERFACE DO USUÁRIO (MENU) ---
+#==============================================================================
+
+function Show-Menu {
     Clear-Host
     Write-Host "=================================================" -ForegroundColor Cyan
-    Write-Host "     PAINEL DE CONTROLE - PROJETO TO-DO LIST     " -ForegroundColor Cyan
-    Write-Host "================================================="
-    Write-Host ""
-    $statusApi = Get-ServiceStatus 'api'
-    $statusWeb = Get-ServiceStatus 'web'
-    $statusDesktop = Get-ServiceStatus 'desktop'
-    $statusEmulator = Get-ServiceStatus 'emulator'
-    $statusAndroid = if ($statusEmulator -eq 'RUNNING') { Get-ServiceStatus 'android' } else { "OFFLINE" }
-    Write-Host "STATUS ATUAL:"
-    Write-Host "  Emulador Android:" -NoNewline; Write-Host " `t`t$statusEmulator" -ForegroundColor $(if ($statusEmulator -eq 'RUNNING') { 'Green' } else { 'Red' })
-    Write-Host "  API Backend (Porta 8080):" -NoNewline; Write-Host " `t$statusApi" -ForegroundColor $(if ($statusApi -eq 'RUNNING') { 'Green' } else { 'Red' })
-    Write-Host "  Servidor Web (Porta 4200):" -NoNewline; Write-Host "`t$statusWeb" -ForegroundColor $(if ($statusWeb -eq 'RUNNING') { 'Green' } else { 'Red' })
-    Write-Host "  App Desktop:" -NoNewline; Write-Host " `t`t`t$statusDesktop" -ForegroundColor $(if ($statusDesktop -eq 'RUNNING') { 'Green' } else { 'Red' })
-    Write-Host "  App Android (no emulador):" -NoNewline; Write-Host "`t$statusAndroid" -ForegroundColor $(if ($statusAndroid -eq 'RUNNING') { 'Green' } else { 'Red' })
-    Write-Host ""
-    Write-Host "--- OPÇÕES ---" -ForegroundColor Yellow
-    Write-Host " AMBIENTE ANDROID `t`t GERAL"
-    Write-Host "  A. Iniciar Emulador `t 9. Iniciar TUDO (exceto emulador)"
-    Write-Host "  B. Parar Emulador `t`t 10. Parar TUDO (exceto emulador)"
-    Write-Host "  G. Criar Túnel (adb reverse)`t Q. Sair"
-    Write-Host "---------------- `t----------------"
-    Write-Host " API Backend: `t`t App Web:"
-    Write-Host "  1. Iniciar API `t 3. Iniciar Web"
-    Write-Host "  2. Parar API `t`t 4. Parar Web"
-    Write-Host "---------------- `t----------------"
-    Write-Host " App Desktop: `t`t App Android:"
-    Write-Host "  5. Iniciar Desktop `t 7. Iniciar App"
-    Write-Host "  6. Parar Desktop `t`t 8. Parar App"
-    Write-Host ""
+    Write-Host "      PAINEL DE CONTROLE - PROJETO TO-DO LIST      " -ForegroundColor White
+    Write-Host "=================================================" -ForegroundColor Cyan
+    
+    # CORREÇÃO: A lógica de coleta de status foi separada para evitar erros de referência nula.
+    $emulatorStatus = Get-ServiceStatus 'emulator'
+    $statuses = @{
+        'Emulador'     = $emulatorStatus;
+        'API Backend'  = Get-ServiceStatus 'api';
+        'Servidor Web' = Get-ServiceStatus 'web';
+        'App Desktop'  = Get-ServiceStatus 'desktop';
+        'App Android'  = if ($emulatorStatus -eq 'RUNNING') { Get-ServiceStatus 'android' } else { "OFFLINE" }
+    }
+
+    Write-Host "`nSTATUS ATUAL:"
+    $statuses.GetEnumerator() | ForEach-Object {
+        $color = if ($_.Value -eq 'RUNNING') { 'Green' } else { 'Red' }
+        Write-Host ("  {0,-15}" -f $_.Name) -NoNewline; Write-Host $_.Value -ForegroundColor $color
+    }
+    Write-Host "`n--- OPÇÕES ---" -ForegroundColor Yellow
+    Write-Host " GERAL                     SERVIÇOS INDIVIDUAIS"
+    Write-Host "  9. Iniciar TUDO          1. Iniciar API          5. Iniciar Desktop"
+    Write-Host " 10. Parar TUDO             2. Parar API            6. Parar Desktop"
+    Write-Host "  L. Limpar Caches         3. Iniciar Web          7. Iniciar App Android"
+    Write-Host "                           4. Parar Web            8. Parar App Android"
+    Write-Host "-----------------------------------------------------------------"
+    Write-Host " FERRAMENTAS ANDROID                               NAVEGAÇÃO"
+    Write-Host "  A. Iniciar Emulador      D. Resetar Servidor ADB R. Atualizar Status"
+    Write-Host "  B. Parar Emulador        E. Listar Dispositivos  Q. Sair"
+    Write-Host "  H. Ligar (Cold Boot)     F. Ver Logs (logcat)"
+    Write-Host "  C. Abrir Web no Browser  G. Criar Túnel de Rede`n"
+}
+
+#==============================================================================
+# --- LÓGICA PRINCIPAL (LOOP DO MENU) ---
+#==============================================================================
+
+while ($true) {
+    Show-Menu
     $choice = Read-Host "Digite sua opção e pressione Enter"
-    switch ($choice) {
-        'a' { Start-Service 'emulator' }
-        'b' { Stop-Service 'emulator' }
-        'g' { & "$platformToolsPath\adb.exe" reverse tcp:8080 tcp:8080; Write-Host "Túnel adb reverse tcp:8080 tcp:8080 criado." -ForegroundColor Green; Start-Sleep 2 }
+    switch ($choice.ToLower()) {
         '1' { Start-Service 'api' }
         '2' { Stop-Service 'api' }
         '3' { Start-Service 'web' }
@@ -1043,10 +1420,30 @@ while ($true) {
         '6' { Stop-Service 'desktop' }
         '7' { Start-Service 'android' }
         '8' { Stop-Service 'android' }
-        '9' { Start-Service 'api'; Start-Service 'web'; Start-Service 'desktop'; Start-Service 'android' }
-        '10'{ Stop-Service 'api'; Stop-Service 'web'; Stop-Service 'desktop'; Stop-Service 'android' }
-        'q' { Write-Host "Saindo..."; break }
-        default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep -Seconds 2 }
+        '9' {
+            if ((Get-ServiceStatus 'emulator') -eq 'STOPPED') { if (-not (Start-Service 'emulator')) { Read-Host "Falha ao iniciar Emulador."; continue } }
+            if (-not (Start-Service 'api')) { Read-Host "Falha ao iniciar API."; continue }
+            Start-Service 'web'; Start-Service 'desktop'; Start-Service 'android'
+            Read-Host "`n--- SEQUÊNCIA CONCLUÍDA ---`nPressione Enter..."
+        }
+        '10' {
+            Stop-Service 'android'; Stop-Service 'desktop'; Stop-Service 'web'; Stop-Service 'api'
+            if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') {
+                if ((Read-Host "Deseja parar o Emulador também? (s/n)") -eq 's') { Stop-Service 'emulator' }
+            }
+        }
+        'a' { Start-Service 'emulator' }
+        'b' { Stop-Service 'emulator' }
+        'h' { Start-Service 'emulator' -ColdBoot }
+        'c' { if ((Get-ServiceStatus 'web') -eq 'RUNNING') { Start-Process $webUrl } else { Write-Host "Servidor web precisa estar rodando." -ForegroundColor Red; Start-Sleep 2 } }
+        'd' { Invoke-AdbTool 'reset' }
+        'e' { Invoke-AdbTool 'devices' }
+        'f' { Invoke-AdbTool 'logcat' }
+        'g' { Invoke-AdbTool 'reverse' }
+        'l' { Clean-Project }
+        'r' { }
+        'q' { break }
+        default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep 2 }
     }
 }
 ```
@@ -1054,7 +1451,7 @@ while ($true) {
 ### \#\#\# ✅ Passo 3: Teste do Painel de Controle
 
 1.  Abra o terminal na pasta raiz do projeto.
-2.  Execute o script: `.\manage.ps1`
+2.  Execute o script: `.\listadetarefas-painel.ps1`
 3.  Teste as opções do menu (Iniciar API, Parar API, Iniciar TUDO, etc.) para garantir que o painel está gerenciando todos os componentes do ecossistema corretamente.
 
 -----
