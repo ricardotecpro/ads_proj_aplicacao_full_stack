@@ -1,4 +1,12 @@
-# 🚀 Sistema Full Stack Completo 02
+# 🚀 Sistema Full Stack Completo
+
+
+# Exercícios
+
+* Lista de Tarefas 01 -- Link
+* Lista de Tarefas 02 -- Link
+* Lista de Tarefas 03 -- Link
+
 
 ## 🗺️ Visão Geral da Arquitetura
 
