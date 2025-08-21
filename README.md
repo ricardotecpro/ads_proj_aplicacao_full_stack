@@ -116,3 +116,7 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 5.  **Conecte as Pontas**: Construa projetos completos onde seu frontend consome a API que você mesmo construiu e que interage com um banco de dados que você modelou.
 6.  **Explore o Básico de DevOps**: Aprenda Git profundamente. Em seguida, aprenda o básico de Docker para empacotar seu projeto. Finalmente, faça o deploy de uma aplicação para um serviço de nuvem (como Vercel, Heroku ou AWS).
 7.  **Nunca Pare de Aprender**: A jornada é contínua.
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

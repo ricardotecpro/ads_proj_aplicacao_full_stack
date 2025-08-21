@@ -1,6 +1,5 @@
 # 🚀 Sistema Full Stack Completo
 
-
 # Exercícios
 
 * Lista de Tarefas 01 -- Link
