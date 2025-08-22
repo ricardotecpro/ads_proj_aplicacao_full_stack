@@ -130,8 +130,17 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 * **[Lista de Tarefa 04](/projetos/listadetarefas_04/)**: Lista de Tarefas 04
 * **[Lista de Tarefa 05](/projetos/listadetarefas_05/)**: Lista de Tarefas 05
 
+
 ---
 
-## 🔗 Tópicos | Principal.
+---
 
-* **[Tópicos - Principal](/Topicos_Remoto.md)**: Trilhas | Principal.
+## 🔗 Tópicos
+
+* **[Tópicos](/Topicos.md)**: Trilhas de Aprendizagem.
+
+---
+
+## ✉️ Contatos
+
+* **[Contatos](/Contatos.md)**: Contatos / Contacts
