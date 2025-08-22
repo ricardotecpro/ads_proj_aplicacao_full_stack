@@ -53,34 +53,34 @@ Este diagrama ilustra como as diferentes camadas se conectam em uma aplicação 
 
 ```mermaid
 graph TD;
-    A[👤 Usuário] --> B{Browser (Frontend)};
+    A[👤 Usuário] --> B{"Browser (Frontend)"};
     
     subgraph Frontend
         direction LR
         B -- Interage com --> HTML;
         B -- Interage com --> CSS;
-        B -- Interage com --> JS[JavaScript (React, Vue, Angular)];
+        B -- Interage com --> JS["JavaScript (React, Vue, Angular)"];
     end
 
-    B -- Requisição via API (REST/GraphQL) --> C{Servidor (Backend)};
+    B -- Requisição via API (REST/GraphQL) --> C{"Servidor (Backend)"};
     
     subgraph Backend
         direction LR
-        C -- Executa --> Linguagem[Linguagem (Node.js, Python, Go)];
-        Linguagem -- Usa --> Framework[Framework (Express, Django)];
+        C -- Executa --> Linguagem["Linguagem (Node.js, Python, Go)"];
+        Linguagem -- Usa --> Framework["Framework (Express, Django)"];
         Framework -- Processa --> Logica[Lógica de Negócios & Autenticação];
     end
 
     C -- Consulta/Grava --> D[(💾 Banco de Dados)];
     subgraph Banco de Dados
-        D -- Pode ser --> SQL[SQL (PostgreSQL)];
-        D -- Pode ser --> NoSQL[NoSQL (MongoDB)];
+        D -- Pode ser --> SQL["SQL (PostgreSQL)"];
+        D -- Pode ser --> NoSQL["NoSQL (MongoDB)"];
     end
 
     subgraph "Infraestrutura & DevOps"
         Stack(Toda a Aplicação) -- Versionada com --> Git;
         Stack -- Empacotada com --> Docker;
-        Stack -- Implantada na --> Nuvem[☁️ Nuvem (AWS, GCP, Azure)];
+        Stack -- Implantada na --> Nuvem["☁️ Nuvem (AWS, GCP, Azure)"];
     end
 
     C -- Resposta via API --> B
@@ -117,7 +117,6 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 6.  **Explore o Básico de DevOps**: Aprenda Git profundamente. Em seguida, aprenda o básico de Docker para empacotar seu projeto. Finalmente, faça o deploy de uma aplicação para um serviço de nuvem (como Vercel, Heroku ou AWS).
 7.  **Nunca Pare de Aprender**: A jornada é contínua.
 
-
 ---
 
 ## ⚒️ Projetos
@@ -130,17 +129,14 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 * **[Lista de Tarefa 04](/projetos/listadetarefas_04/)**: Lista de Tarefas 04
 * **[Lista de Tarefa 05](/projetos/listadetarefas_05/)**: Lista de Tarefas 05
 
-
----
-
 ---
 
 ## 🔗 Tópicos
 
-* **[Tópicos](/Topicos.md)**: Trilhas de Aprendizagem.
+* **[Tópicos](./Topicos.md)**: Trilhas de Aprendizagem.
 
 ---
 
 ## ✉️ Contatos
 
-* **[Contatos](/Contatos.md)**: Contatos / Contacts
+* **[Contatos](./Contatos.md)**: Contatos / Contacts
