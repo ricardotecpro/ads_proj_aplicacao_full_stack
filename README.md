@@ -119,24 +119,16 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 
 ---
 
-## ⚒️ Projetos
-
-* **[Projetos](/projetos/)**: Projetos: Lista de Tarefas (ToDoList)
----
-* **[Lista de Tarefa 01](/projetos/listadetarefas_01/)**: Lista de Tarefas 01
-* **[Lista de Tarefa 02](/projetos/listadetarefas_02/)**: Lista de Tarefas 02
-* **[Lista de Tarefa 03](/projetos/listadetarefas_03/)**: Lista de Tarefas 03 
-* **[Lista de Tarefa 04](/projetos/listadetarefas_04/)**: Lista de Tarefas 04
-* **[Lista de Tarefa 05](/projetos/listadetarefas_05/)**: Lista de Tarefas 05
-
----
-
 ## 🔗 Tópicos
 
-* **[Tópicos](./Topicos.md)**: Trilhas de Aprendizagem.
+* **[Tópicos](/topicos.md)**: Trilhas de Aprendizagem.
 
 ---
 
 ## ✉️ Contatos
 
-* **[Contatos](./Contatos.md)**: Contatos / Contacts
+* **[Contatos](https://ricardotecpro.github.io/contatos.html)**: Contatos / Contacts
+
+---
+
+### 📌 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
