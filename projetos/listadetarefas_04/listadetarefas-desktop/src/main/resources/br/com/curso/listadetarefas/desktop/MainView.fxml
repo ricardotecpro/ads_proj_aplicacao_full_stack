@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.curso.listadetarefas.desktop.MainViewController">
+   <top>
+      <Label text="Minha Lista de Tarefas (Desktop)" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <TableView fx:id="tabelaTarefas" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colunaConcluida" prefWidth="75.0" text="Concluída" />
+          <TableColumn fx:id="colunaDescricao" prefWidth="550.0" text="Descrição" />
+          <TableColumn fx:id="colunaAcoes" prefWidth="150.0" text="Ações" />
+        </columns>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="100.0" spacing="10.0" BorderPane.alignment="CENTER"> <children>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <TextField fx:id="campoNovaTarefa" onAction="#adicionarTarefa" prefWidth="500.0" promptText="Digite a descrição da nova tarefa..." />
+                  <Button fx:id="botaoAdicionar" mnemonicParsing="false" onAction="#adicionarTarefa" text="Adicionar Tarefa" />
+                  <Button fx:id="botaoAtualizar" mnemonicParsing="false" onAction="#atualizarListaDeTarefas" text="Atualizar Tarefas" />
+               </children>
+            </HBox>
+
+            <Label text="Dica: Dê um duplo clique na descrição de uma tarefa para editá-la." textFill="#868686">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+
+            <Label fx:id="labelStatus" text="Status: Pronta." />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+</BorderPane>

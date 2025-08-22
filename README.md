@@ -116,7 +116,22 @@ Não há um caminho único, mas uma trilha comum e eficaz é:
 5.  **Conecte as Pontas**: Construa projetos completos onde seu frontend consome a API que você mesmo construiu e que interage com um banco de dados que você modelou.
 6.  **Explore o Básico de DevOps**: Aprenda Git profundamente. Em seguida, aprenda o básico de Docker para empacotar seu projeto. Finalmente, faça o deploy de uma aplicação para um serviço de nuvem (como Vercel, Heroku ou AWS).
 7.  **Nunca Pare de Aprender**: A jornada é contínua.
+
+
 ---
 
-### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+## ⚒️ Projetos
 
+* **[Projetos](/projetos/)**: Projetos: Lista de Tarefas (ToDoList)
+---
+* **[Lista de Tarefa 01](/projetos/listadetarefas_01/)**: Lista de Tarefas 01
+* **[Lista de Tarefa 02](/projetos/listadetarefas_02/)**: Lista de Tarefas 02
+* **[Lista de Tarefa 03](/projetos/listadetarefas_03/)**: Lista de Tarefas 03 
+* **[Lista de Tarefa 04](/projetos/listadetarefas_04/)**: Lista de Tarefas 04
+* **[Lista de Tarefa 05](/projetos/listadetarefas_05/)**: Lista de Tarefas 05
+
+---
+
+## 🔗 Tópicos | Principal.
+
+* **[Tópicos - Principal](/Topicos_Remoto.md)**: Trilhas | Principal.
