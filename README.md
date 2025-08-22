@@ -1,4 +1,4 @@
-# 🥞 Desenvolvedor Full Stack: Navegando por Todas as Camadas
+# 🥞 Projetos Full Stack: Navegando por Todas as Camadas
 
 O termo **Full Stack** se refere a um perfil de desenvolvedor de software que possui conhecimento e habilidade para trabalhar em todas as camadas (*stack*) de uma aplicação, desde o **frontend (client-side)** até o **backend (server-side)**, incluindo o banco de dados e, cada vez mais, noções de infraestrutura e DevOps.
 
