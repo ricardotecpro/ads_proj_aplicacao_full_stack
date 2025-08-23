@@ -658,34 +658,87 @@ Abra `src/app/components/task-list/task-list.component.html` e substitua seu con
 Por fim, adicione um pouco de CSS em `src/app/components/task-list/task-list.component.css` para deixar a aplicação mais agradável.
 
 ```css
-.container {
-  max-width: 600px;
-  margin: 2rem auto;
-  font-family: sans-serif;
-  padding: 1rem;
+/* ========================================
+  Váriaveis de Cores para fácil customização
+  ========================================
+*/
+:host {
+  --cor-primaria: #007bff;
+  --cor-sucesso: #28a745;
+  --cor-perigo: #dc3545;
+  --cor-fundo: #f4f7f6;
+  --cor-container: #ffffff;
+  --cor-texto: #333;
+  --cor-texto-claro: #888;
+  --cor-borda: #dee2e6;
+  --sombra-caixa: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* ========================================
+  Estilo do Container Principal
+  ========================================
+*/
+.container {
+  max-width: 650px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--cor-container);
+  border-radius: 12px;
+  box-shadow: var(--sombra-caixa);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: var(--cor-texto);
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+/* ========================================
+  Formulário para Adicionar Tarefas
+  ========================================
+*/
 .form-add {
   display: flex;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.form-add input {
+.form-add input[type="text"] {
   flex-grow: 1;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px 0 0 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.form-add input[type="text"]:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
 }
 
 .form-add button {
-  padding: 0.8rem 1.2rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
   border: none;
-  background-color: #007bff;
+  background-color: var(--cor-primaria);
   color: white;
   cursor: pointer;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 8px 8px 0;
+  transition: background-color 0.2s ease;
 }
 
+.form-add button:hover {
+  background-color: #0056b3;
+}
+
+/* ========================================
+  Lista de Tarefas
+  ========================================
+*/
 .task-list {
   list-style: none;
   padding: 0;
@@ -694,32 +747,77 @@ Por fim, adicione um pouco de CSS em `src/app/components/task-list/task-list.com
 .task-list li {
   display: flex;
   align-items: center;
-  padding: 0.8rem;
-  border-bottom: 1px solid #eee;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
 }
 
 .task-list li:last-child {
   border-bottom: none;
 }
 
-.task-list li span {
-  flex-grow: 1;
-  margin-left: 1rem;
+.task-list li:hover {
+  background-color: #fafafa;
 }
 
+/* Checkbox */
+.task-list input[type="checkbox"] {
+  margin-right: 1rem;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+/* Span com o texto da tarefa e campo de edição */
+.task-list li span,
+.task-list li .edit-input {
+  flex-grow: 1;
+  color: var(--cor-texto);
+  transition: color 0.3s ease;
+}
+
+.task-list li span {
+  cursor: pointer;
+}
+
+/* Estilo para tarefas concluídas */
 .task-list li span.completed {
   text-decoration: line-through;
-  color: #888;
+  color: var(--cor-texto-claro);
 }
 
+/* Campo de input para edição */
+.edit-input {
+  padding: 0.4rem;
+  font-size: 1rem;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 4px;
+  outline: none;
+}
+
+
+/* Botão de Deletar */
 .delete-btn {
   border: none;
   background: transparent;
-  color: #ff4d4d;
+  color: #ccc;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+  opacity: 0.5;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
+
+.task-list li:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  color: var(--cor-perigo);
+}
+
 ```
 
 ## Etapa 4: Rodando a Aplicação Completa\!
@@ -729,28 +827,13 @@ Chegou a hora de ver tudo funcionando junto.
 1.  **Garanta que sua API Spring Boot esteja rodando.**
 2.  Abra um terminal na pasta do projeto Angular (`lista-tarefas-web`) e execute:
 
-<!-- end list -->
+
 
 ```bash
 ng serve --open
 ```
 
 Seu navegador abrirá em `http://localhost:4200` e você poderá interagir com sua aplicação de lista de tarefas\!
-
------
-
-## Troubleshooting: Erros de Compilação
-
-> **Erro Comum:** `Property 'addTarefa' does not exist on type 'TarefaService'.`
->
-> **Causa:** Este erro geralmente ocorre quando o componente (`TaskListComponent`) tenta chamar um método que não foi definido ou foi escrito incorretamente no serviço (`TarefaService`).
->
-> **Solução:** Verifique o arquivo `src/app/services/tarefa.service.ts` e garanta que ele contenha o código completo e correto para todos os métodos CRUD, conforme mostrado na **Etapa 2 (Opção A ou B)** deste guia. Qualquer erro de digitação ou método ausente causará essa falha na compilação.
-
-
----
-
-### [ricardotecpro.github.io](https://ricardotecpro.github.io/)
 
 
 
@@ -774,52 +857,74 @@ Vamos criar um novo projeto para nossa aplicação desktop. Manteremos os projet
 
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
-    <project xmlns="http://maven.apache.org/POM/4.0.0"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-        <groupId>br.com.curso</groupId>
-        <artifactId>lista-tarefas-desktop</artifactId>
-        <version>1.0-SNAPSHOT</version>
+    <groupId>br.com.curso</groupId>
+    <artifactId>listadetarefas-desktop</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-        <properties>
-            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-            <maven.compiler.source>17</maven.compiler.source> <maven.compiler.target>17</maven.compiler.target>
-            <javafx.version>17.0.6</javafx.version> </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <javafx.version>17.0.6</javafx.version>
+    </properties>
 
-        <dependencies>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-controls</artifactId>
-                <version>${javafx.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-fxml</artifactId>
-                <version>${javafx.version}</version>
-            </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+    </dependencies>
 
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.15.2</version> </dependency>
-        </dependencies>
-
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <source>17</source>
-                        <target>17</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </project>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>br.com.curso.listadetarefas.desktop.Launcher</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
     ```
 
     Após salvar o `pom.xml`, sua IDE irá pedir para "carregar as mudanças do Maven". Aceite para que ele baixe as dependências que acabamos de declarar.
@@ -832,32 +937,29 @@ Vamos criar um novo projeto para nossa aplicação desktop. Manteremos os projet
     **Código para `MainApp.java`:**
 
     ```java
-    package br.com.curso.lista-tarefas.desktop;
+    package br.com.curso.listadetarefas.desktop;
 
-    import javafx.application.Application;
-    import javafx.scene.Scene;
-    import javafx.scene.control.Label;
-    import javafx.scene.layout.StackPane;
-    import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    public class MainApp extends Application {
+import java.io.IOException;
 
-        @Override
-        public void start(Stage primaryStage) {
-            // Por enquanto, vamos apenas criar uma janela simples para testar
-            Label label = new Label("Olá, Mundo do Desktop!");
-            StackPane root = new StackPane(label);
-            Scene scene = new Scene(root, 400, 300);
-
-            primaryStage.setTitle("Minha Lista de Tarefas (Desktop)");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }
-
-        public static void main(String[] args) {
-            launch(args);
-        }
+public class MainApp extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("MainView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setTitle("Minha Lista de Tarefas (Desktop)");
+        stage.setScene(scene);
+        stage.show();
     }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
     ```
 
 4.  **Execute e Verifique:**
@@ -938,26 +1040,62 @@ O seu arquivo `MainView.fxml` agora conterá um código XML parecido com este:
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.curso.lista-tarefas.desktop.MainViewController">
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
-   <children>
-      <Label text="Minha Lista de Tarefas" />
-      <TableView fx:id="tabelaTarefas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-      <HBox spacing="10.0">
-         <children>
-            <TextField fx:id="campoDescricao" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#onAdicionarAction" text="Adicionar" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.curso.listadetarefas.desktop.MainViewController">
+   <top>
+      <Label text="Minha Lista de Tarefas (Desktop)" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <TableView fx:id="tabelaTarefas" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colunaConcluida" prefWidth="75.0" text="Concluída" />
+          <TableColumn fx:id="colunaDescricao" prefWidth="550.0" text="Descrição" />
+          <TableColumn fx:id="colunaAcoes" prefWidth="150.0" text="Ações" />
+        </columns>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="100.0" spacing="10.0" BorderPane.alignment="CENTER"> <children>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <TextField fx:id="campoNovaTarefa" onAction="#adicionarTarefa" prefWidth="500.0" promptText="Digite a descrição da nova tarefa..." />
+                  <Button fx:id="botaoAdicionar" mnemonicParsing="false" onAction="#adicionarTarefa" text="Adicionar Tarefa" />
+                  <Button fx:id="botaoAtualizar" mnemonicParsing="false" onAction="#atualizarListaDeTarefas" text="Atualizar Tarefas" />
+               </children>
+            </HBox>
+
+            <Label text="Dica: Dê um duplo clique na descrição de uma tarefa para editá-la." textFill="#868686">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+
+            <Label fx:id="labelStatus" text="Status: Pronta." />
          </children>
-      </HBox>
-   </children>
-</VBox>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+</BorderPane>
 ```
 
 -----
@@ -1046,37 +1184,179 @@ Este código inicial fará a "ponte" entre o FXML e o Java. Ele terá variáveis
 Crie a classe `MainViewController.java` com o seguinte conteúdo:
 
 ```java
-package br.com.curso.lista-tarefas.desktop;
+package br.com.curso.listadetarefas.desktop;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell; // 1. IMPORTE A CLASSE NECESSÁRIA
+import javafx.util.Callback;
 
-// Não precisamos da classe Tarefa ainda, mas logo iremos.
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class MainViewController {
+public class MainViewController implements Initializable {
 
-    // A anotação @FXML é crucial. Ela diz ao JavaFX para injetar
-    // o componente do FXML cujo fx:id corresponde ao nome da variável.
+    // ... (Declarações FXML permanecem as mesmas) ...
+    @FXML private TableView<Tarefa> tabelaTarefas;
+    @FXML private TableColumn<Tarefa, Boolean> colunaConcluida;
+    @FXML private TableColumn<Tarefa, String> colunaDescricao;
+    @FXML private TableColumn<Tarefa, Void> colunaAcoes;
+    @FXML private TextField campoNovaTarefa;
+    @FXML private Button botaoAdicionar;
+    @FXML private Label labelStatus;
+    @FXML private Button botaoAtualizar;
+
+    private final TarefaApiService tarefaApiService = new TarefaApiService();
+    private final ObservableList<Tarefa> tarefasObservaveis = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Vincula a lista observável à tabela.
+        tabelaTarefas.setItems(tarefasObservaveis);
+
+        // 2. TORNA A TABELA EDITÁVEL
+        tabelaTarefas.setEditable(true);
+
+        // Configura como a coluna de descrição irá obter os dados.
+        colunaDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+
+        // 3. CONFIGURA A CÉLULA DA DESCRIÇÃO PARA SER UM CAMPO DE TEXTO EDITÁVEL
+        colunaDescricao.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        // 4. DEFINE O QUE ACONTECE QUANDO A EDIÇÃO É CONCLUÍDA (ex: ao pressionar Enter)
+        colunaDescricao.setOnEditCommit(event -> {
+            // Obtém a tarefa que foi editada
+            Tarefa tarefaEditada = event.getRowValue();
+            // Define a nova descrição
+            tarefaEditada.setDescricao(event.getNewValue());
+            // Chama o método para enviar a atualização para a API
+            atualizarTarefa(tarefaEditada);
+        });
+
+        // Configura a coluna "Concluída" para renderizar um CheckBox.
+        colunaConcluida.setCellValueFactory(new PropertyValueFactory<>("concluida"));
+        colunaConcluida.setCellFactory(tc -> new TableCell<>() {
+            private final CheckBox checkBox = new CheckBox();
+            {
+                checkBox.setOnAction(event -> {
+                    Tarefa tarefa = getTableRow().getItem();
+                    if (tarefa != null) {
+                        tarefa.setConcluida(checkBox.isSelected());
+                        atualizarTarefa(tarefa);
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) { setGraphic(null); }
+                else {
+                    checkBox.setSelected(item);
+                    setGraphic(checkBox);
+                }
+            }
+        });
+
+        // Configura a coluna "Ações" para renderizar um botão "Deletar".
+        Callback<TableColumn<Tarefa, Void>, TableCell<Tarefa, Void>> cellFactory = param -> new TableCell<>() {
+            private final Button btnDeletar = new Button("Deletar");
+            {
+                btnDeletar.setOnAction(event -> {
+                    Tarefa tarefa = getTableView().getItems().get(getIndex());
+                    deletarTarefa(tarefa);
+                });
+            }
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) { setGraphic(null); }
+                else { setGraphic(btnDeletar); }
+            }
+        };
+        colunaAcoes.setCellFactory(cellFactory);
+
+        // Carrega os dados da API ao iniciar a tela.
+        carregarTarefas();
+    }
+
+    // ... (O restante dos métodos permanece o mesmo) ...
     @FXML
-    private TableView<?> tabelaTarefas; // Usamos <?> por enquanto, pois ainda não definimos a classe Tarefa
+    private void atualizarListaDeTarefas() {
+        carregarTarefas();
+    }
 
     @FXML
-    private TextField campoDescricao;
+    private void adicionarTarefa() {
+        String descricao = campoNovaTarefa.getText();
+        if (descricao == null || descricao.trim().isEmpty()) {
+            labelStatus.setText("Status: Descrição não pode ser vazia.");
+            return;
+        }
 
-    /**
-     * Este método é chamado automaticamente quando o botão "Adicionar" é clicado,
-     * pois o definimos no FXML com onAction="#onAdicionarAction".
-     */
-    @FXML
-    private void onAdicionarAction() {
-        // Por enquanto, vamos apenas imprimir no console para testar se a conexão funcionou.
-        String descricao = campoDescricao.getText();
-        System.out.println("Botão Adicionar Clicado!");
-        System.out.println("Texto digitado: " + descricao);
-        
-        // Limpa o campo de texto após clicar no botão
-        campoDescricao.clear();
+        Tarefa novaTarefa = new Tarefa();
+        novaTarefa.setDescricao(descricao.trim());
+        novaTarefa.setConcluida(false);
+
+        executarEmBackground(() -> {
+            Tarefa tarefaCriada = tarefaApiService.adicionarTarefa(novaTarefa);
+            if (tarefaCriada != null) {
+                Platform.runLater(() -> {
+                    tarefasObservaveis.add(tarefaCriada);
+                    campoNovaTarefa.clear();
+                    labelStatus.setText("Status: Tarefa adicionada com sucesso!");
+                });
+            }
+        });
+    }
+
+    private void carregarTarefas() {
+        executarEmBackground(() -> {
+            List<Tarefa> tarefasDaApi = tarefaApiService.listarTarefas();
+            Platform.runLater(() -> {
+                tarefasObservaveis.setAll(tarefasDaApi);
+                labelStatus.setText("Status: Tarefas carregadas.");
+            });
+        });
+    }
+
+    private void atualizarTarefa(Tarefa tarefa) {
+        executarEmBackground(() -> {
+            tarefaApiService.atualizarTarefa(tarefa);
+            Platform.runLater(() -> labelStatus.setText("Status: Tarefa '" + tarefa.getDescricao() + "' atualizada."));
+        });
+    }
+
+    private void deletarTarefa(Tarefa tarefa) {
+        executarEmBackground(() -> {
+            tarefaApiService.deletarTarefa(tarefa.getId());
+            Platform.runLater(() -> {
+                tarefasObservaveis.remove(tarefa);
+                labelStatus.setText("Status: Tarefa deletada.");
+            });
+        });
+    }
+
+    private void executarEmBackground(Runnable acao) {
+        labelStatus.setText("Status: Processando...");
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                acao.run();
+                return null;
+            }
+        };
+        task.setOnFailed(e -> {
+            task.getException().printStackTrace();
+            Platform.runLater(() -> labelStatus.setText("Status: Erro na operação. Veja o console."));
+        });
+        new Thread(task).start();
     }
 }
 ```
@@ -1090,48 +1370,27 @@ Agora, precisamos dizer à nossa aplicação para, em vez de mostrar um simples 
 Abra o arquivo `MainApp.java` e **substitua todo o seu conteúdo** por este:
 
 ```java
-package br.com.curso.lista-tarefas.desktop;
+package br.com.curso.listadetarefas.desktop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class MainApp extends Application {
-
     @Override
-    public void start(Stage primaryStage) {
-        try {
-            // 1. Encontra o arquivo FXML dentro do projeto
-            // O getResource procura no classpath, que inclui a pasta 'resources'
-            URL fxmlUrl = getClass().getResource("MainView.fxml");
-            if (fxmlUrl == null) {
-                throw new IOException("Não foi possível encontrar o arquivo FXML. Verifique o caminho.");
-            }
-            
-            // 2. Carrega o arquivo FXML, o que cria a árvore de componentes visuais
-            Parent root = FXMLLoader.load(fxmlUrl);
-
-            // 3. Cria a cena com os componentes carregados do FXML
-            Scene scene = new Scene(root, 600, 400);
-
-            // 4. Configura e exibe a janela principal (o "Palco")
-            primaryStage.setTitle("Minha Lista de Tarefas (Desktop)");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            // Em uma aplicação real, mostraríamos uma caixa de diálogo de erro para o usuário.
-            e.printStackTrace();
-        }
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("MainView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setTitle("Minha Lista de Tarefas (Desktop)");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
 ```
@@ -1247,10 +1506,10 @@ Assim como no backend e no frontend web, nosso aplicativo desktop precisa de uma
 **Código para `Tarefa.java`:**
 
 ```java
-package br.com.curso.todolist.desktop;
+package br.com.curso.listadetarefas.desktop;
 
-// A anotação @JsonIgnoreProperties é da biblioteca Jackson.
-// Ela é útil para ignorar campos do JSON que não existam na nossa classe, evitando erros.
+// A anotação @JsonIgnoreProperties(ignoreUnknown = true) é útil para
+// evitar erros caso o JSON da API tenha campos que não existem nesta classe.
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1259,44 +1518,13 @@ public class Tarefa {
     private String descricao;
     private boolean concluida;
 
-    // Construtores, Getters e Setters são necessários para que
-    // o JavaFX (TableView) e o Jackson (JSON) possam acessar os dados.
-
-    public Tarefa() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public boolean isConcluida() {
-        return concluida;
-    }
-
-    public void setConcluida(boolean concluida) {
-        this.concluida = concluida;
-    }
-
-    @Override
-    public String toString() {
-        return "Tarefa{" +
-                "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", concluida=" + concluida +
-                '}';
-    }
+    // Getters e Setters são necessários para o JavaFX TableView e para o Jackson.
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public boolean isConcluida() { return concluida; }
+    public void setConcluida(boolean concluida) { this.concluida = concluida; }
 }
 ```
 
@@ -1309,11 +1537,11 @@ Para manter nosso Controller limpo e organizado, vamos criar uma classe dedicada
 **Código para `TarefaApiService.java`:**
 
 ```java
-package br.com.curso.todolist.desktop;
+// Ele contém os métodos: listarTarefas, adicionarTarefa, atualizarTarefa e deletarTarefa.
+package br.com.curso.listadetarefas.desktop;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -1323,46 +1551,66 @@ import java.util.Collections;
 import java.util.List;
 
 public class TarefaApiService {
-
-    // Cliente HTTP para fazer as requisições. É eficiente reutilizá-lo.
     private final HttpClient client = HttpClient.newHttpClient();
-    // ObjectMapper para converter JSON em objetos Java e vice-versa.
     private final ObjectMapper objectMapper = new ObjectMapper();
-    // URL base da nossa API que está rodando no Spring Boot.
     private final String API_URL = "http://localhost:8080/api/tarefas";
 
-    /**
-     * Busca a lista de todas as tarefas na API.
-     * @return uma Lista de Tarefas ou uma lista vazia em caso de erro.
-     */
     public List<Tarefa> listarTarefas() {
-        // 1. Cria a requisição GET
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(API_URL))
-                .GET()
-                .build();
-
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(API_URL)).GET().build();
         try {
-            // 2. Envia a requisição e recebe a resposta
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // 3. Verifica se a resposta foi bem-sucedida (código 2xx)
             if (response.statusCode() == 200) {
-                // 4. Converte o corpo da resposta (que é um JSON) em uma Lista de Tarefas
-                return objectMapper.readValue(response.body(), new TypeReference<List<Tarefa>>() {});
-            } else {
-                System.err.println("Erro ao buscar tarefas: " + response.statusCode());
+                return objectMapper.readValue(response.body(), new TypeReference<>() {});
             }
-
         } catch (IOException | InterruptedException e) {
-            System.err.println("Erro de conexão ou ao processar a requisição: " + e.getMessage());
-            e.printStackTrace();
+            e.printStackTrace(); // Em uma aplicação real, trate este erro de forma mais elegante.
         }
-
-        return Collections.emptyList(); // Retorna lista vazia se algo der errado
+        return Collections.emptyList();
     }
 
-    // Futuramente, adicionaremos aqui os métodos para adicionar, atualizar e deletar.
+    public Tarefa adicionarTarefa(Tarefa novaTarefa) {
+        try {
+            String jsonBody = objectMapper.writeValueAsString(novaTarefa);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(API_URL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200 || response.statusCode() == 201) {
+                return objectMapper.readValue(response.body(), Tarefa.class);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void atualizarTarefa(Tarefa tarefa) {
+        try {
+            String jsonBody = objectMapper.writeValueAsString(tarefa);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(API_URL + "/" + tarefa.getId()))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletarTarefa(Long id) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(API_URL + "/" + id))
+                    .DELETE()
+                    .build();
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
@@ -1378,8 +1626,6 @@ Com estas duas classes criadas (`Tarefa.java` e `TarefaApiService.java`), temos 
 
 ---
 
-Com certeza\! Agora vamos juntar tudo. Vamos fazer o nosso `Controller` usar o `TarefaApiService` para buscar os dados da API e exibi-los na tabela que criamos.
-
 Esta é a etapa em que a aplicação desktop finalmente se torna um cliente real da nossa API.
 
 -----
@@ -1393,84 +1639,179 @@ Vamos modificar o `MainViewController` para que ele configure a tabela e chame o
 Abra o arquivo `src/main/java/br/com/curso/todolist/desktop/MainViewController.java` e **substitua todo o seu conteúdo** por este código mais completo:
 
 ```java
-package br.com.curso.todolist.desktop;
+package br.com.curso.listadetarefas.desktop;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell; // 1. IMPORTE A CLASSE NECESSÁRIA
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-// Implementamos a interface Initializable para usar o método initialize()
 public class MainViewController implements Initializable {
 
-    // Instância do nosso serviço de API
+    // ... (Declarações FXML permanecem as mesmas) ...
+    @FXML private TableView<Tarefa> tabelaTarefas;
+    @FXML private TableColumn<Tarefa, Boolean> colunaConcluida;
+    @FXML private TableColumn<Tarefa, String> colunaDescricao;
+    @FXML private TableColumn<Tarefa, Void> colunaAcoes;
+    @FXML private TextField campoNovaTarefa;
+    @FXML private Button botaoAdicionar;
+    @FXML private Label labelStatus;
+    @FXML private Button botaoAtualizar;
+
     private final TarefaApiService tarefaApiService = new TarefaApiService();
+    private final ObservableList<Tarefa> tarefasObservaveis = FXCollections.observableArrayList();
 
-    // --- Componentes da View (FXML) ---
-    @FXML
-    private TableView<Tarefa> tabelaTarefas; // Agora a tabela é do tipo Tarefa
-
-    @FXML
-    private TableColumn<Tarefa, Long> colunaId; // Coluna para o ID
-
-    @FXML
-    private TableColumn<Tarefa, String> colunaDescricao; // Coluna para a Descrição
-
-    @FXML
-    private TableColumn<Tarefa, Boolean> colunaConcluida; // Coluna para o Status
-
-    @FXML
-    private TextField campoDescricao;
-
-    /**
-     * O método initialize() é chamado automaticamente pelo JavaFX
-     * depois que o arquivo FXML é carregado. É o lugar perfeito
-     * para configurar nossa tabela e carregar os dados iniciais.
-     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 1. Configura as colunas da tabela:
-        // Diz a cada coluna de onde ela deve "puxar" o valor de dentro de um objeto Tarefa.
-        // O nome "id", "descricao", "concluida" DEVE corresponder exatamente
-        // ao nome dos atributos na classe Tarefa.java.
-        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colunaDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        colunaConcluida.setCellValueFactory(new PropertyValueFactory<>("concluida"));
+        // Vincula a lista observável à tabela.
+        tabelaTarefas.setItems(tarefasObservaveis);
 
-        // 2. Carrega os dados da API
-        carregarDadosDaTabela();
+        // 2. TORNA A TABELA EDITÁVEL
+        tabelaTarefas.setEditable(true);
+
+        // Configura como a coluna de descrição irá obter os dados.
+        colunaDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+
+        // 3. CONFIGURA A CÉLULA DA DESCRIÇÃO PARA SER UM CAMPO DE TEXTO EDITÁVEL
+        colunaDescricao.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        // 4. DEFINE O QUE ACONTECE QUANDO A EDIÇÃO É CONCLUÍDA (ex: ao pressionar Enter)
+        colunaDescricao.setOnEditCommit(event -> {
+            // Obtém a tarefa que foi editada
+            Tarefa tarefaEditada = event.getRowValue();
+            // Define a nova descrição
+            tarefaEditada.setDescricao(event.getNewValue());
+            // Chama o método para enviar a atualização para a API
+            atualizarTarefa(tarefaEditada);
+        });
+
+        // Configura a coluna "Concluída" para renderizar um CheckBox.
+        colunaConcluida.setCellValueFactory(new PropertyValueFactory<>("concluida"));
+        colunaConcluida.setCellFactory(tc -> new TableCell<>() {
+            private final CheckBox checkBox = new CheckBox();
+            {
+                checkBox.setOnAction(event -> {
+                    Tarefa tarefa = getTableRow().getItem();
+                    if (tarefa != null) {
+                        tarefa.setConcluida(checkBox.isSelected());
+                        atualizarTarefa(tarefa);
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) { setGraphic(null); }
+                else {
+                    checkBox.setSelected(item);
+                    setGraphic(checkBox);
+                }
+            }
+        });
+
+        // Configura a coluna "Ações" para renderizar um botão "Deletar".
+        Callback<TableColumn<Tarefa, Void>, TableCell<Tarefa, Void>> cellFactory = param -> new TableCell<>() {
+            private final Button btnDeletar = new Button("Deletar");
+            {
+                btnDeletar.setOnAction(event -> {
+                    Tarefa tarefa = getTableView().getItems().get(getIndex());
+                    deletarTarefa(tarefa);
+                });
+            }
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) { setGraphic(null); }
+                else { setGraphic(btnDeletar); }
+            }
+        };
+        colunaAcoes.setCellFactory(cellFactory);
+
+        // Carrega os dados da API ao iniciar a tela.
+        carregarTarefas();
     }
 
-    private void carregarDadosDaTabela() {
-        System.out.println("Buscando tarefas na API...");
-        // Chama o serviço para buscar as tarefas
-        List<Tarefa> tarefasDaApi = tarefaApiService.listarTarefas();
-
-        // Converte a lista comum em uma ObservableList, que é o que o JavaFX TableView usa
-        ObservableList<Tarefa> observableListTarefas = FXCollections.observableArrayList(tarefasDaApi);
-
-        // Define os itens da tabela
-        tabelaTarefas.setItems(observableListTarefas);
-        System.out.println("Tabela atualizada com " + tarefasDaApi.size() + " tarefas.");
+    // ... (O restante dos métodos permanece o mesmo) ...
+    @FXML
+    private void atualizarListaDeTarefas() {
+        carregarTarefas();
     }
 
     @FXML
-    private void onAdicionarAction() {
-        String descricao = campoDescricao.getText();
-        System.out.println("Botão Adicionar Clicado!");
-        System.out.println("Texto digitado: " + descricao);
-        
-        // Lógica para adicionar uma nova tarefa virá aqui na próxima etapa
-        
-        campoDescricao.clear();
+    private void adicionarTarefa() {
+        String descricao = campoNovaTarefa.getText();
+        if (descricao == null || descricao.trim().isEmpty()) {
+            labelStatus.setText("Status: Descrição não pode ser vazia.");
+            return;
+        }
+
+        Tarefa novaTarefa = new Tarefa();
+        novaTarefa.setDescricao(descricao.trim());
+        novaTarefa.setConcluida(false);
+
+        executarEmBackground(() -> {
+            Tarefa tarefaCriada = tarefaApiService.adicionarTarefa(novaTarefa);
+            if (tarefaCriada != null) {
+                Platform.runLater(() -> {
+                    tarefasObservaveis.add(tarefaCriada);
+                    campoNovaTarefa.clear();
+                    labelStatus.setText("Status: Tarefa adicionada com sucesso!");
+                });
+            }
+        });
+    }
+
+    private void carregarTarefas() {
+        executarEmBackground(() -> {
+            List<Tarefa> tarefasDaApi = tarefaApiService.listarTarefas();
+            Platform.runLater(() -> {
+                tarefasObservaveis.setAll(tarefasDaApi);
+                labelStatus.setText("Status: Tarefas carregadas.");
+            });
+        });
+    }
+
+    private void atualizarTarefa(Tarefa tarefa) {
+        executarEmBackground(() -> {
+            tarefaApiService.atualizarTarefa(tarefa);
+            Platform.runLater(() -> labelStatus.setText("Status: Tarefa '" + tarefa.getDescricao() + "' atualizada."));
+        });
+    }
+
+    private void deletarTarefa(Tarefa tarefa) {
+        executarEmBackground(() -> {
+            tarefaApiService.deletarTarefa(tarefa.getId());
+            Platform.runLater(() -> {
+                tarefasObservaveis.remove(tarefa);
+                labelStatus.setText("Status: Tarefa deletada.");
+            });
+        });
+    }
+
+    private void executarEmBackground(Runnable acao) {
+        labelStatus.setText("Status: Processando...");
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                acao.run();
+                return null;
+            }
+        };
+        task.setOnFailed(e -> {
+            task.getException().printStackTrace();
+            Platform.runLater(() -> labelStatus.setText("Status: Erro na operação. Veja o console."));
+        });
+        new Thread(task).start();
     }
 }
 ```
@@ -1485,13 +1826,67 @@ Agora que o controller espera que a `TableView` tenha colunas definidas, precisa
 <!-- end list -->
 
 ```xml
-<TableView fx:id="tabelaTarefas" VBox.vgrow="ALWAYS">
-  <columns>
-    <TableColumn fx:id="colunaId" prefWidth="75.0" text="ID" />
-    <TableColumn fx:id="colunaDescricao" prefWidth="350.0" text="Descrição" />
-    <TableColumn fx:id="colunaConcluida" prefWidth="150.0" text="Concluída" />
-  </columns>
-</TableView>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.curso.listadetarefas.desktop.MainViewController">
+   <top>
+      <Label text="Minha Lista de Tarefas (Desktop)" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <center>
+      <TableView fx:id="tabelaTarefas" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colunaConcluida" prefWidth="75.0" text="Concluída" />
+          <TableColumn fx:id="colunaDescricao" prefWidth="550.0" text="Descrição" />
+          <TableColumn fx:id="colunaAcoes" prefWidth="150.0" text="Ações" />
+        </columns>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="100.0" spacing="10.0" BorderPane.alignment="CENTER"> <children>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <TextField fx:id="campoNovaTarefa" onAction="#adicionarTarefa" prefWidth="500.0" promptText="Digite a descrição da nova tarefa..." />
+                  <Button fx:id="botaoAdicionar" mnemonicParsing="false" onAction="#adicionarTarefa" text="Adicionar Tarefa" />
+                  <Button fx:id="botaoAtualizar" mnemonicParsing="false" onAction="#atualizarListaDeTarefas" text="Atualizar Tarefas" />
+               </children>
+            </HBox>
+
+            <Label text="Dica: Dê um duplo clique na descrição de uma tarefa para editá-la." textFill="#868686">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+
+            <Label fx:id="labelStatus" text="Status: Pronta." />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+</BorderPane>
 ```
 
 **O que fizemos aqui?**
@@ -2663,12 +3058,6 @@ Agora, todas as funcionalidades devem funcionar na aplicação web:
 
 
 ### Aplicacao web funcionou. Adicionar um botao atualizar na aplicacao desktop para buscar mudanças feitas pela web
-
-Sim, com certeza\! Essa é uma excelente ideia e uma solução muito mais simples e prática de implementar do que os WebSockets.
-
-Adicionar um botão "Atualizar" é uma abordagem muito comum em aplicações desktop. Ela dá ao usuário o controle para sincronizar os dados quando ele desejar, sem a complexidade de uma conexão em tempo real.
-
-Vamos implementar isso. É um processo bem rápido e vai reforçar os conceitos que já aprendemos.
 
 -----
 
@@ -6175,9 +6564,6 @@ Com este recomeço, eliminamos qualquer possibilidade de erro no código do apli
 
 ---
 
-
-Com certeza. Para eliminar qualquer dúvida sobre a configuração do build, que pode ser a fonte de erros persistentes, aqui está o conteúdo completo e recomendado para o seu arquivo `build.gradle.kts (Module :app)`.
-
 Esta versão utiliza as práticas mais recentes recomendadas pelo Google, como o "Compose BOM" (Bill of Materials) para garantir que todas as bibliotecas do Jetpack Compose sejam compatíveis entre si.
 
 -----
@@ -6729,8 +7115,6 @@ Com isso, a configuração do seu projeto estará 100% correta e alinhada com as
 
 ---
 
-Com certeza. Para garantir que não haja nenhuma dúvida, aqui está o conteúdo completo e correto para o arquivo `gradle/libs.versions.toml`.
-
 Este arquivo define os "apelidos" e as versões centralizadas para todas as suas dependências e plugins.
 
 **Copie e cole todo este conteúdo** para substituir o que está no seu arquivo `gradle/libs.versions.toml`.
@@ -6775,10 +7159,6 @@ Após colar este conteúdo, salve o arquivo e clique em **"Sync Now"** na barra 
 
 
 ---
-
-Com certeza. Para garantir que não haja nenhuma dúvida, aqui está o conteúdo completo e correto para o arquivo `gradle/libs.versions.toml`.
-
-Este arquivo define os "apelidos" e as versões centralizadas para todas as suas dependências e plugins.
 
 **Copie e cole todo este conteúdo** para substituir o que está no seu arquivo `gradle/libs.versions.toml`.
 
@@ -7264,10 +7644,6 @@ fun EditTaskDialog(
 
 
 ---
-
-Com certeza\! Para garantir que você tenha uma base de código 100% limpa, funcional e com todas as funcionalidades que desenvolvemos (CRUD completo e "Puxar para Atualizar"), aqui estão todos os arquivos de código-fonte necessários para recriar o projeto `TodoListAndroid` do zero.
-
-Siga os passos na ordem, substituindo o conteúdo de cada arquivo correspondente no seu novo projeto.
 
 -----
 
@@ -8111,9 +8487,6 @@ Peço desculpas novamente pela longa depuração. A rápida evolução do ecossi
 
 ----
 
-Com certeza. Para garantir que não haja nenhuma dúvida, aqui está o conteúdo completo e correto para o arquivo `gradle/libs.versions.toml`.
-
-Este arquivo define os "apelidos" e as versões centralizadas para todas as suas dependências e plugins.
 
 **Copie e cole todo este conteúdo** para substituir o que está no seu arquivo `gradle/libs.versions.toml`.
 
@@ -8158,9 +8531,6 @@ Após colar este conteúdo, salve o arquivo e clique em **"Sync Now"** na barra 
 
 ---
 
-Com certeza. Para garantir que estamos em uma base 100% limpa e correta, vamos consolidar aqui a versão final e completa de **todos os arquivos de código** para o aplicativo Android com a funcionalidade de CRUD completa (incluir, listar, atualizar/renomear e deletar).
-
-Este é o "gabarito" final. Por favor, substitua o conteúdo de cada arquivo no seu projeto pelo código correspondente abaixo com muito cuidado.
 
 -----
 
@@ -9067,11 +9437,6 @@ fun EditTaskDialog(
 
 
 ---
-
-Com certeza\! Para garantir que você tenha uma base de código 100% limpa, funcional e com todas as funcionalidades que desenvolvemos (CRUD completo e "Puxar para Atualizar"), aqui estão todos os arquivos de código-fonte necessários para recriar o projeto `TodoListAndroid` do zero.
-
-Siga os passos na ordem, substituindo o conteúdo de cada arquivo correspondente no seu novo projeto.
-
 -----
 
 ### **Guia Definitivo e Completo: Recriando o Projeto `TodoListAndroid`**
@@ -9912,12 +10277,6 @@ fun EditTaskDialog(
 Peço desculpas novamente pela longa depuração. A rápida evolução do ecossistema Android às vezes nos prega essas peças. Esta versão usa as bibliotecas e APIs mais atuais e estáveis, e deve resolver o problema de build de uma vez por todas.
 
 
----
-
-Com certeza\! Foi uma jornada incrível de desenvolvimento e depuração. Criar um guia consolidado com a versão final e correta de tudo é a maneira perfeita de finalizar este curso.
-
-Aqui está o guia completo, passo a passo, em uma sequência didática, para implementar cada um dos aplicativos do zero, incorporando todas as correções e melhorias que descobrimos juntos.
-
 -----
 
 ### **Guia Didático Completo: Construindo o Ecossistema To-Do List**
@@ -10278,8 +10637,6 @@ Este guia consolida toda a nossa jornada. Seguindo-o, você terá um ecossistema
 
 ---
 
-
-Com certeza\! Agora que construímos todo o ecossistema, incluindo o cliente Android e o painel de controle, o diagrama da arquitetura final fica muito mais completo e impressionante.
 
 Aqui estão as versões atualizadas do diagrama, refletindo fielmente o sistema robusto que você construiu.
 
@@ -11033,10 +11390,6 @@ Digitar o caminho completo toda vez é cansativo. Vamos adicionar as ferramentas
 
 ---
 
-Com certeza\! Adicionar o controle do emulador diretamente ao script é a melhoria final perfeita para torná-lo um painel de controle completo.
-
-Com base nas informações que você forneceu, atualizei o script `manage.ps1`. Ele agora inclui opções dedicadas para iniciar, parar e verificar o status do seu emulador chamado `Medium_Phone`.
-
 -----
 
 ### **Passo 1: Substitua o Código do Script `manage.ps1`**
@@ -11208,11 +11561,6 @@ O uso continua o mesmo e ainda mais fácil:
 4. Use a **opção 'A'** para iniciar seu emulador `Medium_Phone`.
 5. Depois que o emulador estiver rodando, use as outras opções (1, 3, 5, 7, 9) para iniciar os serviços que você precisa.
 
-Você agora tem um painel de controle completo para todo o seu ecossistema de desenvolvimento\!
-
-Com certeza\! Adicionar o controle do emulador diretamente ao script é a melhoria final perfeita para torná-lo um painel de controle completo.
-
-Com base nas informações que você forneceu, atualizei o script `manage.ps1`. Ele agora inclui opções dedicadas para iniciar, parar e verificar o status do seu emulador chamado `Medium_Phone`.
 
 -----
 
@@ -12401,7 +12749,7 @@ O problema está na camada de rede entre o emulador e o seu computador. Precisam
 
 ### O Teste Definitivo: Usando o Navegador do Emulador
 
-Vamos remover completamente o seu aplicativo da equação e usar o navegador Chrome de dentro do emulador para tentar acessar a API. Se o navegador não conseguir, saberemos com certeza que o problema é na rede.
+
 
 **Por favor, siga estes passos com atenção:**
 
