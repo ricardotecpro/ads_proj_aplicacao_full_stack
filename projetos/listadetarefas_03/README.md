@@ -335,6 +335,29 @@ public class TarefaController {
 
 A interface web, com layout de tabela e funcionalidades consistentes.
 
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Node.js e npm:** Ambiente de execução e gerenciador de pacotes.
+  * **Angular CLI:** (`npm install -g @angular/cli`)
+  * **Editor de Código:** Visual Studio Code.
+
+### \#\#\# 📂 Passo 1: Criação do Projeto
+
+1.  No terminal, crie o projeto:
+    ```bash
+    ng new listadetarefas-web --standalone --style=css
+    ```
+2.  Navegue até a pasta `cd listadetarefas-web`.
+3.  Gere os arquivos necessários:
+    ```bash
+    ng generate interface models/tarefa
+    ng generate service services/tarefa
+    ng generate component components/task-list
+    ```
+
+
+
 #### **Estrutura de Pastas (Web)**
 
 ```
@@ -596,6 +619,14 @@ export class TaskListComponent implements OnInit {
 ```
 
 -----
+
+
+### \#\#\# ✅ Execução e Teste
+
+1.  **Pré-requisito:** A API backend deve estar rodando.
+2.  **Execute:** No terminal (na pasta `listadetarefas-web`), rode `ng serve --open`.
+3.  **Teste:** Abra as ferramentas de desenvolvedor do navegador (F12) e teste todas as funcionalidades: adicionar, editar com duplo clique, marcar como concluída e deletar.
+
 
 ### **Parte 3: O Frontend Desktop com JavaFX**
 
