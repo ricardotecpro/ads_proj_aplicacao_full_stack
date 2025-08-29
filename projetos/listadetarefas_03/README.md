@@ -1,4 +1,4 @@
-### **Guia Didático v3.8: Edição Final**
+# 🚀 Sistema Full Stack Completo v3.8
 
 **Objetivo do Projeto:** Construir um ecossistema de software completo para uma Lista de Tarefas. Este guia é a versão definitiva do projeto, contendo a arquitetura, estrutura de pastas, descrição de arquivos e o código completo para o backend, frontend web e frontend desktop, com foco em uma experiência de usuário consistente e com a sincronização de estado corrigida entre as plataformas.
 
@@ -27,6 +27,63 @@ graph TD
 ```
 
 -----
+
+### Passo 0: Configuração Inicial do Projeto
+
+Nesta primeira etapa, vamos criar a estrutura base do **backend** utilizando o **Spring Initializr**.  
+Esse gerador oficial do Spring Boot nos ajuda a configurar dependências essenciais de forma rápida e segura.
+
+---
+
+#### Passo 1: Acessar o Spring Initializr
+
+Acesse o site: 👉 [https://start.spring.io](https://start.spring.io)
+
+---
+
+#### Passo 2: Preencher os campos
+
+- **Project**: Maven  
+- **Language**: Java  
+- **Spring Boot**: Versão estável mais recente (exemplo: `3.x.x`)  
+
+##### Project Metadata
+- **Group**: `br.com.curso`  
+- **Artifact**: `lista-tarefas-api`  
+- **Name**: `lista-tarefas-api`  
+- **Description**: `API para gerenciamento de tarefas`  
+- **Package name**: `br.com.curso.lista-tarefas.api`  
+- **Packaging**: Jar  
+- **Java**: `21` (ou a versão que você instalou)  
+
+---
+
+#### Passo 3: Adicionar dependências
+
+Clique em **“ADD DEPENDENCIES”** e adicione as seguintes:
+
+- **Spring Web** → Essencial para criar aplicações web e APIs REST.  
+- **Spring Data JPA** → Facilita a comunicação com o banco de dados.  
+- **H2 Database** → Banco de dados em memória, ideal para desenvolvimento e testes.  
+- **Lombok** → Reduz código repetitivo (getters, setters, construtores, etc).  
+
+---
+
+#### Passo 4: Gerar o projeto
+
+- Clique em **GENERATE**.  
+- Um arquivo `.zip` será baixado no seu computador.  
+
+---
+
+#### Passo 5: Abrir o projeto na IDE
+
+1. **Descompacte** o arquivo `.zip`.  
+2. Abra a pasta gerada na sua IDE favorita:  
+   - **IntelliJ IDEA** (recomendado)  
+   - ou **VS Code** (com extensões de Java instaladas).  
+
+---
 
 ### **Parte 1: O Backend - A API com Spring Boot**
 
