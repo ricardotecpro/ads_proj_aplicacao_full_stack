@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController // Especialização de @Controller para criar APIs RESTful.
-@RequestMapping("/api/tarefas") // Mapeia todas as requisições para este Controller para o caminho /api/tarefas.
-@CrossOrigin(origins = "*") // Permite que requisições de qualquer origem acessem esta API.
+@RestController
+@RequestMapping("/api/tarefas")
+@CrossOrigin(origins = "*")
 public class TarefaController {
     @Autowired
     private TarefaService tarefaService;
@@ -21,10 +21,9 @@ public class TarefaController {
     @PutMapping("/{id}")
     public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
         try {
-            Tarefa atualizada = tarefaService.atualizar(id, tarefa);
-            return ResponseEntity.ok(atualizada); // Retorna HTTP 200 OK.
+            return ResponseEntity.ok(tarefaService.atualizar(id, tarefa));
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build(); // Retorna HTTP 404 Not Found.
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -32,9 +31,9 @@ public class TarefaController {
     public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
         try {
             tarefaService.deletar(id);
-            return ResponseEntity.noContent().build(); // Retorna HTTP 204 No Content.
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build(); // Retorna HTTP 404 Not Found.
+            return ResponseEntity.notFound().build();
         }
     }
 }

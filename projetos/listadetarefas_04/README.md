@@ -1,4 +1,4 @@
-# Listas de Tarefas v04
+# Listas de Tarefas v4.0
 
 Construindo o Frontend com Angular
 

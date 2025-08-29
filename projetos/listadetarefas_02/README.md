@@ -1,4 +1,4 @@
-# 🚀 Sistema Full Stack Completo v02
+# 🚀 Sistema Full Stack Completo v2.0
 
 
 ## 🗺️ Visão Geral da Arquitetura

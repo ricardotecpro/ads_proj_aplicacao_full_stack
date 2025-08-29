@@ -1,4 +1,3 @@
-// Cole o código da classe TarefaApiService apresentado no guia anterior aqui.
 // Ele contém os métodos: listarTarefas, adicionarTarefa, atualizarTarefa e deletarTarefa.
 package br.com.curso.listadetarefas.desktop;
 
