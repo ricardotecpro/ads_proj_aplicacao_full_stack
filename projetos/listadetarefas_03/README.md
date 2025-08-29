@@ -49,10 +49,10 @@ Acesse o site: 👉 [https://start.spring.io](https://start.spring.io)
 
 ##### Project Metadata
 - **Group**: `br.com.curso`  
-- **Artifact**: `lista-tarefas-api`  
-- **Name**: `lista-tarefas-api`  
+- **Artifact**: `listadetarefas-api`  
+- **Name**: `listadetarefas-api`  
 - **Description**: `API para gerenciamento de tarefas`  
-- **Package name**: `br.com.curso.lista-tarefas.api`  
+- **Package name**: `br.com.curso.listadetarefas.api`  
 - **Packaging**: Jar  
 - **Java**: `21` (ou a versão que você instalou)  
 
