@@ -1550,3 +1550,6 @@ java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar
 ![Lista de Tarefas Desktop](.\assets\listadetarefas-desktop.png)
 
 ---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+
