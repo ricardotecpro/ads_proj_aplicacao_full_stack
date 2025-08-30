@@ -8,12 +8,11 @@ import { TaskListComponent } from './components/task-list/task-list';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     TaskListComponent // 2. ADICIONE o componente ao array de imports
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class AppComponent {
+export class App {
   title = 'listadetarefas-web';
 }

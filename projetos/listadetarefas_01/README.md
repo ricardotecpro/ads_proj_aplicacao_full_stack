@@ -210,14 +210,8 @@ INSERT INTO TB_TAREFAS (TITULO, DESCRICAO, CONCLUIDA) VALUES ('Criar a API REST'
 
 Reinicie a aplicação e acesse a URL novamente. Agora você verá os dados em formato JSON!
 
-## ✨ Módulo 5: Refinando a API com Boas Práticas
 
-Nossa API funciona, mas podemos torná-la muito melhor!
+-----
 
-### 5.1 - O Problema: Expor Entidades na API
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
 
-Usar a classe `@Entity` diretamente na API é arriscado, pois acopla o cliente à estrutura do seu banco de dados. A solução é usar **DTOs (Data Transfer Objects)**.
-
-### 5.2 - Implementando DTOs e Mappers
-
-Vamos criar DTOs para o "contrato" da nossa API e um Mapper para converter entre Entidade e

@@ -1,0 +1,73 @@
+## 🖥️ Módulo 3: Cliente Desktop com JavaFX (`listadetarefas-desktop`)
+
+**Objetivo:** Criar uma aplicação desktop nativa e funcional que consome a API backend.
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Java Development Kit (JDK):** Versão 17 ou superior.
+  * **IDE:** IntelliJ IDEA ou VS Code com o "Extension Pack for Java".
+
+### \#\#\# 📂 Passo 1: Criação e Configuração do Projeto
+
+1.  **Crie um projeto Maven** na sua IDE para `listadetarefas-desktop` (siga as instruções detalhadas do guia anterior para IntelliJ ou VS Code).
+2.  **Substitua o `pom.xml`** pelo código completo fornecido no guia anterior, que inclui JavaFX, Jackson e o `maven-shade-plugin`.
+3.  **Crie o arquivo `module-info.java`** em `src/main/java` com a versão final e corrigida, contendo todos os `requires`, `opens` e `exports` necessários.
+
+### \#\#\# 🏗️ Passo 2: Estrutura de Código e UI
+
+Siga os passos e use os códigos completos e detalhados do guia anterior para criar a estrutura final.
+
+#### Diagrama de Classes do Cliente Desktop
+
+```mermaid
+classDiagram
+    MainApp --|> Application
+    MainApp ..> MainViewController : Carrega
+    MainViewController ..> TarefaApiService : Usa
+    TarefaApiService ..> Tarefa : Manipula
+    class MainApp {
+        +start(Stage)
+    }
+    class MainViewController {
+        -TableView~Tarefa~ tabelaTarefas
+        +initialize()
+        +adicionarTarefa()
+        +atualizarListaDeTarefas()
+    }
+    class TarefaApiService {
+        +List~Tarefa~ listarTarefas()
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
+    }
+```
+
+#### Estrutura de Pastas e Arquivos Final do Desktop
+
+```
+listadetarefas-desktop/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   ├── br/com/curso/listadetarefas/desktop/
+│       │   │   ├── Launcher.java
+│       │   │   ├── MainApp.java
+│       │   │   ├── MainViewController.java
+│       │   │   ├── Tarefa.java
+│       │   │   └── TarefaApiService.java
+│       │   └── module-info.java
+│       └── resources/
+│           └── br/com/curso/listadetarefas/desktop/
+│               └── MainView.fxml
+└── pom.xml
+```
+
+### \#\#\# ✅ Passo 3: Construção e Teste
+
+1.  **Pré-requisito:** A API backend deve estar rodando.
+2.  **Construa:** No terminal, na raiz do projeto, rode `mvn clean package`.
+3.  **Execute:** Rode o JAR gerado: `java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar`.
+4.  **Teste:** Verifique todas as funcionalidades: adicionar, deletar, atualizar a lista, e editar a descrição com duplo clique.
+

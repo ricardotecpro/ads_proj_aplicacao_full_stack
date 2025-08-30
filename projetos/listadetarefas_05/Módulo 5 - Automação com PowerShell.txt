@@ -1,12 +1,46 @@
-﻿<#
+## 🤖 Módulo 5: Automação com PowerShell (`listadetarefas-painel.ps1`)
+
+**Objetivo:** Criar um painel de controle centralizado para gerenciar todo o ecossistema (iniciar/parar serviços) de forma rápida e fácil.
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Windows Terminal** ou **PowerShell**.
+
+### \#\#\# 📂 Passo 1: Estrutura Final e Configuração
+
+1.  Na **pasta raiz** que contém todos os 4 projetos, crie o arquivo `listadetarefas-painel.ps1`.
+2.  **Habilite a Execução de Scripts:** Abra o PowerShell como **Administrador** e execute (apenas uma vez):
+    ```powershell
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    ```
+
+#### Estrutura de Pastas Final do Projeto Completo
+
+```
+projeto-todolist/
+├── listadetarefas-api/
+├── listadetarefas-web/
+├── listadetarefas-desktop/
+├── listadetarefas-android/
+└── listadetarefas-painel.ps1  # <- Script de automação
+```
+
+### \#\#\# 📜 Passo 2: O Script de Automação
+
+Ele contém as funções Get-ServiceStatus, Start-Service, Stop-Service e o menu interativo.
+
+Copie o código abaixo para o seu arquivo `listadetarefas-painel.ps1`. Ele deve usar os nomes corretos dos projetos e é portátil.
+
+```powershell
+<#
 .SYNOPSIS
-    Painel de controle para gerenciar o projeto To-Do List (API, Web, Desktop, Mobile).
+    Painel de controle para gerenciar o projeto To-Do List (API, Web, Desktop, Android).
 .DESCRIPTION
     Este script PowerShell fornece um menu interativo para iniciar, parar, construir e depurar
     os diferentes componentes do projeto. Ele detecta automaticamente o status de cada serviço
     e torna o ambiente de desenvolvimento mais produtivo.
 .VERSION
-    4.3 - Adicionada detecção e seleção dinâmica de emuladores Android.
+    9.4 - Corrigida a lógica de exibição de status no menu
 #>
 
 # Força o uso do protocolo TLS 1.2 para compatibilidade com downloads HTTPS (ex: Maven Wrapper).
@@ -20,10 +54,10 @@ $basePath = $PSScriptRoot
 $apiPath = Join-Path $basePath "listadetarefas-api"
 $webPath = Join-Path $basePath "listadetarefas-web"
 $desktopPath = Join-Path $basePath "listadetarefas-desktop"
-$mobilePath = Join-Path $basePath "listadetarefas-mobile"
+$androidPath = Join-Path $basePath "listadetarefas-android"
 
 # --- VALIDAÇÃO DE CAMINHOS ---
-$projectPaths = @{ "API" = $apiPath; "Web" = $webPath; "Desktop" = $desktopPath; "Mobile" = $mobilePath }
+$projectPaths = @{ "API" = $apiPath; "Web" = $webPath; "Desktop" = $desktopPath; "Android" = $androidPath }
 $pathsAreValid = $true
 foreach ($project in $projectPaths.Keys) {
     if (-not (Test-Path $projectPaths[$project])) {
@@ -37,83 +71,24 @@ if (-not $pathsAreValid) { Read-Host "`nVerifique os nomes das pastas. Pressione
 $sdkPath = Join-Path $env:LOCALAPPDATA "Android\Sdk"
 $emulatorPath = Join-Path $sdkPath "emulator"
 $platformToolsPath = Join-Path $sdkPath "platform-tools"
-$emulatorName = $null # Será definido dinamicamente na inicialização
-$availableEmulators = @() # Lista de emuladores detectados
+$emulatorName = "Medium_Phone"
 
-# --- CONFIGURAÇÕES DOS ARTEFATOS E URLs ---
+# --- CONFIGURAÇÕES DOS ARTEFATOS ---
 $apiJar = Join-Path $apiPath "target\listadetarefas-api-0.0.1-SNAPSHOT.jar"
 $desktopJar = Join-Path $desktopPath "target\listadetarefas-desktop-1.0-SNAPSHOT.jar"
 $androidPackage = "br.com.curso.listadetarefas.android"
-$webUrl = "http://localhost:4200"
 $desktopWindowTitle = "Minha Lista de Tarefas (Desktop)"
+$webUrl = "http://localhost:3000"
 
 #==============================================================================
-# --- FUNÇÕES DE INICIALIZAÇÃO E SELEÇÃO DE EMULADOR ---
-#==============================================================================
-
-function Initialize-EmulatorSelection {
-    Write-Host "Detectando emuladores instalados..." -ForegroundColor Cyan
-    try {
-        $avdList = & "$emulatorPath\emulator.exe" -list-avds
-        $script:availableEmulators = $avdList | Where-Object { $_ -and $_.Trim().Length -gt 0 } | ForEach-Object { $_.Trim() }
-    } catch {
-        Write-Host "AVISO: Não foi possível executar o comando do emulador. Verifique o caminho do SDK do Android." -ForegroundColor Yellow
-        $script:availableEmulators = @()
-    }
-
-    if ($availableEmulators.Count -eq 0) {
-        Write-Host "AVISO: Nenhum emulador (AVD) foi encontrado. Você precisará iniciar um manualmente." -ForegroundColor Yellow
-        $script:emulatorName = $null
-    } elseif ($availableEmulators.Count -eq 1) {
-        $script:emulatorName = $availableEmulators[0]
-        Write-Host "Emulador '$emulatorName' selecionado automaticamente." -ForegroundColor Green
-    } else {
-        $script:emulatorName = $availableEmulators[0]
-        Write-Host "Múltiplos emuladores encontrados. '$emulatorName' foi selecionado como padrão." -ForegroundColor Green
-        Write-Host "Use a opção 'S' no menu para selecionar outro."
-    }
-    Start-Sleep -Seconds 2
-}
-
-function Select-Emulator {
-    Clear-Host
-    Write-Host "--- SELECIONAR EMULADOR ANDROID ---" -ForegroundColor Yellow
-
-    if ($availableEmulators.Count -eq 0) {
-        Read-Host "Nenhum emulador foi detectado. Verifique sua instalação do Android Studio. Pressione Enter..."
-        return
-    }
-
-    Write-Host "`nEmuladores disponíveis:"
-    for ($i = 0; $i -lt $availableEmulators.Count; $i++) {
-        $indicator = if ($availableEmulators[$i] -eq $emulatorName) { "[SELECIONADO]" } else { "" }
-        Write-Host "  $($i + 1). $($availableEmulators[$i]) $indicator"
-    }
-
-    $choice = Read-Host "`nDigite o número do emulador que deseja usar e pressione Enter (ou Enter para cancelar)"
-    if ($choice -eq "") { return }
-
-    $index = $choice -as [int]
-
-    if ($index -and $index -ge 1 -and $index -le $availableEmulators.Count) {
-        $script:emulatorName = $availableEmulators[$index - 1]
-        Write-Host "Emulador '$emulatorName' selecionado." -ForegroundColor Green
-    } else {
-        Write-Host "Seleção inválida. Nenhuma alteração foi feita." -ForegroundColor Red
-    }
-    Start-Sleep -Seconds 2
-}
-
-
-#==============================================================================
-# --- FUNÇÕES AUXILIARES (O restante do script) ---
+# --- FUNÇÕES AUXILIARES ---
 #==============================================================================
 
 function Get-ServiceStatus($serviceName) {
     try {
         switch ($serviceName) {
             'api' { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction Stop) { return "RUNNING" } }
-            'web' { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            'web' { if (Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction Stop) { return "RUNNING" } }
             'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction Stop | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" }) { return "RUNNING" } }
             'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } }
             'emulator' { if ((& "$platformToolsPath\adb.exe" devices) -like "*`tdevice*") { return "RUNNING" } }
@@ -124,9 +99,9 @@ function Get-ServiceStatus($serviceName) {
 }
 
 function Wait-For-AdbDevice {
-    param([int]$TimeoutSeconds = 90) # Aumentado para 90 segundos
+    param([int]$TimeoutSeconds = 60)
     if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') { return $true }
-    Write-Host "Aguardando o emulador/dispositivo ficar online..." -ForegroundColor Cyan
+    Write-Host "Aguardando um emulador/dispositivo ficar online..." -ForegroundColor Cyan
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     while ($stopwatch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
         if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') {
@@ -138,20 +113,40 @@ function Wait-For-AdbDevice {
 }
 
 function Ensure-BuildArtifact {
-    param([string]$ArtifactPath, [string]$ProjectPath, [string[]]$BuildCommand)
+    param([string]$ArtifactPath, [string]$ProjectPath, [string[]]$BuildCommand, [string]$BuildToolName)
     if (!(Test-Path $ArtifactPath)) {
         $choice = Read-Host "Artefato de build não encontrado em '$ArtifactPath'. Deseja construir agora? (s/n)"
         if ($choice -eq 's') {
             Push-Location $ProjectPath
             Write-Host "Construindo em '$ProjectPath'..." -ForegroundColor Cyan
-            try { & ".\mvnw.cmd" $BuildCommand *>&1 | ForEach-Object { Write-Host $_ } } catch { Write-Host "`nERRO DE BUILD" -ForegroundColor Red; Pop-Location; Start-Sleep 2; return $false }
+            if ($BuildToolName -eq "mvnw.cmd" -and -not (Test-Path ".\pom.xml")) {
+                Write-Host "ERRO CRÍTICO: 'pom.xml' não encontrado em '$ProjectPath'." -ForegroundColor Red
+                Pop-Location; Start-Sleep 3; return $false
+            }
+            $executableCommand = $null
+            if ($BuildToolName -eq "ng") {
+                if (Get-Command ng -ErrorAction SilentlyContinue) { $executableCommand = "ng" }
+                else { Write-Host "ERRO: O comando 'ng' (Angular CLI) não foi encontrado." -ForegroundColor Red }
+            }
+            else {
+                if ((Test-Path ".\$BuildToolName") -and (Test-Path ".\.mvn\wrapper")) { $executableCommand = ".\$BuildToolName" }
+                elseif (Get-Command mvn -ErrorAction SilentlyContinue) { $executableCommand = "mvn"; Write-Host "AVISO: Usando Maven global ('mvn')." -ForegroundColor Yellow }
+                else { Write-Host "ERRO: Nenhuma ferramenta de build do Maven foi encontrada." -ForegroundColor Red }
+            }
+            if (-not $executableCommand) { Pop-Location; Start-Sleep 2; return $false }
+            try { & $executableCommand $BuildCommand *>&1 | ForEach-Object { Write-Host $_ } } catch { Write-Host "`nERRO DE BUILD" -ForegroundColor Red; Pop-Location; Start-Sleep 2; return $false }
             if ($LASTEXITCODE -ne 0) { Write-Host "`nERRO DE BUILD (código: $LASTEXITCODE)." -ForegroundColor Red; Pop-Location; Start-Sleep 2; return $false }
             Pop-Location
             if (!(Test-Path $ArtifactPath)) { Write-Host "Build concluído, mas o artefato '$ArtifactPath' não foi encontrado." -ForegroundColor Red; Start-Sleep 2; return $false }
-        } else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return $false }
+        }
+        else { Write-Host "Início cancelado." -ForegroundColor Red; Start-Sleep 2; return $false }
     }
     return $true
 }
+
+#==============================================================================
+# --- FUNÇÕES DE GERENCIAMENTO DE SERVIÇOS ---
+#==============================================================================
 
 function Start-Service($serviceName, [switch]$ColdBoot) {
     if ($serviceName -in @('web', 'desktop', 'android')) {
@@ -165,16 +160,17 @@ function Start-Service($serviceName, [switch]$ColdBoot) {
     $commandExecuted = $false
     switch ($serviceName) {
         'api' {
-            if (-not (Ensure-BuildArtifact -ArtifactPath $apiJar -ProjectPath $apiPath -BuildCommand @("clean", "package"))) { break }
+            if (-not (Ensure-BuildArtifact -ArtifactPath $apiJar -ProjectPath $apiPath -BuildCommand @("clean", "package") -BuildToolName "mvnw.cmd")) { break }
             Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title API-Backend && java -jar `"`"$apiJar`"`"`"" -WorkingDirectory $apiPath
             $commandExecuted = $true
         }
         'web' {
-            Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title Frontend-Web && ng serve --open`"" -WorkingDirectory $webPath
+            if (-not (Ensure-BuildArtifact -ArtifactPath (Join-Path $webPath "dist") -ProjectPath $webPath -BuildCommand "build" -BuildToolName "ng")) { break }
+            Push-Location $webPath; Start-Process npx -ArgumentList "serve", "dist\listadetarefas-web\browser"; Pop-Location
             $commandExecuted = $true
         }
         'desktop' {
-            if (-not (Ensure-BuildArtifact -ArtifactPath $desktopJar -ProjectPath $desktopPath -BuildCommand @("clean", "package"))) { break }
+            if (-not (Ensure-BuildArtifact -ArtifactPath $desktopJar -ProjectPath $desktopPath -BuildCommand @("clean", "package") -BuildToolName "mvnw.cmd")) { break }
             Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title App-Desktop && java -jar `"`"$desktopJar`"`"`"" -WorkingDirectory $desktopPath
             $commandExecuted = $true
         }
@@ -182,15 +178,10 @@ function Start-Service($serviceName, [switch]$ColdBoot) {
             if (-not (Wait-For-AdbDevice)) { Write-Host "Nenhum emulador/dispositivo detectado." -ForegroundColor Red; Start-Sleep 2; return $false }
             Write-Host "Criando túnel de rede (adb reverse)..." -ForegroundColor Cyan
             & "$platformToolsPath\adb.exe" reverse tcp:8080 tcp:8080
-            Write-Host "Iniciando App Mobile..."; & "$platformToolsPath\adb.exe" shell am start -n "$androidPackage/$androidPackage.MainActivity"
+            Write-Host "Iniciando App Android..."; & "$platformToolsPath\adb.exe" shell am start -n "$androidPackage/$androidPackage.MainActivity"
             $commandExecuted = $true
         }
         'emulator' {
-            if (-not $emulatorName) {
-                Write-Host "Nenhum emulador está selecionado." -ForegroundColor Yellow
-                Select-Emulator
-                if (-not $emulatorName) { Read-Host "Operação cancelada. Pressione Enter..."; return $false }
-            }
             if ((Get-ServiceStatus 'emulator') -eq 'RUNNING') { Write-Host "Emulador já parece estar rodando." -ForegroundColor Green; return $true }
             $arguments = "-avd", $emulatorName
             if ($ColdBoot) { $arguments += "-no-snapshot-load"; Write-Host "Iniciando emulador em modo Cold Boot..." -ForegroundColor Yellow }
@@ -213,7 +204,7 @@ function Stop-Service($serviceName) {
     Write-Host "`nParando serviço: $serviceName..." -ForegroundColor Yellow
     switch ($serviceName) {
         'api' { $p = Get-NetTCPConnection -LocalPort 8080 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
-        'web' { $p = Get-NetTCPConnection -LocalPort 4200 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
+        'web' { $p = Get-NetTCPConnection -LocalPort 3000 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
         'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" } | Stop-Process -Force }
         'android' { & "$platformToolsPath\adb.exe" shell am force-stop $androidPackage }
         'emulator' { & "$platformToolsPath\adb.exe" emu kill }
@@ -225,16 +216,20 @@ function Clean-Project {
     Clear-Host; Write-Host "--- LIMPANDO CACHES E BUILDS ---" -ForegroundColor Yellow
     Write-Host "`nLimpando API..." -ForegroundColor Cyan; Push-Location $apiPath; & ".\mvnw.cmd" clean; Pop-Location
     Write-Host "`nLimpando Desktop..." -ForegroundColor Cyan; Push-Location $desktopPath; & ".\mvnw.cmd" clean; Pop-Location
-    Write-Host "`nLimpando Web (removendo .angular/ e dist/)..." -ForegroundColor Cyan
+    Write-Host "`nLimpando Web..." -ForegroundColor Cyan
     $angularCache = Join-Path $webPath ".angular"; $angularDist = Join-Path $webPath "dist"
     if (Test-Path $angularCache) { Remove-Item -Recurse -Force $angularCache }
     if (Test-Path $angularDist) { Remove-Item -Recurse -Force $angularDist }
     Write-Host "`n--- LIMPEZA CONCLUÍDA ---" -ForegroundColor Green; Read-Host "Pressione Enter..."
 }
 
+#==============================================================================
+# --- FERRAMENTAS DE DEBUG (ANDROID) ---
+#==============================================================================
+
 function Invoke-AdbTool($toolName) {
     if (-not (Wait-For-AdbDevice)) { Read-Host "`nOperação ADB cancelada. Pressione Enter..."; return }
-    Clear-Host; Write-Host "--- Ferramenta Mobile (ADB): $toolName ---" -ForegroundColor Yellow
+    Clear-Host; Write-Host "--- Ferramenta ADB: $toolName ---" -ForegroundColor Yellow
     switch ($toolName) {
         'reset' { & "$platformToolsPath\adb.exe" kill-server; & "$platformToolsPath\adb.exe" start-server }
         'devices' { & "$platformToolsPath\adb.exe" devices }
@@ -251,47 +246,48 @@ function Invoke-AdbTool($toolName) {
     Read-Host "`nPressione Enter para voltar ao menu"
 }
 
+#==============================================================================
+# --- INTERFACE DO USUÁRIO (MENU) ---
+#==============================================================================
+
 function Show-Menu {
     Clear-Host
     Write-Host "=================================================" -ForegroundColor Cyan
     Write-Host "      PAINEL DE CONTROLE - PROJETO TO-DO LIST      " -ForegroundColor White
     Write-Host "=================================================" -ForegroundColor Cyan
-    
+
+    # CORREÇÃO: A lógica de coleta de status foi separada para evitar erros de referência nula.
     $emulatorStatus = Get-ServiceStatus 'emulator'
-    $emulatorDisplayName = if ($emulatorName) { $emulatorName } else { "Nenhum Selecionado" }
-    
     $statuses = @{
-        "Emulador ($emulatorDisplayName)" = $emulatorStatus;
+        'Emulador'     = $emulatorStatus;
         'API Backend'  = Get-ServiceStatus 'api';
-        'Frontend Web' = Get-ServiceStatus 'web';
+        'Servidor Web' = Get-ServiceStatus 'web';
         'App Desktop'  = Get-ServiceStatus 'desktop';
-        'App Mobile'   = if ($emulatorStatus -eq 'RUNNING') { Get-ServiceStatus 'android' } else { "OFFLINE" }
+        'App Android'  = if ($emulatorStatus -eq 'RUNNING') { Get-ServiceStatus 'android' } else { "OFFLINE" }
     }
 
     Write-Host "`nSTATUS ATUAL:"
     $statuses.GetEnumerator() | ForEach-Object {
         $color = if ($_.Value -eq 'RUNNING') { 'Green' } else { 'Red' }
-        Write-Host ("  {0,-30}" -f $_.Name) -NoNewline; Write-Host $_.Value -ForegroundColor $color
+        Write-Host ("  {0,-15}" -f $_.Name) -NoNewline; Write-Host $_.Value -ForegroundColor $color
     }
     Write-Host "`n--- OPÇÕES ---" -ForegroundColor Yellow
     Write-Host " GERAL                     SERVIÇOS INDIVIDUAIS"
     Write-Host "  9. Iniciar TUDO          1. Iniciar API          5. Iniciar Desktop"
     Write-Host " 10. Parar TUDO             2. Parar API            6. Parar Desktop"
-    Write-Host "  L. Limpar Caches         3. Iniciar Web          7. Iniciar App Mobile"
-    Write-Host "                           4. Parar Web            8. Parar App Mobile"
+    Write-Host "  L. Limpar Caches         3. Iniciar Web          7. Iniciar App Android"
+    Write-Host "                           4. Parar Web            8. Parar App Android"
     Write-Host "-----------------------------------------------------------------"
-    Write-Host " FERRAMENTAS MOBILE (ANDROID)                      NAVEGAÇÃO"
+    Write-Host " FERRAMENTAS ANDROID                               NAVEGAÇÃO"
     Write-Host "  A. Iniciar Emulador      D. Resetar Servidor ADB R. Atualizar Status"
     Write-Host "  B. Parar Emulador        E. Listar Dispositivos  Q. Sair"
     Write-Host "  H. Ligar (Cold Boot)     F. Ver Logs (logcat)"
-    Write-Host "  S. Selecionar Emulador   G. Criar Túnel de Rede`n"
+    Write-Host "  C. Abrir Web no Browser  G. Criar Túnel de Rede`n"
 }
 
 #==============================================================================
 # --- LÓGICA PRINCIPAL (LOOP DO MENU) ---
 #==============================================================================
-
-Initialize-EmulatorSelection
 
 while ($true) {
     Show-Menu
@@ -320,7 +316,6 @@ while ($true) {
         'a' { Start-Service 'emulator' }
         'b' { Stop-Service 'emulator' }
         'h' { Start-Service 'emulator' -ColdBoot }
-        's' { Select-Emulator }
         'c' { if ((Get-ServiceStatus 'web') -eq 'RUNNING') { Start-Process $webUrl } else { Write-Host "Servidor web precisa estar rodando." -ForegroundColor Red; Start-Sleep 2 } }
         'd' { Invoke-AdbTool 'reset' }
         'e' { Invoke-AdbTool 'devices' }
@@ -332,3 +327,16 @@ while ($true) {
         default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep 2 }
     }
 }
+```
+
+### \#\#\# ✅ Passo 3: Teste do Painel de Controle
+
+1.  Abra o terminal na pasta raiz do projeto.
+2.  Execute o script: `.\listadetarefas-painel.ps1`
+3.  Teste as opções do menu (Iniciar API, Parar API, Iniciar TUDO, etc.) para garantir que o painel está gerenciando todos os componentes do ecossistema corretamente.
+
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
+

@@ -63,13 +63,13 @@ Esse gerador oficial do Spring Boot nos ajuda a configurar dependências essenci
 - [Postman](https://www.postman.com/downloads/)  
 - [Insomnia](https://insomnia.rest/download)  
 - [Yet Another Rest Client (YARC)](https://chromewebstore.google.com/detail/yet-another-rest-client/ehafadccdcdedbhcbddihehiodgcddpl)
-![Visual Studio Code](.\assets\extension-yarc.png)
+![Visual Studio Code](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\extension-yarc.png)
 - [VS Code Java Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
-![Visual Studio Code](.\assets\extension-pack-for-java.png)
+![Visual Studio Code](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\extension-pack-for-java.png)
 
 [VS Code Spring Boot Pack](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack)
 
-![Visual Studio Code](.\assets\extension-spring-boot.png)
+![Visual Studio Code](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\extension-spring-boot.png)
 
 #### Estrutura de Pastas
 
@@ -79,7 +79,7 @@ graph TD
     A --> B[listadetarefas-api]
     A --> C[listadetarefas-web]
     A --> D[listadetarefas-desktop]
-    A --> E[listadetarefas-android]    
+    A --> E[listadetarefas-mobile]    
 ```
 
 ---
@@ -609,7 +609,7 @@ graph TD
       * Após criar tarefas via API, execute o comando SQL `SELECT * FROM TB_TAREFAS;` para ver os dados diretamente no banco.
 
 
-![H2 Console](.\assets\h2-console.png)
+![H2 Console](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\h2-console.png)
 
 -----
 
@@ -923,7 +923,7 @@ ng serve --open
 3.  **Teste:** Abra as ferramentas de desenvolvedor do navegador (F12) e teste todas as funcionalidades: adicionar, editar com duplo clique, marcar como concluída e deletar.
 
 
-![H2 Console](.\assets\listadetarefas-web.png)
+![H2 Console](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\listadetarefas-web.png)
 
 ---
 
@@ -1547,9 +1547,8 @@ mvn clean package
 java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar
 ```
 
-![Lista de Tarefas Desktop](.\assets\listadetarefas-desktop.png)
+![Lista de Tarefas Desktop](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/projetos/assets\listadetarefas-desktop.png)
 
 ---
 
 ### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
-

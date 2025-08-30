@@ -1,4 +1,3 @@
-// Ele contém os métodos: listarTarefas, adicionarTarefa, atualizarTarefa e deletarTarefa.
 package br.com.curso.listadetarefas.desktop;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,12 +23,12 @@ public class TarefaApiService {
                 return objectMapper.readValue(response.body(), new TypeReference<>() {});
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace(); // Em uma aplicação real, trate este erro de forma mais elegante.
+            e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    public Tarefa adicionarTarefa(Tarefa novaTarefa) {
+    public void adicionarTarefa(Tarefa novaTarefa) {
         try {
             String jsonBody = objectMapper.writeValueAsString(novaTarefa);
             HttpRequest request = HttpRequest.newBuilder()
@@ -37,14 +36,10 @@ public class TarefaApiService {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200 || response.statusCode() == 201) {
-                return objectMapper.readValue(response.body(), Tarefa.class);
-            }
+            client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     public void atualizarTarefa(Tarefa tarefa) {

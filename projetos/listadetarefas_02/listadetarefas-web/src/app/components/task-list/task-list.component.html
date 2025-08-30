@@ -8,7 +8,7 @@
 
   <ul class="task-list">
     <li *ngFor="let tarefa of tarefas">
-      <input type="checkbox" [(ngModel)]="tarefa.concluida" (change)="atualizarTarefa(tarefa)">
+      <input type="checkbox" [(ngModel)]="tarefa.concluida" (change)="toggleConcluida(tarefa)">
 
       <span *ngIf="!tarefa.editando" (dblclick)="iniciarEdicao(tarefa)" [ngClass]="{'completed': tarefa.concluida}">
 
