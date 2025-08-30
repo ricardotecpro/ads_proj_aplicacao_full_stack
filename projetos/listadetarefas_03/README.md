@@ -1,4 +1,15 @@
-# 🚀 Sistema Full Stack Completo v3.8
+# 🚀 Sistema Full Stack Completo v3.9
+
+## 🗺️ Visão Geral da Arquitetura
+
+Neste projeto, construiremos um sistema completo de **"Lista de Tarefas" (To-Do List)**, demonstrando como diferentes aplicações cliente podem consumir uma única fonte de dados central (API). A arquitetura final será:
+
+  * **Um Backend (API REST):** O cérebro do sistema, desenvolvido em Java com Spring Boot.
+  * **Dois Clientes:**
+    1.  Uma aplicação **Web** com Angular.
+    2.  Uma aplicação **Desktop** nativa com JavaFX.
+  * **Um Painel de Controle:** Um script PowerShell para automação e gerenciamento do ambiente.
+
 
 **Objetivo do Projeto:** Construir um ecossistema de software completo para uma Lista de Tarefas. Este guia é a versão definitiva do projeto, contendo a arquitetura, estrutura de pastas, descrição de arquivos e o código completo para o backend, frontend web e frontend desktop, com foco em uma experiência de usuário consistente e com a sincronização de estado corrigida entre as plataformas.
 
@@ -28,7 +39,7 @@ graph TD
 
 -----
 
-### Passo 0: Configuração Inicial do Projeto
+### Parte 0: Configuração Inicial do Projeto
 
 Nesta primeira etapa, vamos criar a estrutura base do **backend** utilizando o **Spring Initializr**.  
 Esse gerador oficial do Spring Boot nos ajuda a configurar dependências essenciais de forma rápida e segura.
@@ -36,6 +47,53 @@ Esse gerador oficial do Spring Boot nos ajuda a configurar dependências essenci
 ---
 
 #### Passo 1: Acessar o Spring Initializr
+
+
+**Objetivo:** Criar o serviço central que irá gerenciar os dados das tarefas, servindo como a única fonte de verdade para todos os clientes.
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Java Development Kit (JDK):** Versão LTS 17 ou 21.
+  * **Apache Maven:** Ferramenta de automação de build.
+  * **IDE (Ambiente de Desenvolvimento):** IntelliJ IDEA ou vsCode.
+  * **Cliente REST:** Postman Insomnia ou extensão YARC para navegador (para testes).
+
+### Ferramentas para Testar APIs
+
+- [Postman](https://www.postman.com/downloads/)  
+- [Insomnia](https://insomnia.rest/download)  
+- [Yet Another Rest Client (YARC)](https://chromewebstore.google.com/detail/yet-another-rest-client/ehafadccdcdedbhcbddihehiodgcddpl)
+![Visual Studio Code](.\assets\extension-yarc.png)
+- [VS Code Java Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+![Visual Studio Code](.\assets\extension-pack-for-java.png)
+
+[VS Code Spring Boot Pack](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack)
+
+![Visual Studio Code](.\assets\extension-spring-boot.png)
+
+#### Estrutura de Pastas
+
+```mermaid
+graph TD
+    A[listadetarefas-projeto]
+    A --> B[listadetarefas-api]
+    A --> C[listadetarefas-web]
+    A --> D[listadetarefas-desktop]
+    A --> E[listadetarefas-android]    
+```
+
+---
+
+Após criar o projeto, sua estrutura de pastas principal será:
+
+```
+listadetarefas-projeto/
+├── listadetarefas-api/ <-- Backend Spring Boot 
+├── listadetarefas-web/ <-- Frontend Angular
+├── listadetarefas-desktop/ <-- Frontend Java FX
+├── listadetarefas-android/<-- Frontend Mobile Android Kotlin
+└── listadetarefas-painel.ps1 <-- Script para executar via terminal
+```
 
 Acesse o site: 👉 [https://start.spring.io](https://start.spring.io)
 
@@ -54,7 +112,7 @@ Acesse o site: 👉 [https://start.spring.io](https://start.spring.io)
 - **Description**: `API para gerenciamento de tarefas`  
 - **Package name**: `br.com.curso.listadetarefas.api`  
 - **Packaging**: Jar  
-- **Java**: `21` (ou a versão que você instalou)  
+- **Java**: `21` (ou a versão que você instalou em seu computador)  
 
 ---
 
@@ -89,6 +147,180 @@ Clique em **“ADD DEPENDENCIES”** e adicione as seguintes:
 
 O cérebro da nossa aplicação, responsável por gerenciar e fornecer os dados das tarefas.
 
+
+### 📝 Passo 3: Modelagem dos Dados
+
+Vamos definir a estrutura da nossa tabela de tarefas.
+
+#### Diagrama Entidade-Relacionamento (ER)
+
+```mermaid
+erDiagram
+    TB_TAREFAS {
+        BIGINT id PK "Auto-incremento"
+        VARCHAR descricao
+        BOOLEAN concluida
+    }
+```
+
+---
+
+1.  Dentro de `src/main/java/br/com/curso/listadetarefas/api`, crie um novo pacote chamado `tarefa`.
+2.  Dentro do pacote `tarefa`, crie a classe `Tarefa.java`.
+
+<!-- end list -->
+
+
+```java
+// src/main/java/br/com/curso/listadetarefas/api/tarefa/Tarefa.java
+package br.com.curso.listadetarefas.api.tarefa;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "tb_tarefas")
+public class Tarefa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String descricao;
+    private boolean concluida;
+}
+```
+
+
+#### Estrutura de Pastas Após a Criação do Modelo
+
+```
+api/
+└── src/main/java/br/com/curso/listadetarefas/api/
+    ├── tarefa/
+    │   └── Tarefa.java  # <- Arquivo criado
+    └── ListadetarefasApiApplication.java
+```
+
+### 🏗️ Passo 4: Construção das Camadas de Serviço
+
+Agora, criaremos as classes que formam a arquitetura da nossa API: `Repository` (acesso a dados), `Service` (regras de negócio) e `Controller` (endpoints HTTP).
+
+#### Diagrama de Classes
+
+```mermaid
+classDiagram
+    TarefaController ..> TarefaService : Usa
+    TarefaService ..> TarefaRepository : Usa
+    TarefaRepository ..> Tarefa : Gerencia
+    class TarefaController {
+        +List~Tarefa~ listarTarefas()
+        +Tarefa criarTarefa(Tarefa)
+        +ResponseEntity~Tarefa~ atualizarTarefa(Long, Tarefa)
+        +ResponseEntity~Void~ deletarTarefa(Long)
+    }
+    class TarefaService {
+        +List~Tarefa~ listarTodas()
+        +Tarefa criar(Tarefa)
+        +Tarefa atualizar(Long, Tarefa)
+        +void deletar(Long)
+    }
+    class TarefaRepository {
+        <<Interface>>
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
+    }
+```
+
+1.  Dentro do pacote `tarefa`, crie as seguintes classes e interfaces:
+
+**`TarefaRepository.java`**
+
+```java
+package br.com.curso.listadetarefas.api.tarefa;
+import org.springframework.data.jpa.repository.JpaRepository;
+public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
+}
+```
+
+**`TarefaService.java`**
+
+```java
+package br.com.curso.listadetarefas.api.tarefa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class TarefaService {
+    @Autowired
+    private TarefaRepository tarefaRepository;
+
+    public List<Tarefa> listarTodas() { return tarefaRepository.findAll(); }
+    public Tarefa criar(Tarefa tarefa) { return tarefaRepository.save(tarefa); }
+    public Tarefa atualizar(Long id, Tarefa tarefaAtualizada) {
+        return tarefaRepository.findById(id)
+            .map(tarefaExistente -> {
+                tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
+                tarefaExistente.setConcluida(tarefaAtualizada.isConcluida());
+                return tarefaRepository.save(tarefaExistente);
+            }).orElseThrow(() -> new RuntimeException("Tarefa não encontrada com o id: " + id));
+    }
+    public void deletar(Long id) {
+        if (!tarefaRepository.existsById(id)) {
+            throw new RuntimeException("Tarefa não encontrada com o id: " + id);
+        }
+        tarefaRepository.deleteById(id);
+    }
+}
+```
+
+**`TarefaController.java`**
+
+```java
+package br.com.curso.listadetarefas.api.tarefa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/tarefas")
+@CrossOrigin(origins = "*")
+public class TarefaController {
+    @Autowired
+    private TarefaService tarefaService;
+
+    @GetMapping
+    public List<Tarefa> listarTarefas() { return tarefaService.listarTodas(); }
+    @PostMapping
+    public Tarefa criarTarefa(@RequestBody Tarefa tarefa) { return tarefaService.criar(tarefa); }
+    @PutMapping("/{id}")
+    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+        try {
+            Tarefa atualizada = tarefaService.atualizar(id, tarefa);
+            return ResponseEntity.ok(atualizada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
+        try {
+            tarefaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}
+```
+
+---
+
+
 #### **Estrutura de Pastas (Backend)**
 
 ```
@@ -107,6 +339,8 @@ listadetarefas-api/
         └── resources/
             └── application.properties
 ```
+
+---
 
 #### **Descrição dos Arquivos (Backend)**
 
@@ -329,20 +563,74 @@ public class TarefaController {
 }
 ```
 
+### ✅ Passo 5: Execução e Teste da API
+
+#### Diagrama de Casos de Uso da API
+
+```mermaid
+graph TD
+    subgraph "Sistema de Tarefas API"
+        UC1[Listar todas as tarefas]
+        UC2[Adicionar nova tarefa]
+        UC3[Atualizar uma tarefa]
+        UC4[Deletar uma tarefa]
+    end
+
+    Usuario["Usuário (via Cliente)"] --> UC1
+    Usuario --> UC2
+    Usuario --> UC3
+    Usuario --> UC4
+```
+
+---
+
+1.  **Execute a Aplicação:**
+
+      * Na sua IDE, execute a classe `ListadetarefasApiApplication.java`.
+      * Ou, via terminal na raiz do projeto: `./mvnw spring-boot:run`
+
+```bash
+./mvnw spring-boot:run
+```
+
+---
+
+2.  **Teste com Cliente REST (ex: YARC):**
+
+      * Use um cliente REST para fazer requisições para `http://localhost:8080/api/tarefas` e verifique todas as operações de CRUD (GET, POST, PUT, DELETE) como detalhado no guia anterior.
+
+3.  **Teste com o Console H2:**
+
+      * Com a API rodando, acesse `http://localhost:8080/h2-console` no navegador.
+      * Use as seguintes credenciais para logar:
+          * **JDBC URL:** `jdbc:h2:mem:testdb`
+          * **User Name:** `sa`
+          * **Password:** (em branco)
+      * Após criar tarefas via API, execute o comando SQL `SELECT * FROM TB_TAREFAS;` para ver os dados diretamente no banco.
+
+
+![H2 Console](.\assets\h2-console.png)
+
 -----
 
 ### **Parte 2: O Frontend Web com Angular**
+
+(`listadetarefas-web`)
 
 A interface web, com layout de tabela e funcionalidades consistentes.
 
 
 ### 🛠️ Ferramentas Necessárias
 
-  * **Node.js e npm:** Ambiente de execução e gerenciador de pacotes.
-  * **Angular CLI:** (`npm install -g @angular/cli`)
-  * **Editor de Código:** Visual Studio Code.
+  * **Node.js LTS 20.x ou 22.x e npm:** Ambiente de execução e gerenciador de pacotes.
+   
+  * **Angular CLI:**
+0. No terminal, execute:
+  ```bash
+  npm install -g @angular/cli
+  ```
 
-### \#\#\# 📂 Passo 1: Criação do Projeto
+### 📂 Passo 1: Criação do Projeto
 
 1.  No terminal, crie o projeto:
     ```bash
@@ -356,9 +644,11 @@ A interface web, com layout de tabela e funcionalidades consistentes.
     ng generate component components/task-list
     ```
 
-
+---
 
 #### **Estrutura de Pastas (Web)**
+
+Renomear os arquivos criados pelo nodejs, e criar os demais para refletir essa estrutura.
 
 ```
 listadetarefas-web/
@@ -366,14 +656,14 @@ listadetarefas-web/
     └── app/
         ├── components/
         │   └── task-list/
-        │       ├── task-list.component.css
-        │       ├── task-list.component.html
-        │       └── task-list.component.ts
+        │       ├── task-list.component.css <-- renomeado
+        │       ├── task-list.component.html <-- renomeado
+        │       └── task-list.component.ts <-- renomeado
         ├── models/
         │   └── tarefa.ts
         ├── services/
         │   └── tarefa.service.ts
-        ├── app.component.ts
+        ├── app.component.ts <-- criado
         └── app.config.ts
 ```
 
@@ -621,16 +911,75 @@ export class TaskListComponent implements OnInit {
 -----
 
 
-### \#\#\# ✅ Execução e Teste
+### ✅ Execução e Teste
 
-1.  **Pré-requisito:** A API backend deve estar rodando.
-2.  **Execute:** No terminal (na pasta `listadetarefas-web`), rode `ng serve --open`.
+1.  **Pré-requisito:** A API backend deve estar rodando ✅.
+2.  **Execute:** No terminal (na pasta `listadetarefas-web`),
+
+```bash
+ng serve --open
+```
+
 3.  **Teste:** Abra as ferramentas de desenvolvedor do navegador (F12) e teste todas as funcionalidades: adicionar, editar com duplo clique, marcar como concluída e deletar.
 
+
+![H2 Console](.\assets\listadetarefas-web.png)
+
+---
 
 ### **Parte 3: O Frontend Desktop com JavaFX**
 
 A aplicação nativa, com layout e funcionalidades consistentes com a versão web.
+
+---
+(`listadetarefas-desktop`)
+
+**Objetivo:** Criar uma aplicação desktop nativa e funcional que consome a API backend.
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Java Development Kit (JDK):** Versão 17 ou superior.
+  * **IDE:** IntelliJ IDEA ou VS Code com o "Extension Pack for Java".
+
+### \#\#\# 📂 Passo 1: Criação e Configuração do Projeto
+
+1.  **Crie um projeto Maven** na sua IDE para `listadetarefas-desktop` (siga as instruções detalhadas do guia anterior para IntelliJ ou VS Code).
+2.  **Substitua o `pom.xml`** pelo código completo fornecido no guia anterior, que inclui JavaFX, Jackson e o `maven-shade-plugin`.
+3.  **Crie o arquivo `module-info.java`** em `src/main/java` com a versão final e corrigida, contendo todos os `requires`, `opens` e `exports` necessários.
+
+### \#\#\# 🏗️ Passo 2: Estrutura de Código e UI
+
+Siga os passos e use os códigos completos e detalhados do guia anterior para criar a estrutura final.
+
+#### Diagrama de Classes do Cliente Desktop
+
+```mermaid
+classDiagram
+    MainApp --|> Application
+    MainApp ..> MainViewController : Carrega
+    MainViewController ..> TarefaApiService : Usa
+    TarefaApiService ..> Tarefa : Manipula
+    class MainApp {
+        +start(Stage)
+    }
+    class MainViewController {
+        -TableView~Tarefa~ tabelaTarefas
+        +initialize()
+        +adicionarTarefa()
+        +atualizarListaDeTarefas()
+    }
+    class TarefaApiService {
+        +List~Tarefa~ listarTarefas()
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
+    }
+```
+
+---
+
 
 #### **Estrutura de Pastas (Desktop)**
 
@@ -1154,3 +1503,50 @@ public class MainViewController implements Initializable {
     }
 }
 ```
+---
+
+
+#### Estrutura de Pastas e Arquivos Final do Desktop
+
+```
+listadetarefas-desktop/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   ├── br/com/curso/listadetarefas/desktop/
+│       │   │   ├── Launcher.java
+│       │   │   ├── MainApp.java
+│       │   │   ├── MainViewController.java
+│       │   │   ├── Tarefa.java
+│       │   │   └── TarefaApiService.java
+│       │   └── module-info.java
+│       └── resources/
+│           └── br/com/curso/listadetarefas/desktop/
+│               └── MainView.fxml
+└── pom.xml
+```
+
+### \#\#\# ✅ Passo 3: Construção e Teste
+
+1.  **Pré-requisito:** A API backend deve estar rodando.
+2.  **Construa:** No terminal, na raiz do projeto, rode `mvn clean package`.
+3.  **Execute:** Rode o JAR gerado: `java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar`.
+4.  **Teste:** Verifique todas as funcionalidades: adicionar, deletar, atualizar a lista, e editar a descrição com duplo clique.
+
+---
+
+**Construa:** No terminal, na raiz do projeto
+
+```bash
+mvn clean package
+```
+**Execute:** Rode o JAR gerado
+
+
+```bash
+java -jar target/listadetarefas-desktop-1.0-SNAPSHOT.jar
+```
+
+![Lista de Tarefas Desktop](.\assets\listadetarefas-desktop.png)
+
+---

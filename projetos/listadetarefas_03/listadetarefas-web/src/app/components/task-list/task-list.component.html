@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="header">
+    <h1>Minha Lista de Tarefas</h1>
+    <div class="header-actions">
+      <button class="btn-refresh" (click)="carregarTarefas()">🔄 Atualizar</button>
+      <button *ngIf="existemTarefasSelecionadas()" class="btn-delete" (click)="deletarTarefasSelecionadas()">
+        ❌ Excluir Selecionadas
+      </button>
+    </div>
+  </div>
+
+  <form class="form-add" (ngSubmit)="adicionarTarefa()">
+    <input type="text" placeholder="O que precisa ser feito?" [(ngModel)]="novaTarefa.descricao" name="descricao" required>
+    <button type="submit" class="btn-create">Adicionar</button>
+  </form>
+
+  <div class="task-list-container">
+    <div class="task-list-header">
+      <div class="col-select">Sel.</div>
+      <div class="col-status">Status</div>
+      <div class="col-desc">Descrição</div>
+      <div class="col-actions">Ações</div>
+    </div>
+    <div class="task-list-body">
+      <div *ngFor="let tarefa of tarefas" class="task-row">
+        <div class="col-select">
+          <input class="selection-checkbox" type="checkbox" [(ngModel)]="tarefa.selecionada">
+        </div>
+        <div class="col-status">
+          <input class="status-checkbox" type="checkbox" [(ngModel)]="tarefa.concluida" (ngModelChange)="atualizarStatus(tarefa)">
+        </div>
+        <div class="col-desc">
+           <span *ngIf="!tarefaEmEdicao || tarefaEmEdicao.id !== tarefa.id" [ngClass]="{'completed': tarefa.concluida}">{{ tarefa.descricao }}</span>
+           <input *ngIf="tarefaEmEdicao && tarefaEmEdicao.id === tarefa.id" type="text" [(ngModel)]="tarefaEmEdicao.descricao" (keyup.enter)="salvarEdicao()" (keyup.escape)="cancelarEdicao()">
+        </div>
+        <div class="col-actions">
+          <div class="actions" *ngIf="!tarefaEmEdicao || tarefaEmEdicao.id !== tarefa.id">
+            <button class="btn-update" (click)="iniciarEdicao(tarefa)">✏️</button>
+            <button class="btn-delete" (click)="deletarTarefa(tarefa.id)">❌</button>
+          </div>
+           <div class="actions" *ngIf="tarefaEmEdicao && tarefaEmEdicao.id === tarefa.id">
+            <button class="btn-create" (click)="salvarEdicao()">✔️</button>
+            <button class="btn-cancel" (click)="cancelarEdicao()">✖️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
