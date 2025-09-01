@@ -6,7 +6,7 @@
     os diferentes componentes do projeto. Ele detecta automaticamente o status de cada serviço
     e torna o ambiente de desenvolvimento mais produtivo.
 .VERSION
-    4.8 - Unifica a correção de detecção do emulador (v4.6) com o build do Android (v4.7).
+    4.9 - Aprimorada a detecção da janela do App Desktop para maior robustez.
 #>
 
 # Força o uso do protocolo TLS 1.2 para compatibilidade com downloads HTTPS (ex: Maven Wrapper).
@@ -15,7 +15,7 @@
 #==============================================================================
 # --- CONFIGURAÇÕES GLOBAIS ---
 #==============================================================================
-$ScriptVersion = "4.8"
+$ScriptVersion = "4.9"
 
 $basePath = $PSScriptRoot
 $apiPath = Join-Path $basePath "listadetarefas-api"
@@ -55,7 +55,6 @@ $desktopWindowTitle = "Minha Lista de Tarefas (Desktop)"
 function Initialize-EmulatorSelection {
     Write-Host "Detectando emuladores instalados..." -ForegroundColor Cyan
     try {
-        # --- LÓGICA CORRIGIDA DA v4.6 ---
         $outputLines = & "$emulatorPath\emulator.exe" -list-avds
         $validEmulators = New-Object System.Collections.Generic.List[string]
         foreach ($line in $outputLines) {
@@ -105,7 +104,7 @@ function Select-Emulator {
 }
 
 #==============================================================================
-# --- FUNÇÃO PARA BUILD ANDROID (da v4.7) ---
+# --- FUNÇÃO PARA BUILD ANDROID ---
 #==============================================================================
 function Build-And-Install-Android {
     if (-not (Wait-For-AdbDevice)) { Read-Host "`nOperação cancelada. Pressione Enter..."; return }
@@ -132,11 +131,13 @@ function Build-And-Install-Android {
 function Get-ServiceStatus($serviceName) {
     try {
         switch ($serviceName) {
-            'api' { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction Stop) { return "RUNNING" } }
-            'web' { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            'api'     { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            'web'     { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction Stop) { return "RUNNING" } }
+            # --- CORREÇÃO AQUI ---
+            # Comando mais robusto para encontrar a janela, focando apenas em processos que TÊM uma janela principal.
             'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction Stop | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle }) { return "RUNNING" } }
             'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } }
-            'emulator' { if ((& "$platformToolsPath\adb.exe" devices) -like "*`tdevice*") { return "RUNNING" } }
+            'emulator'{ if ((& "$platformToolsPath\adb.exe" devices) -like "*`tdevice*") { return "RUNNING" } }
         }
     }
     catch { return "STOPPED" }
@@ -196,6 +197,8 @@ function Start-Service($serviceName, [switch]$ColdBoot, [switch]$FixDns) {
         'desktop' {
             if (-not (Ensure-BuildArtifact -ArtifactPath $desktopJar -ProjectPath $desktopPath -BuildCommand @("clean", "package"))) { break }
             Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title App-Desktop && java -jar `"`"$desktopJar`"`"`"" -WorkingDirectory $desktopPath
+            # --- CORREÇÃO AQUI ---
+            # Adiciona uma pausa para dar tempo ao processo Java de criar a janela.
             Start-Sleep -Seconds 3
             $commandExecuted = $true
         }
@@ -231,7 +234,7 @@ function Start-Service($serviceName, [switch]$ColdBoot, [switch]$FixDns) {
     if (-not $commandExecuted -and $serviceName -ne 'emulator') { Write-Host "Falha no pré-requisito para '$serviceName'." -ForegroundColor Red; Start-Sleep 2; return $false }
     Write-Host "Comando de início enviado. Verificando status..." -ForegroundColor Green
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    while ($stopwatch.Elapsed.TotalSeconds -lt 20) {
+    while ($stopwatch.Elapsed.TotalSeconds -lt 20) { # Reduzido o tempo de espera geral
         if ((Get-ServiceStatus $serviceName) -eq 'RUNNING') { Write-Host "`nServiço '$serviceName' parece estar rodando." -ForegroundColor Green; return $true }
         Write-Host "." -NoNewline; Start-Sleep 2
     }

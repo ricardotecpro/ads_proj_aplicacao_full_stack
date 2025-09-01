@@ -166,3 +166,7 @@ Esta seção descreve o fluxo de criação dos componentes do backend.
 - Anotado com `@RestController` para indicar que os retornos dos métodos serão serializados para JSON.
 - `@RequestMapping("/tarefas")` define a URL base para todos os endpoints.
 - Utiliza anotações como `@GetMapping`, `@PostMapping`, `@PutMapping` e `@DeleteMapping` para mapear os métodos HTTP para as ações CRUD, seguindo as melhores práticas REST.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)

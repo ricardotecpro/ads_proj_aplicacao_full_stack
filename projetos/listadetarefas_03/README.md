@@ -1,4 +1,5 @@
-# 🚀 Sistema Full Stack Completo v3.9
+# 🚀 Projeto Lista de Tarefas" (To-Do List)
+v3.9
 
 ## 🗺️ Visão Geral da Arquitetura
 

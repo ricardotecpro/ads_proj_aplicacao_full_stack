@@ -105,7 +105,7 @@ function Select-Emulator {
 }
 
 #==============================================================================
-# --- FUNÇÃO PARA BUILD ANDROID (da v4.7) ---
+# --- FUNÇÃO PARA BUILD ANDROID ---
 #==============================================================================
 function Build-And-Install-Android {
     if (-not (Wait-For-AdbDevice)) { Read-Host "`nOperação cancelada. Pressione Enter..."; return }
@@ -125,6 +125,7 @@ function Build-And-Install-Android {
     }
 }
 
+
 #==============================================================================
 # --- FUNÇÕES DE GERENCIAMENTO DE SERVIÇOS ---
 #==============================================================================
@@ -134,7 +135,7 @@ function Get-ServiceStatus($serviceName) {
         switch ($serviceName) {
             'api' { if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction Stop) { return "RUNNING" } }
             'web' { if (Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction Stop) { return "RUNNING" } }
-            'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction Stop | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle }) { return "RUNNING" } }
+            'desktop' { if (Get-Process -Name "java", "javaw" -ErrorAction Stop | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" }) { return "RUNNING" } }
             'android' { if ((& "$platformToolsPath\adb.exe" shell ps) -match $androidPackage) { return "RUNNING" } }
             'emulator' { if ((& "$platformToolsPath\adb.exe" devices) -like "*`tdevice*") { return "RUNNING" } }
         }
@@ -196,7 +197,6 @@ function Start-Service($serviceName, [switch]$ColdBoot, [switch]$FixDns) {
         'desktop' {
             if (-not (Ensure-BuildArtifact -ArtifactPath $desktopJar -ProjectPath $desktopPath -BuildCommand @("clean", "package"))) { break }
             Start-Process cmd.exe -ArgumentList "/c start cmd.exe /k `"title App-Desktop && java -jar `"`"$desktopJar`"`"`"" -WorkingDirectory $desktopPath
-            Start-Sleep -Seconds 3
             $commandExecuted = $true
         }
         'android' {
@@ -231,7 +231,7 @@ function Start-Service($serviceName, [switch]$ColdBoot, [switch]$FixDns) {
     if (-not $commandExecuted -and $serviceName -ne 'emulator') { Write-Host "Falha no pré-requisito para '$serviceName'." -ForegroundColor Red; Start-Sleep 2; return $false }
     Write-Host "Comando de início enviado. Verificando status..." -ForegroundColor Green
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    while ($stopwatch.Elapsed.TotalSeconds -lt 20) {
+    while ($stopwatch.Elapsed.TotalSeconds -lt 45) {
         if ((Get-ServiceStatus $serviceName) -eq 'RUNNING') { Write-Host "`nServiço '$serviceName' parece estar rodando." -ForegroundColor Green; return $true }
         Write-Host "." -NoNewline; Start-Sleep 2
     }
@@ -244,7 +244,7 @@ function Stop-Service($serviceName) {
     switch ($serviceName) {
         'api' { $p = Get-NetTCPConnection -LocalPort 8080 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
         'web' { $p = Get-NetTCPConnection -LocalPort 4200 -State Listen -EA 0; if ($p) { Stop-Process -Id $p.OwningProcess -Force } }
-        'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -eq $desktopWindowTitle } | Stop-Process -Force }
+        'desktop' { Get-Process -Name "java", "javaw" -EA 0 | Where-Object { $_.MainWindowTitle -like "*$desktopWindowTitle*" } | Stop-Process -Force }
         'android' { & "$platformToolsPath\adb.exe" shell am force-stop $androidPackage }
         'emulator' { & "$platformToolsPath\adb.exe" emu kill }
     }
@@ -370,3 +370,4 @@ while ($true) {
         default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep 2 }
     }
 }
+
