@@ -430,6 +430,9 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
 
 5.  Agora, a parte mais importante: as **Variáveis de Ambiente**. Clique em **Advanced**.
 
+
+
+
       * Clique em **Add Environment Variable** e adicione as seguintes chaves e valores:
 
         | Chave | Valor |
@@ -447,6 +450,88 @@ O Render irá buscar seu código do GitHub, construir a aplicação e iniciá-la
 
 Quando terminar, o Render fornecerá uma URL pública (ex: `https://controle-de-gastos.onrender.com`), e sua aplicação estará **ao vivo\!** 🎉
 
+---
+
+
+## 🔹 Caminho 1 — Sem Docker (mais simples)
+
+1. Vá em **New Web Service** → **Connect Repo** → selecione o repositório `controle-de-gastos`.
+2. Quando Render pedir a configuração, escolha **Runtime: Docker (ou Other)** (mesmo se não aparecer Java).
+3. Preencha manualmente:
+
+   * **Name**: `controle-de-gastos`
+   * **Region**: (ex. Ohio se você está no Brasil)
+   * **Branch**: `main`
+   * **Build Command**:
+
+     ```bash
+     ./mvnw clean install -DskipTests
+     ```
+
+     ou, se não tiver wrapper (`mvnw`):
+
+     ```bash
+     mvn clean install -DskipTests
+     ```
+   * **Start Command**:
+
+     ```bash
+     java -jar target/*.jar
+     ```
+4. Certifique-se de que o seu projeto **gera o JAR executável** (padrão do Spring Boot). No `pom.xml`, deve ter:
+
+   ```xml
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+           </plugin>
+       </plugins>
+   </build>
+   ```
+
+   Isso garante que o JAR gerado seja “fat jar” (`target/controle-de-gastos-0.0.1-SNAPSHOT.jar`).
+
+
+./mvnw clean package -DskipTests   
+
+---
+
+## 🔹 Caminho 2 — Usando Docker (mais flexível)
+
+Se quiser controlar melhor, crie um arquivo **`Dockerfile`** na raiz do projeto:
+
+```dockerfile
+# Etapa 1: build do JAR
+FROM maven:3.9.4-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Etapa 2: imagem final
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+No Render:
+
+* **Runtime**: Docker
+* Ele vai detectar o `Dockerfile` automaticamente e construir sua imagem.
+
+---
+
+## 🔹 Conferindo variáveis de ambiente
+
+No painel do Render → **Environment**:
+
+* Configure variáveis como `SPRING_PROFILES_ACTIVE=prod` ou credenciais do banco (`DATABASE_URL`, `JDBC_URL`, etc).
+* Se estiver usando PostgreSQL do Render, ele te dá os dados prontos (host, user, password).
+
 -----
 
 ### ✅ Conclusão
@@ -460,4 +545,4 @@ Parabéns\! Você construiu do zero e implantou uma aplicação web completa com
   * Melhorar o CSS e a aparência geral da aplicação.
   * Adicionar um sistema de usuários e autenticação com Spring Security.
 
-Espero que este guia tenha sido útil e didático. Agora você tem uma base sólida para criar muitas outras aplicações incríveis\!
+---
