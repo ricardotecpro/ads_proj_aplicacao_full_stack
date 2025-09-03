@@ -1,11 +1,14 @@
 # ⚒️ Projetos
 
-* **[Projetos](./projetos/)**: Projetos: Lista de Tarefas (ToDoList)
+* **[Projetos](./projetos/)**: Projetos: Estudo de Casos
 
 ---
 
 ## Atividades - Lista de Tarefas (To-Do List)
 
+
+* **[controledegastos_01](./projetos/controledegastos_01/)**: Controle de Gastos 01
+* 
 * **[Lista de Tarefa 01](./projetos/listadetarefas_01/)**: Lista de Tarefas 01
 * **[Lista de Tarefa 02](./projetos/listadetarefas_02/)**: Lista de Tarefas 02
 * **[Lista de Tarefa 03](./projetos/listadetarefas_03/)**: Lista de Tarefas 03 

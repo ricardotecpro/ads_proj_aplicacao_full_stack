@@ -1,4 +1,4 @@
-# 🚀 Guia Completo: Construindo e Implantando o "Controle de Gastos" com Spring Boot e htmx
+# 🚀 Controle de Gastos com Spring Boot e htmx
 
 Neste guia, vamos construir juntos uma aplicação web moderna e robusta chamada **Controle de Gastos**. O objetivo é criar um gerenciador financeiro simples, mas com uma experiência de usuário fluida, similar a uma **Single Page Application (SPA)**, sem a complexidade de frameworks JavaScript.
 
