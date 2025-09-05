@@ -647,3 +647,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 ### ✅ Conclusão
 
 Parabéns\! Você concluiu um guia completo que não apenas constrói uma aplicação funcional, mas também incorpora as melhores práticas e soluções para problemas reais de desenvolvimento e deploy.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
