@@ -1,4 +1,5 @@
-# 🚀 Controle de Gastos com Spring Boot e htmx
+# 🚀 Controle de Gastos com Spring Boot e HTMX
+v1.1
 
 Neste guia, vamos construir juntos uma aplicação web moderna e robusta chamada **Controle de Gastos**. O objetivo é criar um gerenciador financeiro simples, mas com uma experiência de usuário fluida, similar a uma **Single Page Application (SPA)**, sem a complexidade de frameworks JavaScript.
 
@@ -8,18 +9,22 @@ Ao final, você terá uma aplicação funcional implantada na nuvem, pronta para
 
   * Estruturar um projeto **Spring Boot** do zero.
   * Modelar dados e usar o **Spring Data JPA**.
-  * Criar uma interface reativa com **Thymeleaf** e **htmx**.
+  * Criar uma interface reativa com **Thymeleaf** e **HTMX**.
   * Gerenciar diferentes ambientes (desenvolvimento e produção) com **Spring Profiles**.
   * Fazer o deploy de um banco de dados **PostgreSQL** no **Neon**.
   * Fazer o deploy de uma aplicação Java no **Render**.
-
-Vamos começar\!
 
 -----
 
 ### 🗂️ Fase 1: Preparação do Ambiente e Controle de Versão
 
 Todo projeto profissional começa com um bom controle de versão. Vamos usar Git e hospedá-lo no GitHub.
+
+## GitHub Desktop
+Se não estiver habituado a usar o Git por linha de comando, utilize o GitHub Desktop
+https://desktop.github.com/download/
+
+---
 
 1.  **Crie a Pasta do Projeto:**
     Abra seu terminal e crie uma pasta para o projeto.
@@ -53,6 +58,9 @@ Todo projeto profissional começa com um bom controle de versão. Vamos usar Git
 
 ### 🏗️ Fase 2: Criação do Esqueleto do Projeto
 
+
+## 🔹 Spring Initializr
+
 Usaremos o **Spring Initializr** para gerar a base da nossa aplicação com todas as dependências necessárias.
 
 1.  Acesse o [Spring Initializr](https://start.spring.io/).
@@ -67,9 +75,9 @@ Usaremos o **Spring Initializr** para gerar a base da nossa aplicação com toda
           * **Artifact:** `controle-de-gastos`
           * **Name:** `controle-de-gastos`
           * **Description:** `Aplicação para controle de gastos pessoais`
-          * **Package name:** `br.com.controledegastos`
+          * **Package name:** `br.com.controledegastos` <--- Fazer exatamente igual, remover excesso
       * **Packaging:** Jar
-      * **Java:** 17
+      * **Java:** 21
 
 3.  No campo **Dependencies**, clique em "ADD DEPENDENCIES" e adicione as seguintes:
 
@@ -344,6 +352,8 @@ Agora vamos criar a interface que o usuário verá. Ela será um único arquivo 
       * **Adicionar:** O `<form>` tem `hx-post="/lancamentos"`. Ao submeter, ele envia um POST para essa URL. `hx-target="#lista-lancamentos"` e `hx-swap="outerHTML"` dizem para pegar a resposta (que é o fragmento da tabela atualizada) e substituir todo o elemento `<div id="lista-lancamentos">`.
       * **Excluir:** O `<button>` de exclusão tem `hx-delete="/lancamentos/..."`. Ao clicar, ele envia uma requisição DELETE. A resposta (a tabela atualizada) também substitui o `<div id="lista-lancamentos">`.
 
+### Obs. Crud completo será implementado posteriormente.
+
 -----
 
 ### 🌍 Fase 6: Configuração de Ambientes
@@ -354,7 +364,7 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
     Este arquivo, localizado em `src/main/resources/`, já é o perfil padrão. Vamos configurá-lo para o H2.
 
     ```properties
-    # Configurações do H2 Database (perfil 'default')
+    # Configuracoes do H2 Database (perfil 'default') <-- 'Nao usar acentos por conta do Render'
     spring.datasource.url=jdbc:h2:mem:testdb
     spring.datasource.driverClassName=org.h2.Driver
     spring.datasource.username=sa
@@ -362,7 +372,7 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
     spring.h2.console.enabled=true
 
     # JPA
-    spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+    #spring.jpa.database-platform=org.hibernate.dialect.H2Dialect <-- 'Comentar por conta do Render'
     spring.jpa.hibernate.ddl-auto=update
     ```
 
@@ -372,7 +382,7 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
     Na mesma pasta, crie um novo arquivo chamado `application-prod.properties`. Este arquivo será ativado quando o perfil `prod` estiver ativo.
 
     ```properties
-    # Configurações do PostgreSQL (perfil 'prod')
+    # Configuracoes do PostgreSQL (perfil 'prod') <-- 'Nao usar acentos por conta do Render'
     # Usaremos variáveis de ambiente no Render para preencher estes valores
     spring.datasource.url=${DB_URL}
     spring.datasource.username=${DB_USERNAME}
@@ -380,10 +390,55 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
 
     # JPA
     spring.jpa.hibernate.ddl-auto=update
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    #spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect <-- 'Comentar por conta do Render'
     ```
 
     Os valores `${...}` serão substituídos por variáveis de ambiente que configuraremos na plataforma de deploy.
+
+---
+
+## 🔹 Caminho 1 — Usando Docker (mais flexível)
+
+Se quiser controlar melhor, crie um arquivo **`Dockerfile`** na raiz do projeto:
+
+```dockerfile
+# Estágio 1: Build da Aplicação com Eclipse Temurin JDK
+FROM eclipse-temurin:21-jdk-jammy as builder
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY pom.xml .
+
+RUN chmod +x mvnw # <-- ADICIONE ESTA LINHA
+
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+RUN ./mvnw clean package -DskipTests
+
+# Estágio 2: Imagem Final de Execução com Eclipse Temurin JRE
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+---
+
+## Preparando Docker para o Render:
+
+* **Runtime**: Docker
+* Ele vai detectar o `Dockerfile` automaticamente e construir sua imagem.
+
+---
+
+## 🔹 Conferindo variáveis de ambiente
+
+No painel do Render → **Environment**:
+
+* Configure variáveis como `SPRING_PROFILES_ACTIVE=prod` ou credenciais do banco (`DATABASE_URL`, `JDBC_URL`, etc).
+* Se estiver usando PostgreSQL do Render, ele te dá os dados prontos (host, user, password).
+
 
 3.  **Commit das mudanças:**
 
@@ -399,16 +454,21 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
 
 É hora de colocar nossa aplicação no ar\!
 
+## 🔹 Neon
+
 #### 7.1. Criando o Banco de Dados no Neon
 
 1.  Vá para [Neon](https://neon.tech) e faça login (pode usar sua conta do GitHub).
 2.  Crie um novo projeto. Dê um nome, como `controle-de-gastos-db`.
-3.  Após a criação, você será levado a um painel. Na seção **Connection Details**, você encontrará as informações que precisamos.
+3.  Após a criação, Clique no botão superior direito **Connect**, você será levado a um painel. Na seção **Connection Details**, você encontrará as informações que precisamos.
 4.  O Neon fornece uma URL de conexão completa. Guarde as seguintes partes:
       * **Host:** (ex: `ep-plain-snow-123456.us-east-2.aws.neon.tech`)
       * **Database:** (o nome do seu banco)
       * **User:** (o nome do seu usuário)
       * **Password:** (a senha que foi gerada)
+5. Ou mais simples clique onde está **psql**, e mude para **Connection string**, depois clique em **Copy snippet** e salve no bloco de notas, para ser usado posteriormente no Render.
+
+## 🔹 Render
 
 #### 7.2. Fazendo o Deploy da Aplicação no Render
 
@@ -420,27 +480,22 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
 
 4.  Na tela de configuração, preencha:
 
-      * **Name:** `controle-de-gastos` (ou o que preferir).
-      * **Region:** Escolha a mais próxima de você.
-      * **Branch:** `main`.
-      * **Runtime:** `Java`. O Render geralmente detecta isso.
-      * **Build Command:** `./mvnw clean install`
-      * **Start Command:** `java -jar target/controle-de-gastos-0.0.1-SNAPSHOT.jar`
-      * **Instance Type:** **Free**.
+      * **Name:** `controle-de-gastos[NomeSobrenome]` (ou o que preferir).      
+      * **Language:** `Docker`.  
+      * **Branch:** `main`. <-- ou **master** conferir no seu GitHub      
+      * **Region:** Escolha a mais próxima de você. Ohio (US East)
+      * **Instance Type:** **Free**. 512 (RAM) 0.1 CPU 
 
 5.  Agora, a parte mais importante: as **Variáveis de Ambiente**. Clique em **Advanced**.
-
-
-
 
       * Clique em **Add Environment Variable** e adicione as seguintes chaves e valores:
 
         | Chave | Valor |
         | :--- | :--- |
         | `SPRING_PROFILES_ACTIVE` | `prod` |
-        | `DB_USERNAME` | O usuário do seu banco de dados Neon. |
-        | `DB_PASSWORD` | A senha do seu banco de dados Neon. |
-        | `DB_URL` | `jdbc:postgresql://<HOST_DO_NEON>/<DB_NAME_DO_NEON>?sslmode=require` |
+        | `DB_USERNAME` | O usuário do seu banco de dados Neon. | `neondb_owner` |
+        | `DB_PASSWORD` | A senha do seu banco de dados Neon. | `:*********@` |fica entre os dois pontos e o arroba.
+        | `DB_URL` | Exemplo: `postgresql://neondb_owner:*****@----?sslmode=require&channel_binding=require` |
 
         **Atenção:** Substitua `<HOST_DO_NEON>` e `<DB_NAME_DO_NEON>` pelos valores que você pegou do painel do Neon. A parte `?sslmode=require` é **essencial** para a conexão funcionar.
 
@@ -448,15 +503,19 @@ Vamos configurar a aplicação para usar o H2 em desenvolvimento e o PostgreSQL 
 
 O Render irá buscar seu código do GitHub, construir a aplicação e iniciá-la. O primeiro deploy pode levar alguns minutos. Você pode acompanhar o progresso nos logs.
 
-Quando terminar, o Render fornecerá uma URL pública (ex: `https://controle-de-gastos.onrender.com`), e sua aplicação estará **ao vivo\!** 🎉
+Quando terminar, o Render fornecerá uma URL pública:
 
----
+### Exemplo: `https://controle-de-gastosNomeSobrenome.onrender.com`
 
+Agora sua aplicação estará **Online** e pronta para ser usada de forma remota! 🎉
 
-## 🔹 Caminho 1 — Sem Docker (mais simples)
+-----
+
+## 🔹 Caminho 2 — Sem Docker 
+Mais simples para deploy com outras linguagens, como Elixir, Go, Node, Python, Ruby, Rust.
 
 1. Vá em **New Web Service** → **Connect Repo** → selecione o repositório `controle-de-gastos`.
-2. Quando Render pedir a configuração, escolha **Runtime: Docker (ou Other)** (mesmo se não aparecer Java).
+2. Quando Render pedir a configuração, escolha **Runtime: Docker (ou  sua linguagem de preferência)**.
 3. Preencha manualmente:
 
    * **Name**: `controle-de-gastos`
@@ -496,43 +555,6 @@ Quando terminar, o Render fornecerá uma URL pública (ex: `https://controle-de-
 
 ./mvnw clean package -DskipTests   
 
----
-
-## 🔹 Caminho 2 — Usando Docker (mais flexível)
-
-Se quiser controlar melhor, crie um arquivo **`Dockerfile`** na raiz do projeto:
-
-```dockerfile
-# Etapa 1: build do JAR
-FROM maven:3.9.4-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
-# Etapa 2: imagem final
-FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
-```
-
-No Render:
-
-* **Runtime**: Docker
-* Ele vai detectar o `Dockerfile` automaticamente e construir sua imagem.
-
----
-
-## 🔹 Conferindo variáveis de ambiente
-
-No painel do Render → **Environment**:
-
-* Configure variáveis como `SPRING_PROFILES_ACTIVE=prod` ou credenciais do banco (`DATABASE_URL`, `JDBC_URL`, etc).
-* Se estiver usando PostgreSQL do Render, ele te dá os dados prontos (host, user, password).
-
------
 
 ### ✅ Conclusão
 
@@ -546,3 +568,112 @@ Parabéns\! Você construiu do zero e implantou uma aplicação web completa com
   * Adicionar um sistema de usuários e autenticação com Spring Security.
 
 ---
+
+## Obs 1.
+Seu build falhou novamente devido ao erro **`Permission denied`**. Isso significa que o arquivo `mvnw` dentro do seu repositório Git não tem a permissão necessária para ser executado no ambiente de build do Docker.
+
+### A Causa
+
+O Git armazena as permissões dos arquivos. Se o arquivo `mvnw` foi enviado (commitado) a partir de um sistema que não marcou a permissão de execução, o ambiente de build do Docker herda essa restrição e não consegue rodar o script.
+
+-----
+
+### Como Corrigir
+
+Você tem duas maneiras de resolver isso. A primeira é a mais recomendada.
+
+#### Solução 1 (Recomendada): Corrigir a Permissão no Git
+
+Esta é a solução permanente e correta, pois conserta o problema na origem.
+
+1.  **Abra o terminal** na pasta do seu projeto local.
+2.  Execute o seguinte comando para dar a permissão de execução ao arquivo no Git:
+    ```bash
+    git update-index --chmod=+x mvnw
+    ```
+3.  **Faça o commit e o push** desta alteração de permissão:
+    ```bash
+    git commit -m "fix: Adiciona permissão de execução ao mvnw"
+    git push origin main
+    ```
+
+#### Solução 2 (Alternativa Rápida): Corrigir no Dockerfile
+
+Você pode adicionar um comando no seu `Dockerfile` para dar a permissão durante cada build.
+
+1.  **Abra seu `Dockerfile`**.
+
+2.  Adicione a linha `RUN chmod +x mvnw` logo após as linhas `COPY`.
+
+---
+
+## Obs 2.
+
+O seu build no Render está falhando por um erro de codificação de caracteres (**`MalformedInputException`**) dentro do seu arquivo `application.properties`.
+
+Este é o mesmo tipo de erro que encontramos anteriormente, mas agora no outro arquivo de propriedades. Isso acontece quando o Maven, durante o processo de build dentro do Docker, tenta ler o arquivo e encontra um caractere inválido ou uma codificação que ele não espera (o padrão é UTF-8).
+
+-----
+
+### Como Corrigir (3 Passos)
+
+Para resolver isso, você precisa garantir que o arquivo esteja "limpo" e que o Maven esteja configurado para ler em UTF-8.
+
+#### Passo 1: Corrija o Arquivo Localmente
+
+1.  Abra o arquivo **`src/main/resources/application.properties`** na sua IDE.
+
+2.  Apague **todo** o conteúdo dele.
+
+3.  Copie e cole o conteúdo limpo abaixo:
+
+    ```properties
+    # Configurações do H2 Database (perfil 'default')
+    spring.datasource.url=jdbc:h2:mem:testdb
+    spring.datasource.driverClassName=org.h2.Driver
+    spring.datasource.username=sa
+    spring.datasource.password=
+    spring.h2.console.enabled=true
+    spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+    spring.jpa.hibernate.ddl-auto=update
+    ```
+
+4.  Salve o arquivo. Garanta que sua IDE está salvando os arquivos com a codificação **UTF-8**.
+
+-----
+
+#### Passo 2: Verifique o `pom.xml`
+
+Confirme que a seguinte propriedade ainda está presente no seu arquivo `pom.xml`. Ela é essencial para instruir o Maven a usar a codificação correta.
+
+```xml
+<properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+```
+
+-----
+
+#### Passo 3: Envie a Correção para o GitHub
+
+Para que o Render use o arquivo corrigido, você precisa enviar a nova versão para o seu repositório.
+
+Execute os seguintes comandos no seu terminal:
+
+```bash
+# Adiciona todas as alterações (incluindo o arquivo corrigido)
+git add .
+
+# Cria um commit com uma mensagem clara
+git commit -m "fix: Corrige codificação do application.properties"
+
+# Envia o commit para o GitHub
+git push origin main
+```
+
+Após fazer o `push`, o Render irá automaticamente iniciar um novo build com o arquivo corrigido, e o erro de `MalformedInputException` será resolvido.
+
+---
+
+### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)

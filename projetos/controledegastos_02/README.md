@@ -1,4 +1,4 @@
-# 🚀 Construindo o "Controle de Gastos" do Zero
+# 🚀 Controle de Gastos com Spring Boot e HTMX
 v2.0
 
 Bem-vindo ao guia definitivo para criar a aplicação **Controle de Gastos**. Esta versão foi aprimorada com base em experiências práticas de build e deploy, garantindo um processo mais robusto e educativo. Vamos construir uma aplicação Spring Boot com uma interface dinâmica usando htmx e implantá-la na nuvem de forma profissional com Docker.
@@ -6,7 +6,7 @@ Bem-vindo ao guia definitivo para criar a aplicação **Controle de Gastos**. Es
 **Tecnologias Finais:**
 
   * **Backend**: Java 21, Spring Boot, Spring Data JPA
-  * **Frontend**: Thymeleaf + htmx
+  * **Frontend**: Thymeleaf + HTMX
   * **Banco de Dados**: H2 (Desenvolvimento), PostgreSQL (Produção no Neon)
   * **Deploy**: Docker, Render
 
@@ -606,26 +606,29 @@ Finalmente, preparamos a aplicação para o mundo real.
 
 #### **Arquivo:** `Dockerfile`
 
-[cite\_start]O Dockerfile é um manual de instruções para construir um container com nossa aplicação[cite: 1, 2]. Este é otimizado para builds mais rápidos e uma imagem final mais leve.
+O Dockerfile é um manual de instruções para construir um container com nossa aplicação[cite: 1, 2]. Este é otimizado para builds mais rápidos e uma imagem final mais leve.
 
-  * [cite\_start]**Estágio 1 (`builder`):** Usa um JDK completo para compilar o projeto com Maven[cite: 1]. [cite\_start]A instrução `dependency:go-offline` armazena as dependências em cache, acelerando builds futuros[cite: 2].
-  * [cite\_start]**Estágio 2 (final):** Usa uma imagem JRE, que é menor, e copia apenas o `.jar` compilado, resultando em um container mais seguro e eficiente[cite: 2].
+  * **Estágio 1 (`builder`):** Usa um JDK completo para compilar o projeto com Maven[cite: 1]. [cite\_start]A instrução `dependency:go-offline` armazena as dependências em cache, acelerando builds futuros.
+  * **Estágio 2 (final):** Usa uma imagem JRE, que é menor, e copia apenas o `.jar` compilado, resultando em um container mais seguro e eficiente.
 
 <!-- end list -->
 
 ```dockerfile
-# Estágio 1: Build da Aplicação com OpenJDK
-FROM openjdk:21-jdk as builder
+# Estágio 1: Build da Aplicação com Eclipse Temurin JDK
+FROM eclipse-temurin:21-jdk-jammy as builder
 WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw .
 COPY pom.xml .
+
+RUN chmod +x mvnw # <-- ADICIONE ESTA LINHA
+
 RUN ./mvnw dependency:go-offline
 COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
-# Estágio 2: Imagem Final de Execução (mais leve)
-FROM openjdk:21-jre
+# Estágio 2: Imagem Final de Execução com Eclipse Temurin JRE
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8080
@@ -647,6 +650,114 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 ### ✅ Conclusão
 
 Parabéns\! Você concluiu um guia completo que não apenas constrói uma aplicação funcional, mas também incorpora as melhores práticas e soluções para problemas reais de desenvolvimento e deploy.
+
+
+---
+
+## Obs 1.
+Seu build falhou novamente devido ao erro **`Permission denied`**. Isso significa que o arquivo `mvnw` dentro do seu repositório Git não tem a permissão necessária para ser executado no ambiente de build do Docker.
+
+### A Causa
+
+O Git armazena as permissões dos arquivos. Se o arquivo `mvnw` foi enviado (commitado) a partir de um sistema que não marcou a permissão de execução, o ambiente de build do Docker herda essa restrição e não consegue rodar o script.
+
+-----
+
+### Como Corrigir
+
+Você tem duas maneiras de resolver isso. A primeira é a mais recomendada.
+
+#### Solução 1 (Recomendada): Corrigir a Permissão no Git
+
+Esta é a solução permanente e correta, pois conserta o problema na origem.
+
+1.  **Abra o terminal** na pasta do seu projeto local.
+2.  Execute o seguinte comando para dar a permissão de execução ao arquivo no Git:
+    ```bash
+    git update-index --chmod=+x mvnw
+    ```
+3.  **Faça o commit e o push** desta alteração de permissão:
+    ```bash
+    git commit -m "fix: Adiciona permissão de execução ao mvnw"
+    git push origin main
+    ```
+
+#### Solução 2 (Alternativa Rápida): Corrigir no Dockerfile
+
+Você pode adicionar um comando no seu `Dockerfile` para dar a permissão durante cada build.
+
+1.  **Abra seu `Dockerfile`**.
+
+2.  Adicione a linha `RUN chmod +x mvnw` logo após as linhas `COPY`.
+
+---
+
+## Obs 2.
+
+O seu build no Render está falhando por um erro de codificação de caracteres (**`MalformedInputException`**) dentro do seu arquivo `application.properties`.
+
+Este é o mesmo tipo de erro que encontramos anteriormente, mas agora no outro arquivo de propriedades. Isso acontece quando o Maven, durante o processo de build dentro do Docker, tenta ler o arquivo e encontra um caractere inválido ou uma codificação que ele não espera (o padrão é UTF-8).
+
+-----
+
+### Como Corrigir (3 Passos)
+
+Para resolver isso, você precisa garantir que o arquivo esteja "limpo" e que o Maven esteja configurado para ler em UTF-8.
+
+#### Passo 1: Corrija o Arquivo Localmente
+
+1.  Abra o arquivo **`src/main/resources/application.properties`** na sua IDE.
+
+2.  Apague **todo** o conteúdo dele.
+
+3.  Copie e cole o conteúdo limpo abaixo:
+
+    ```properties
+    # Configurações do H2 Database (perfil 'default')
+    spring.datasource.url=jdbc:h2:mem:testdb
+    spring.datasource.driverClassName=org.h2.Driver
+    spring.datasource.username=sa
+    spring.datasource.password=
+    spring.h2.console.enabled=true
+    #spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+    spring.jpa.hibernate.ddl-auto=update
+    ```
+
+4.  Salve o arquivo. Garanta que sua IDE está salvando os arquivos com a codificação **UTF-8**.
+
+-----
+
+#### Passo 2: Verifique o `pom.xml`
+
+Confirme que a seguinte propriedade ainda está presente no seu arquivo `pom.xml`. Ela é essencial para instruir o Maven a usar a codificação correta.
+
+```xml
+<properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+```
+
+-----
+
+#### Passo 3: Envie a Correção para o GitHub
+
+Para que o Render use o arquivo corrigido, você precisa enviar a nova versão para o seu repositório.
+
+Execute os seguintes comandos no seu terminal:
+
+```bash
+# Adiciona todas as alterações (incluindo o arquivo corrigido)
+git add .
+
+# Cria um commit com uma mensagem clara
+git commit -m "fix: Corrige codificação do application.properties"
+
+# Envia o commit para o GitHub
+git push origin main
+```
+
+Após fazer o `push`, o Render irá automaticamente iniciar um novo build com o arquivo corrigido, e o erro de `MalformedInputException` será resolvido.
 
 ---
 

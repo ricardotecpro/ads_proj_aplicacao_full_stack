@@ -4,7 +4,7 @@
 
 ---
 
-## Atividades - Lista de Tarefas (To-Do List)
+## Atividades - Aplicações
 
 
 * **[Controle de Gastos 01](./projetos/controledegastos_01/)**: Controle de Gastos 01
