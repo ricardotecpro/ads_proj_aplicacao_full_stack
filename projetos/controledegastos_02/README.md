@@ -1,5 +1,5 @@
 # 🚀 Controle de Gastos com Spring Boot e HTMX
-v2.0
+v2.1
 
 Bem-vindo ao guia definitivo para criar a aplicação **Controle de Gastos**. Esta versão foi aprimorada com base em experiências práticas de build e deploy, garantindo um processo mais robusto e educativo. Vamos construir uma aplicação Spring Boot com uma interface dinâmica usando htmx e implantá-la na nuvem de forma profissional com Docker.
 
