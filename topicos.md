@@ -8,7 +8,8 @@
 
 
 * **[Controle de Gastos 01](./projetos/controledegastos_01/)**: Controle de Gastos 01
-
+* **[Controle de Gastos 02](./projetos/controledegastos_02/)**: Controle de Gastos 02
+ 
 --- 
 * **[Lista de Tarefa 01](./projetos/listadetarefas_01/)**: Lista de Tarefas 01
 * **[Lista de Tarefa 02](./projetos/listadetarefas_02/)**: Lista de Tarefas 02
