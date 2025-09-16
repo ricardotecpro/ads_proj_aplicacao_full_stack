@@ -723,7 +723,7 @@ spring.application.name=bibliotecajogos
 # --- H2 (Desenvolvimento) ---
 spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
-# Força a recriação do banco de dados a cada inicialização para garantir que os dados de teste sejam sempre atualizados
+# Forca a recriacao do banco de dados a cada inicializacao para garantir que os dados de teste sejam sempre atualizados
 spring.jpa.hibernate.ddl-auto=create
 
 # --- PostgreSQL (Producao) ---
@@ -733,7 +733,7 @@ spring.jpa.hibernate.ddl-auto=create
 #spring.jpa.hibernate.ddl-auto=update
 #spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-# --- Configuração Ativa (Desenvolvimento) ---
+# --- Configuracao Ativa (Desenvolvimento) ---
 spring.profiles.active=dev
 ```
 
@@ -766,6 +766,95 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 - Para rodar em produção, altere `spring.profiles.active` para `prod` ou defina a variável de ambiente `SPRING_PROFILES_ACTIVE=prod`.
 
 
+---
+
+
+**`pom.xml`**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>br.com.bibliotecajogos</groupId>
+	<artifactId>bibliotecajogos</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bibliotecajogos</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>21</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+```
+---
 
 ### Estrutura do Projeto (Atulizado)
 
@@ -1507,8 +1596,6 @@ O serviço do pgAdmin precisará de:
 Abra o arquivo `docker-compose.yml` e adicione o serviço `pgadmin` da seguinte forma:
 
 ```yaml
-version: '3.8'
-
 services:
   # Serviço do banco de dados PostgreSQL (já existente)
   db:
