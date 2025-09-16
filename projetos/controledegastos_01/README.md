@@ -440,7 +440,7 @@ No painel do Render → **Environment**:
 * Se estiver usando PostgreSQL do Render, ele te dá os dados prontos (host, user, password).
 
 
-3.  **Commit das mudanças:**
+3. **Commit das mudanças:**
 
     ```bash
     git add .
@@ -488,18 +488,20 @@ No painel do Render → **Environment**:
 
 5.  Agora, a parte mais importante: as **Variáveis de Ambiente**. Clique em **Advanced**.
 
-      * Clique em **Add Environment Variable** e adicione as seguintes chaves e valores:
+    * Clique em **Add Environment Variable** e adicione as seguintes chaves e valores:
 
-        | Chave | Valor |
-        | :--- | :--- |
-        | `SPRING_PROFILES_ACTIVE` | `prod` |
-        | `DB_USERNAME` | O usuário do seu banco de dados Neon. | `neondb_owner` |
-        | `DB_PASSWORD` | A senha do seu banco de dados Neon. | `:*********@` |fica entre os dois pontos e o arroba.
-        | `DB_URL` | Exemplo: `postgresql://neondb_owner:*****@----?sslmode=require&channel_binding=require` |
+    | Chave                    | Valor                                                                                   |
+    |:-------------------------|:----------------------------------------------------------------------------------------|
+    | `SPRING_PROFILES_ACTIVE` | `prod`                                                                                  |
+    | `DB_USERNAME`            | O usuário do seu banco de dados Neon.                                                   | `neondb_owner` |
+    | `DB_PASSWORD`            | A senha do seu banco de dados Neon.                                                     | `:*********@` |fica entre os dois pontos e o arroba.
+    | `DB_URL`                 | Exemplo: `postgresql://neondb_owner:*****@----?sslmode=require&channel_binding=require` |
 
-        **Atenção:** Substitua `<HOST_DO_NEON>` e `<DB_NAME_DO_NEON>` pelos valores que você pegou do painel do Neon. A parte `?sslmode=require` é **essencial** para a conexão funcionar.
+    **Atenção:** Substitua `<HOST_DO_NEON>` e `<DB_NAME_DO_NEON>` pelos valores que você pegou do painel do Neon. A parte `?sslmode=require` é **essencial** para a conexão funcionar.
 
-6.  Role para baixo e clique em **Create Web Service**.
+---
+
+6. Role para baixo e clique em **Create Web Service**.
 
 O Render irá buscar seu código do GitHub, construir a aplicação e iniciá-la. O primeiro deploy pode levar alguns minutos. Você pode acompanhar o progresso nos logs.
 
