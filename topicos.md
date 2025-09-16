@@ -7,7 +7,7 @@
 ## Atividades - Aplicações
 
 * **[Biblioteca de Jogos 01](./projetos/bibliotecajogos_01/)**: Biblioteca de Jogos 01
-* **[Spring Initialzr](./projetos/bibliotecajogos_01/bibliotecajogos.zip)
+* --[Spring Initialzr](./projetos/bibliotecajogos_01/bibliotecajogos.zip)
 
 * **[Controle de Gastos 01](./projetos/controledegastos_01/)**: Controle de Gastos 01
 * **[Controle de Gastos 02](./projetos/controledegastos_02/)**: Controle de Gastos 02

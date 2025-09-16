@@ -1,6 +1,6 @@
 # 🚀 Biblioteca de Jogos
 
-v1.0
+v1.1
 
 ## Guia Completo: Desenvolvendo e Implantando uma Biblioteca de Jogos com Spring Boot e Thymeleaf
 
@@ -46,6 +46,8 @@ Antes de começarmos a codificar, vamos preparar nosso ambiente:
 
 Após preencher as informações, clique em "Generate" para baixar o projeto base.
 
+---
+
 ### 3\. Estrutura do Projeto
 
 Após importar o projeto para sua IDE, teremos a seguinte estrutura de pacotes:
@@ -70,6 +72,176 @@ src
         └── application-dev.properties
         └── application-prod.properties                        
 ```
+
+---
+
+Abaixo está o modelo de banco de dados e o relacionamento entre as entidades `Categoria` e `Jogo`, representados em um Diagrama de Entidade-Relacionamento (ERD).
+
+Este diagrama reflete exatamente a estrutura que definimos em nossas classes `Entity` com JPA.
+
+---
+
+
+### Diagrama de Entidade-Relacionamento (ERD)
+
+```mermaid
+erDiagram
+    CATEGORIA ||--o{ JOGO : "possui"
+
+    CATEGORIA {
+        BIGINT id PK "Chave Primária"
+        VARCHAR nome "Nome da categoria (ex: RPG, Ação)"
+    }
+
+    JOGO {
+        BIGINT id PK "Chave Primária"
+        VARCHAR titulo "Título do jogo"
+        VARCHAR autor "Desenvolvedora ou Autor"
+        INT anoPublicacao "Ano de lançamento"
+        VARCHAR genero "Gênero específico (ex: RPG de Ação)"
+        BOOLEAN finalizado "Indica se o jogo foi concluído"
+        BIGINT categoria_id FK "Chave Estrangeira para Categoria"
+    }
+```
+
+---
+
+Abaixo está um diagrama Mermaid que ilustra o fluxo de navegação e a relação entre as páginas HTML da aplicação "Biblioteca de Jogos".
+
+### Diagrama de Fluxo das Páginas (Views)
+
+Este diagrama mostra como o usuário navega entre a tela de listagem e a tela de formulário, e quais ações disparam cada transição.
+
+```mermaid
+graph TD
+    A["Página: Lista de Jogos (jogos.html)"] -->|Clica em 'Adicionar'| B["Página: Formulário (formulario-jogo.html)"];
+    A -->|Clica em 'Editar'| B;
+    
+    B -->|Clica em 'Salvar'| A;
+    B -->|Clica em 'Cancelar'| A;
+
+    A -->|Clica em 'Excluir'| A;
+    A -->|Submete 'Pesquisa'| A;
+```
+
+### Explicação do Diagrama
+
+1.  **Template Base (`layout.html`)**: O diagrama mostra que tanto a "Lista de Jogos" (`jogos.html`) quanto o "Formulário de Jogo" (`formulario-jogo.html`) são envolvidos pelo `layout.html`, que fornece a estrutura visual comum (menu de navegação, rodapé, etc.).
+
+2.  **Página: Lista de Jogos (`jogos.html`)**:
+
+      * É a tela principal e o ponto de partida (`/jogos`).
+      * A partir dela, o usuário pode iniciar três fluxos principais:
+          * **Adicionar**: Leva para a página de formulário.
+          * **Editar**: Também leva para a mesma página de formulário, mas com os dados do jogo pré-carregados.
+          * **Excluir e Pesquisar**: São ações que executam uma lógica no backend e, em seguida, recarregam a própria página de lista, seja para remover um item ou para exibir um resultado filtrado. Por isso, as setas apontam de volta para a própria página.
+
+3.  **Página: Formulário de Jogo (`formulario-jogo.html`)**:
+
+      * É a tela usada tanto para **criação** quanto para **edição**.
+      * Possui duas saídas principais:
+          * **Salvar**: Envia os dados do formulário para o servidor (`POST /jogos`) e, após o processamento, redireciona o usuário de volta para a lista de jogos atualizada.
+          * **Cancelar**: Simplesmente retorna o usuário para a lista de jogos, descartando quaisquer alterações.
+
+---
+
+Uma versão mais detalhada e didática do diagrama é uma ótima maneira de solidificar o conhecimento para estudantes.
+
+A versão anterior era funcional, mas esta nova versão focará em explicar o **"porquê"** das coisas acontecerem, incluindo os **métodos HTTP** e o fluxo de **requisição e resposta** entre o navegador e o servidor.
+
+### Diagrama de Fluxo Acadêmico (Navegador ↔ Servidor)
+
+Este diagrama separa visualmente o que acontece no navegador do usuário (Client-Side) e o que acontece no servidor (Server-Side), detalhando as requisições HTTP que conectam os dois.
+
+```mermaid
+graph TD
+    subgraph "Lado do Cliente (Navegador)"
+        A["Página: Lista de Jogos<br>(<b>GET</b> /jogos)"]
+        B["Página: Formulário<br>(<b>GET</b> /jogos/novo ou /jogos/editar/{id})"]
+    end
+
+    subgraph "Lado do Servidor (Spring Boot)"
+        C["Controller processa<br><b>POST</b> /jogos"]
+        D["Controller processa<br><b>GET</b> /jogos/excluir/{id}"]
+        E["Redirecionamento<br>(HTTP 302 Found)"]
+    end
+
+    %% Fluxos de Navegação
+    A --"1. Clica em 'Adicionar' ou 'Editar'"--> B
+
+    B --"2. Clica em 'Salvar'"--> C
+    C --"3. Salva no Banco de Dados"--> E
+    
+    A --"4. Clica em 'Excluir'"--> D
+    D --"5. Exclui do Banco de Dados"--> E
+
+    E --"6. Navegador é redirecionado para a lista"--> A
+    
+    B --"7. Clica em 'Cancelar' (Link simples)"--> A
+
+    %% Estilos para clareza
+    style A fill:#cde4ff,stroke:#333
+    style B fill:#e8dff5,stroke:#333
+    style C fill:#fff5cc,stroke:#333
+    style D fill:#fff5cc,stroke:#333
+    style E fill:#d4edda,stroke:#333
+```
+
+### Explicação Didática do Diagrama
+
+Este modelo vai além de simplesmente mostrar a navegação, ele ensina conceitos fundamentais de desenvolvimento web:
+
+1.  **Separação Cliente-Servidor**: O diagrama mostra claramente que existem dois "mundos": o que o usuário vê e interage no **Navegador** e o que a aplicação **Spring Boot** processa no Servidor.
+
+2.  **Métodos HTTP e URLs**:
+
+      * Para **visualizar** páginas, o navegador sempre faz uma requisição `GET` para uma URL específica (ex: `GET /jogos`).
+      * Para **enviar dados** (criar ou atualizar um jogo), o formulário faz uma requisição `POST` para `/jogos`. O método `POST` é usado para alterar dados no servidor.
+
+3.  **O Padrão Post-Redirect-Get (PRG)**: Este é um dos conceitos mais importantes ilustrados aqui.
+
+      * Observe o fluxo ao "Salvar" (`2 → 3 → 6`):
+        1.  O navegador envia os dados (`POST`).
+        2.  O **Servidor** recebe, processa e salva no banco (`Controller processa POST /jogos`).
+        3.  **Crucial**: Em vez de devolver uma página HTML diretamente, o servidor responde com um **Redirecionamento** (`HTTP 302`).
+        4.  O Navegador recebe essa resposta e "obedece", fazendo uma nova requisição `GET` para a página de listagem (`/jogos`), que agora mostrará os dados atualizados.
+      * **Por que isso é importante?** Isso evita o reenvio acidental de formulários. Se o usuário atualizasse a página após salvar, ele estaria atualizando a página de listagem (`GET`), e não reenviando os dados do formulário (`POST`). O mesmo padrão se aplica à exclusão.
+
+4.  **Ações de Estado vs. Ações de Navegação**:
+
+      * "Salvar" e "Excluir" são **ações que mudam o estado** dos dados no servidor. Por isso, elas passam por um processamento no backend antes de redirecionar.
+      * "Cancelar" é uma simples **ação de navegação**. É apenas um link (`<a>`) que leva o usuário de volta para a página de lista, sem a necessidade de processamento no servidor.
+
+Este diagrama oferece uma visão muito mais completa e alinhada com os conceitos que um estudante de engenharia de software precisa entender sobre o funcionamento de uma aplicação web moderna.
+
+---
+
+
+### Explicação do Modelo
+
+#### 1\. Entidades (Tabelas)
+
+  * **`CATEGORIA`**: Esta tabela armazena as categorias gerais dos jogos.
+
+      * `id (BIGINT, PK)`: É a chave primária da tabela, um número único que identifica cada categoria.
+      * `nome (VARCHAR)`: Armazena o nome da categoria, como "RPG", "Ação", "Estratégia", etc.
+
+  * **`JOGO`**: Esta tabela armazena as informações de cada jogo cadastrado na biblioteca.
+
+      * `id (BIGINT, PK)`: A chave primária que identifica unicamente cada jogo.
+      * `titulo`, `autor`, `anoPublicacao`, `genero`: Atributos com as informações básicas do jogo.
+      * `finalizado (BOOLEAN)`: Um campo booleano (`true` ou `false`) para atender ao requisito extra de marcar jogos como finalizados.
+      * `categoria_id (BIGINT, FK)`: Esta é a **chave estrangeira** (`Foreign Key`). Ela armazena o `id` da categoria à qual o jogo pertence, criando a ligação entre as duas tabelas.
+
+#### 2\. Relacionamento
+
+  * **`CATEGORIA ||--o{ JOGO : "possui"`**: Esta linha define o relacionamento entre as tabelas.
+      * **`||--o{`**: É a notação que representa uma relação de **Um-para-Muitos** (`One-to-Many`).
+      * **Tradução**: "Uma `CATEGORIA` pode possuir **muitos** `JOGO`s". Por outro lado, um `JOGO` pertence a apenas **uma** `CATEGORIA`.
+
+Este modelo simples, porém robusto, é a base da nossa aplicação, permitindo organizar os jogos de forma eficiente e realizar consultas e ordenações baseadas em suas categorias.
+
+---
 
 ### 4\. Modelando os Dados: Entidades
 
@@ -405,7 +577,6 @@ public class JogoController {
 
 ----
 
-
 **`BibliotecajogosApplication.java`**
 
 ```java
@@ -594,6 +765,44 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 - **`application-prod.properties`**: Contém as configurações para o ambiente de produção (PostgreSQL).
 - Para rodar em produção, altere `spring.profiles.active` para `prod` ou defina a variável de ambiente `SPRING_PROFILES_ACTIVE=prod`.
 
+
+
+### Estrutura do Projeto (Atulizado)
+
+Após importar o projeto para sua IDE, teremos a seguinte estrutura de pacotes:
+
+```
+src
+└── main
+    ├── java
+    │   └── br
+    │       └── com
+    │           └── bibliotecajogos
+    │               ├── BibliotecajogosApplication.java
+    │               ├── config
+    │               │   └── DataInitializer.java
+    │               ├── controller
+    │               │   └── JogoController.java
+    │               ├── entity
+    │               │   ├── Categoria.java
+    │               │   └── Jogo.java
+    │               ├── repository
+    │               │   ├── CategoriaRepository.java
+    │               │   └── JogoRepository.java
+    │               └── service
+    │                   └── JogoService.java
+    │               ├── BibliotecaJogosApplication.java    
+    └── resources
+        ├── static/
+        ├── templates
+        │   ├── formulario-jogo.html
+        │   ├── jogos.html
+        │   └── layout.html
+        ├── application.properties
+        ├── application-dev.properties
+        └── application-prod.properties
+```
+
 ### 10\. Executando e Testando a Aplicação
 
 1.  **Execute a aplicação:** Rode a classe `BibliotecaJogosApplication.java` a partir da sua IDE.
@@ -621,11 +830,11 @@ Com a base da aplicação construída, você pode explorar diversas melhorias:
 
 Vamos adicionar as seções de "Melhorias na Interface do Usuário com Bootstrap" e "Containerização com Docker" ao guia, detalhando o passo a passo para cada uma.
 
----
-
 ### 12\. Melhorias na Interface do Usuário com Bootstrap
 
 Para deixar nossa aplicação com uma aparência mais profissional e responsiva sem muito esforço, vamos integrar o Bootstrap, um dos frameworks CSS mais populares do mundo.
+
+
 
 #### Passo 1: Adicionar o Bootstrap ao Projeto
 
@@ -894,6 +1103,63 @@ Após aplicar essas mudanças, reinicie a aplicação. Você verá uma interface
 
 Containerizar nossa aplicação com Docker nos permite empacotar o software com todas as suas dependências em uma unidade padronizada para desenvolvimento, envio e implantação. Isso garante que a aplicação funcione da mesma forma em qualquer ambiente.
 
+
+
+Um diagrama é uma excelente forma de visualizar a arquitetura completa do projeto que construímos, incluindo todos os componentes e suas interações.
+
+Aqui está um diagrama Mermaid que representa a estrutura geral do nosso sistema, desde a interação do usuário até a infraestrutura em contêineres com Docker.
+
+### Diagrama de Arquitetura do Projeto
+
+```mermaid
+graph TD
+    subgraph "Ambiente Docker"
+        direction LR
+        subgraph "Container: App Spring Boot"
+            direction TB
+            A[Controller] --> B[Service]
+            B --> C[Repository / JPA]
+        end
+
+        subgraph "Container: Banco de Dados"
+            direction TB
+            DB[(PostgreSQL)]
+        end
+
+        subgraph "Container: Gerenciador de DB"
+            direction TB
+            PGADMIN([pgAdmin])
+        end
+
+        C --> DB
+        PGADMIN -.-> DB
+    end
+
+    USER[Usuário] -->|Requisição HTTP| A
+    A -->|HTML com Thymeleaf| USER
+
+    style USER fill:#f9f,stroke:#333,stroke-width:2px
+    style DB fill:#add,stroke:#333,stroke-width:2px
+    style PGADMIN fill:#f8d5a2,stroke:#333,stroke-width:2px
+```
+
+### Explicação do Diagrama
+
+Este diagrama de fluxo ilustra os seguintes pontos-chave da nossa arquitetura:
+
+1.  **Usuário**: Representa o cliente final interagindo com a aplicação através de um navegador web.
+2.  **Ambiente Docker**: É o bloco maior, indicando que todos os nossos serviços (aplicação, banco de dados e pgAdmin) estão rodando como contêineres isolados, mas conectados, gerenciados pelo Docker Compose.
+3.  **Container: App Spring Boot**:
+      * **Controller**: A porta de entrada da aplicação. Recebe as requisições HTTP do usuário.
+      * **Service**: Onde a lógica de negócio é processada.
+      * **Repository / JPA**: A camada de acesso aos dados, responsável por se comunicar com o banco de dados.
+      * O fluxo `Controller -> Service -> Repository` demonstra a arquitetura em camadas da nossa aplicação.
+4.  **Container: Banco de Dados**:
+      * **PostgreSQL**: Nosso banco de dados relacional que armazena todos os dados da aplicação (jogos, categorias, etc.). A aplicação se comunica com ele através da camada de repositório.
+5.  **Container: Gerenciador de DB**:
+      * **pgAdmin**: A ferramenta de administração gráfica. A linha pontilhada (`-.->`) indica que ele se conecta ao banco de dados para fins de gerenciamento e visualização, mas não faz parte do fluxo principal da aplicação.
+
+O diagrama mostra claramente como uma requisição do usuário viaja através das camadas da aplicação Spring Boot para ler ou escrever no banco de dados PostgreSQL, e como o pgAdmin oferece uma interface de gerenciamento paralela, tudo orquestrado dentro do ambiente Docker.
 #### Passo 1: Criar o Dockerfile
 
 Na raiz do seu projeto, crie um arquivo chamado `Dockerfile` (sem extensão).
@@ -1219,3 +1485,138 @@ Agora, basta rodar sua aplicação novamente com o perfil `dev` ativo. Observe o
 ```
 
 Ao acessar `http://localhost:8080/jogos` no seu navegador, a lista de jogos já estará preenchida com os dados que cadastramos no `DataInitializer`.
+
+---
+
+Adicionar o pgAdmin ao nosso ambiente Docker é uma maneira excelente de ter uma interface gráfica para visualizar e gerenciar nosso banco de dados PostgreSQL.
+
+Vamos integrar o pgAdmin ao nosso `docker-compose.yml` e detalhar o passo a passo para acessá-lo e conectar ao banco da nossa aplicação.
+
+### 1\. Modificando o arquivo `docker-compose.yml`
+
+Vamos adicionar um novo `service` para o pgAdmin no mesmo arquivo `docker-compose.yml` que criamos anteriormente.
+
+O serviço do pgAdmin precisará de:
+
+  * A imagem oficial (`dpage/pgadmin4`).
+  * Variáveis de ambiente para configurar o login inicial.
+  * Um mapeamento de porta para que possamos acessá-lo pelo navegador.
+  * Um volume para persistir os dados de configuração (como as conexões de servidor que você salvar).
+  * Uma dependência do serviço do banco de dados (`db`) para garantir a ordem correta de inicialização.
+
+Abra o arquivo `docker-compose.yml` e adicione o serviço `pgadmin` da seguinte forma:
+
+```yaml
+version: '3.8'
+
+services:
+  # Serviço do banco de dados PostgreSQL (já existente)
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: seu_usuario
+      POSTGRES_PASSWORD: sua_senha
+      POSTGRES_DB: bibliotecajogos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Serviço da nossa aplicação (já existente)
+  app:
+    build: .
+    container_name: biblioteca-jogos-app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bibliotecajogos
+      - SPRING_DATASOURCE_USERNAME=seu_usuario
+      - SPRING_DATASOURCE_PASSWORD=sua_senha
+      - SPRING_PROFILES_ACTIVE=prod
+
+  # NOVO SERVIÇO: pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4-web
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"  # Email para login no pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: "admin"         # Senha para login no pgAdmin
+    ports:
+      - "5050:80"  # Mapeia a porta 5050 do seu PC para a 80 do container
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:  # Adiciona o volume para o pgAdmin
+```
+
+**O que fizemos de novo?**
+
+1.  **`services.pgadmin`**: Adicionamos a definição de um novo contêiner chamado `pgadmin`.
+2.  **`environment`**: Definimos um e-mail (`PGADMIN_DEFAULT_EMAIL`) e uma senha (`PGADMIN_DEFAULT_PASSWORD`) que serão usados como suas credenciais para acessar a interface web do pgAdmin.
+3.  **`ports: - "5050:80"`**: Mapeamos a porta `5050` do nosso computador (host) para a porta `80` dentro do contêiner do pgAdmin. Escolhemos `5050` para não conflitar com a nossa aplicação (`8080`) ou com o Postgres (`5432`).
+4.  **`volumes: - pgadmin_data:/var/lib/pgadmin`**: Criamos um volume chamado `pgadmin_data`. Isso é **muito importante** para que suas configurações de servidor e outros dados do pgAdmin não sejam perdidos se o contêiner for recriado.
+5.  **`volumes: pgadmin_data:`**: Declaramos o volume na seção principal de volumes no final do arquivo.
+
+### 2\. Passo a Passo para Acessar e Configurar o pgAdmin
+
+Com o arquivo `docker-compose.yml` atualizado, siga os passos abaixo:
+
+#### Passo 1: Iniciar os Serviços
+
+No terminal, na raiz do projeto, pare qualquer execução anterior (`Ctrl + C`) e suba os serviços novamente. O Docker Compose irá detectar o novo serviço `pgadmin` e o criará.
+
+```bash
+docker-compose up --build
+```
+
+Aguarde até que os logs indiquem que os três contêineres (`db`, `app` e `pgadmin`) estão rodando.
+
+#### Passo 2: Acessar a Interface Web do pgAdmin
+
+Abra seu navegador e acesse a URL:
+
+**`http://localhost:5050`**
+
+Você verá a tela de login do pgAdmin.
+
+#### Passo 3: Fazer o Login
+
+Use as credenciais que você definiu no arquivo `docker-compose.yml`:
+
+  * **Email**: `admin@admin.com`
+  * **Password**: `admin`
+
+#### Passo 4: Conectar ao Banco de Dados PostgreSQL
+
+Após o login, você verá a tela inicial. Agora, vamos registrar o nosso servidor de banco de dados (`db`).
+
+1.  Clique em **"Add New Server"**.
+
+2.  Na aba **"General"**, dê um nome para a sua conexão. Pode ser qualquer nome, por exemplo: `Biblioteca Jogos Local`.
+
+3.  Vá para a aba **"Connection"** e preencha os dados do seu contêiner do PostgreSQL. **Esta é a parte mais importante\!**
+
+      * **Host name/address**: `db`
+          * **Por que `db`?** Porque é o nome do serviço do PostgreSQL definido no nosso `docker-compose.yml`. Dentro da rede do Docker Compose, os contêineres podem se comunicar usando os nomes dos serviços como se fossem nomes de host (DNS). **Não use `localhost` aqui\!**
+      * **Port**: `5432` (a porta padrão do Postgres).
+      * **Maintenance database**: `bibliotecajogos` (o nome do banco que definimos).
+      * **Username**: `seu_usuario` (o usuário que definimos).
+      * **Password**: `sua_senha` (a senha que definimos).
+      * Marque a opção "Save password?".
+
+    A sua tela deve ficar assim:
+
+4.  Clique em **"Save"**.
+
+### Pronto\!
+
+Se tudo deu certo, o servidor aparecerá na barra lateral esquerda. Agora você pode navegar pelas Databases, Schemas e Tabelas para visualizar os dados que a sua aplicação está inserindo, executar queries SQL diretamente e muito mais.
+
+---
