@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuários</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Estilo para hover dos botões (opcional) -->
+    <style>
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Navbar Superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-people-fill me-2"></i>
+                Cadastro de Usuários
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/relatorios" class="btn btn-outline-info me-2 btn-hover">
+                            <i class="bi bi-file-earmark-bar-graph-fill"></i> Relatórios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn btn-outline-danger btn-hover" type="submit">
+                                <i class="bi bi-box-arrow-right"></i> Sair
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mt-4">
+        <div class="row g-4">
+
+            <!-- Coluna do Formulário -->
+            <div class="col-lg-4 col-md-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0" th:if="${userForm.id == null}"><i class="bi bi-person-plus-fill me-2"></i> Novo Usuário</h5>
+                        <h5 class="mb-0" th:if="${userForm.id != null}"><i class="bi bi-pencil-square me-2"></i> Editar Usuário</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="#" th:action="@{/save}" th:object="${userForm}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input id="username" type="text" th:field="*{username}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input id="email" type="email" th:field="*{email}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Senha</label>
+                                <input id="password" type="password" th:field="*{password}" class="form-control" placeholder="Deixe em branco para não alterar">
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/" class="btn btn-secondary me-md-2 btn-hover"><i class="bi bi-x-circle me-1"></i> Cancelar</a>
+                                <button type="submit" class="btn btn-success btn-hover"><i class="bi bi-check-circle-fill me-1"></i> Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna da Tabela de Usuários -->
+            <div class="col-lg-8 col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                       <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i> Usuários Cadastrados</h5>
+                    </div>
+                    <div class="card-body">
+                         <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user : ${users}">
+                                        <td th:text="${user.id}"></td>
+                                        <td th:text="${user.username}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td class="text-center">
+                                            <!-- Botão Editar -->
+                                            <a th:href="@{/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning btn-hover" title="Editar">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                            <!-- Botão Excluir -->
+                                            <a th:href="@{/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger btn-hover" title="Excluir">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                             <!-- Botão para Gerenciar Perfil -->
+                                            <button type="button" class="btn btn-sm btn-info btn-hover" title="Alterar Perfil"
+                                                    data-bs-toggle="modal" data-bs-target="#perfilModal"
+                                                    th:attr="data-user-id=${user.id}, data-user-name=${user.username}">
+                                                <i class="bi bi-shield-lock-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Gerenciar Perfil -->
+    <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perfilModalLabel"><i class="bi bi-shield-lock-fill me-2"></i> Alterar Perfil do Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/user/change-role}" method="post">
+                    <div class="modal-body">
+                        <p>Você está alterando o perfil do usuário: <strong id="usernameModal"></strong></p>
+                        <input type="hidden" id="userIdModal" name="userId" />
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Selecione o novo perfil:</label>
+                            <select id="role" name="role" class="form-select">
+                                <option value="ROLE_ADMIN">Administrador</option>
+                                <option value="ROLE_USER">Usuário</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-hover" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn-hover">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Script para popular o Modal -->
+    <script>
+        const perfilModal = document.getElementById('perfilModal');
+        if (perfilModal) {
+            perfilModal.addEventListener('show.bs.modal', event => {
+                // Botão que acionou o modal
+                const button = event.relatedTarget;
+
+                // Extrai informações dos atributos data-*
+                const userId = button.getAttribute('data-user-id');
+                const userName = button.getAttribute('data-user-name');
+
+                // Atualiza o conteúdo do modal
+                const modalBodyUsername = perfilModal.querySelector('#usernameModal');
+                const modalInputUserId = perfilModal.querySelector('#userIdModal');
+
+                modalBodyUsername.textContent = userName;
+                modalInputUserId.value = userId;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -6,6 +6,9 @@
 
 ## Atividades - Aplicações
 
+* **[Login de Usuários 01](./projetos/loginusuarios_01)**: Login de Usuários)
+* **[Login de Usuários 02](./projetos/loginusuarios_02)**: Login de Usuários)
+
 * **[Biblioteca de Jogos 01](./projetos/bibliotecajogos_01/)**: Biblioteca de Jogos 01
 * --[Spring Initialzr](./projetos/bibliotecajogos_01/bibliotecajogos.zip)
 
