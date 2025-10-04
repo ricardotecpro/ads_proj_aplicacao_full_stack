@@ -1,6 +1,4 @@
------
-
-# Guia Atualizado: CRUD de Utilizadores com Spring Boot, Thymeleaf e Perfis de Acesso
+# CRUD de Utilizadores com Spring Boot, Thymeleaf e Perfis de Acesso
 
 Este documento detalha a construção de uma aplicação web monolítica completa para registo, autenticação e gestão de utilizadores, com distinção entre perfis de Administrador e Utilizador comum.
 
@@ -563,7 +561,9 @@ Ficheiro: `src/main/resources/templates/usuarios.html`
 
 ---
 # Para acesso ao H2
+
 ## SecurityConfig
+
 ```java
 package br.com.curso.loginusuarios.config;
 
@@ -616,3 +616,6 @@ public class SecurityConfig {
 }
 
 ```
+
+---
+
