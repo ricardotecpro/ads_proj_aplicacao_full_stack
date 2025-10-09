@@ -1,10 +1,10 @@
-package br.com.curso.todolistapi;
+package br.com.curso.listadetarefas.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodolistApiApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
