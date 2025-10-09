@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.com.curso.todolist-api' is invalid and this project uses 'br.com.curso.todolist_api' instead.
+* The original package name 'br.com.curso.todolist-api' is invalid and this project uses 'br.com.curso.todolistapi' instead.
 
 # Getting Started
 

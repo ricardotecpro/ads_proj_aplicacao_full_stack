@@ -1,4 +1,4 @@
-package br.com.curso.todolist_api;
+package br.com.curso.todolistapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

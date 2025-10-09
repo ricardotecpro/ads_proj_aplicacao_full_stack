@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Serviço da nossa API Spring Boot
+  app-service:
+    # Constrói a imagem a partir do Dockerfile no diretório atual
+    build: .
+    # Mapeia a porta 8080 do host para a porta 8080 do container
+    ports:
+      - "8080:8080"
+    # Define as variáveis de ambiente para o container da aplicação
+    environment:
+      # Diz ao Spring para usar o perfil 'prod', ativando o application-prod.properties
+      - SPRING_PROFILES_ACTIVE=prod
+      # O segredo do JWT (em um projeto real, use um mecanismo de secrets)
+      - JWT_SECRET=7d4a1b0b3e6c9d8a3f4b2e1c0a9f8b7c6d5e4a3b2c1d0f9e8a7b6c5d4e3f2a1b
+    # Garante que o serviço do banco de dados inicie antes da nossa aplicação
+    depends_on:
+      - postgres-db
+
+  # Serviço do Banco de Dados PostgreSQL
+  postgres-db:
+    # Usa a imagem oficial do PostgreSQL
+    image: postgres:15
+    # Define as variáveis de ambiente para configurar o banco de dados
+    environment:
+      - POSTGRES_DB=estoquedb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+    # Mapeia a porta 5432 do container para a 5432 do host (opcional, para acesso externo)
+    ports:
+      - "5432:5432"
+    # Monta um volume para persistir os dados do banco
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+# Define o volume nomeado para persistência dos dados
+volumes:
+  postgres-data:

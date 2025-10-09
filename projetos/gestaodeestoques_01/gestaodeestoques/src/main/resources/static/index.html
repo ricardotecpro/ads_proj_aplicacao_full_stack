@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Estoque</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#/produtos"><i class="fas fa-boxes-stacked me-2"></i>Gestão de Estoque</a>
+
+                <ul class="navbar-nav d-flex flex-row align-items-center ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#/produtos">Produtos</a>
+                    </li>
+
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="#/categorias">Categorias</a>
+                    </li>
+
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="#/fornecedores">Fornecedores</a>
+                    </li>
+
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="#/usuarios">Usuários</a>
+                    </li>
+
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="#/papeis">Papéis</a>
+                    </li>
+
+                    <li class="nav-item ms-4">
+                        <button id="logout-button" class="btn btn-outline-danger btn-rounded">Sair</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="app-content" class="container my-5">
+        </main>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/router.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 # 🚀 Projeto Lista de Tarefas" (To-Do List)
  v1.0
 
-Bem-vindo(a)! Este guia é uma sequência didática projetada para ensinar, passo a passo, como construir uma API RESTful robusta e moderna utilizando Spring Boot. Vamos abordar desde a configuração inicial até práticas avançadas de engenharia de software.
+Este guia é uma sequência didática projetada para ensinar, passo a passo, como construir uma API RESTful robusta e moderna utilizando Spring Boot. Vamos abordar desde a configuração inicial até práticas avançadas de engenharia de software.
 
 ## 🎯 Objetivo
 
