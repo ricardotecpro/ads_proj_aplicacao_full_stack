@@ -1,16 +1,36 @@
-# ⚒️ Projetos
 
-* **[Projetos](./projetos/)**: Projetos: Estudo de Casos
+## Projetos - Aplicações
+
+* **[Gestão de Estoques 01](./projetos/gestaodeestoques_01)**: Login de Usuários JWT)
+--- 
+* **[Spring Initialzr](./projetos/gestaodeestoques_01/gestaodeestoques.zip)**
+---
+* **[Gestão de Estoques Módulo 00](./projetos/gestaodeestoques_01/modulo00.md)**
+* **[Gestão de Estoques Módulo 01](./projetos/gestaodeestoques_01/modulo01.md)**
+* **[Gestão de Estoques Módulo 02](./projetos/gestaodeestoques_01/modulo02.md)**
+* **[Gestão de Estoques Módulo 03](./projetos/gestaodeestoques_01/modulo03.md)**
+* **[Gestão de Estoques Módulo 04](./projetos/gestaodeestoques_01/modulo04.md)**
+* **[Gestão de Estoques Módulo 05](./projetos/gestaodeestoques_01/modulo05.md)** 
+* **[Gestão de Estoques Módulo 06](./projetos/gestaodeestoques_01/modulo06.md)**
+* **[Gestão de Estoques Módulo 07](./projetos/gestaodeestoques_01/modulo07.md)**
+* **[Gestão de Estoques Módulo 08](./projetos/gestaodeestoques_01/modulo08.md)**
+* **[Gestão de Estoques Módulo 09](./projetos/gestaodeestoques_01/modulo09.md)** 
+
 
 ---
-
-## Atividades - Aplicações
 
 * **[Login de Usuários 01](./projetos/loginusuarios_01)**: Login de Usuários)
 * --[Spring Initialzr](./projetos/loginusuarios_01/loginusuarios01.zip) 
 
+* **[Login de Usuários 01](./projetos/loginusuarios_01)**: Login de Usuários)
+* --[Spring Initialzr](./projetos/loginusuarios_01/loginusuarios01.zip) 
+
+---
+
 * **[Biblioteca de Jogos 01](./projetos/bibliotecajogos_01/)**: Biblioteca de Jogos 01
 * --[Spring Initialzr](./projetos/bibliotecajogos_01/bibliotecajogos.zip)
+
+---
 
 * **[Controle de Gastos 01](./projetos/controledegastos_01/)**: Controle de Gastos 01
 * **[Controle de Gastos 02](./projetos/controledegastos_02/)**: Controle de Gastos 02

@@ -1,425 +1,328 @@
 # 🚀 Projeto Lista de Tarefas" (To-Do List)
- v1.0
+v2.0
 
-Este guia é uma sequência didática projetada para ensinar, passo a passo, como construir uma API RESTful robusta e moderna utilizando Spring Boot. Vamos abordar desde a configuração inicial até práticas avançadas de engenharia de software.
+## 🗺️ Visão Geral da Arquitetura
 
-## 🎯 Objetivo
+Neste projeto, construiremos um sistema completo de "Lista de Tarefas" (To-Do List), demonstrando como diferentes aplicações cliente podem consumir uma única fonte de dados central (API). A arquitetura final será:
 
-Ao final deste tutorial, você terá construído uma API completa para um sistema de "Lista de Tarefas" (To-Do List), capaz de realizar as operações de **Criar, Ler, Atualizar e Deletar** (CRUD).
+  * **Um Backend (API REST):** O cérebro do sistema, desenvolvido em Java com Spring Boot.
+  * **Um Cliente:**
+    1.  Uma aplicação **Web** com Angular.
 
-## 🛠️ Módulo 1: Preparando o Terreno
+### Diagrama da Arquitetura
 
-### 1.1 - Configurando o Projeto
+```mermaid
+graph TD
+    subgraph "🎛️ Gerenciamento e Automação"
+        Script["🛠️ Painel de Controle (listadetarefas-painel.ps1)"]
+    end
 
-Vamos começar criando nosso projeto com o **Spring Initializr**, a ferramenta oficial para iniciar projetos Spring.
+    subgraph "📱 Clientes (Frontends)"
+        Web["💻 Frontend Web (Angular)"]
+        Desktop["🖥️ Frontend Desktop (JavaFX)"]
+        Mobile["📱 Frontend Mobile (Android)"]
+    end
 
-1.  Acesse [start.spring.io](https://start.spring.io).
+    subgraph "⚙️ Serviços (Backend)"
+        API["🔌 Backend API (Spring Boot)"]
+        DB[("🗄️ Banco de Dados Em Memória H2")]
+    end
+
+    %% Conexões de Dados
+    Web -->|Requisições HTTP/JSON| API
+    Desktop -->|Requisições HTTP/JSON| API
+    Mobile -->|Requisições HTTP/JSON| API
+    API --- DB
+
+    %% Conexões de Gerenciamento
+    Script -- Gerencia --> API
+    Script -- Gerencia --> Web
+    Script -- Gerencia --> Desktop
+    Script -- Gerencia --> Mobile
+
+```
+
+-----
+
+## ⚙️ Módulo 1: A Fundação – Backend com Spring Boot (`listadetarefas-api`)
+
+**Objetivo:** Criar o serviço central que irá gerenciar os dados das tarefas, servindo como a única fonte de verdade para todos os clientes.
+
+### 🛠️ Ferramentas Necessárias
+
+  * **Java Development Kit (JDK):** Versão 17 ou superior.
+  * **Apache Maven:** Ferramenta de automação de build.
+  * **IDE (Ambiente de Desenvolvimento):** IntelliJ IDEA ou Eclipse.
+  * **Cliente REST:** Postman ou Insomnia (para testes).
+
+### \#\#\# 📂 Passo 1: Criação do Projeto
+
+1.  Acesse o **Spring Initializr** ([https://start.spring.io](https://start.spring.io)).
 2.  Preencha os metadados do projeto:
-    *   **Project**: `Maven`
-    *   **Language**: `Java`
-    *   **Spring Boot**: Use a versão estável mais recente (ex: 3.x.x).
-    *   **Group**: `br.com.curso`
-    *   **Artifact**: `listadetarefas.api`
-    *   **Description**: `Projeto Lista de Tarefas" (To-Do List)`
-    *   **Package name**: `br.com.curso.listadetarefas.api`
-    *   **Packaging**: `Jar`
-    *   **Java**: `21` (ou a versão que você tiver instalada)
+      * **Project:** `Maven`
+      * **Language:** `Java`
+      * **Spring Boot:** Versão estável mais recente (ex: 3.x.x)
+      * **Group:** `br.com.curso`
+      * **Artifact:** `listadetarefas-api`
+      * **Package name:** `br.com.curso.listadetarefas.api`
 3.  Adicione as seguintes dependências (`Dependencies`):
-    *   `Spring Web`: Para criar APIs REST.
-    *   `Spring Data JPA`: Para facilitar o acesso a dados.
-    *   `H2 Database`: Um banco de dados em memória, ótimo para desenvolvimento.
-    *   `Lombok`: Para reduzir código repetitivo (getters, setters, etc.).
-    *   `Spring Boot DevTools`: Para reinicializações automáticas durante o desenvolvimento.
-4.  Clique em **GENERATE** e extraia o arquivo `.zip` em seu computador.
+      * `Spring Web`, `Spring Data JPA`, `H2 Database`, `Lombok`.
+4.  Clique em **GENERATE**, baixe o projeto, descompacte-o e abra na sua IDE.
 
-### 1.2 - Estrutura Inicial do Projeto
+#### Estrutura Inicial de Pastas
 
-Após abrir o projeto em sua IDE (IntelliJ, VS Code, Eclipse), a estrutura de pastas será a seguinte:
+Após criar o projeto, sua estrutura de pastas principal será:
 
 ```
-listadetarefas.api/
-├── pom.xml                # Arquivo de configuração do Maven com nossas dependências
-└── src/
-    ├── main/
-    │   ├── java/
-    │   │   └── br/com/curso/listadetarefasapi/
-    │   │       └── listadetarefasApiApplication.java  # Ponto de entrada da aplicação
-    │   └── resources/
-    │       └── application.properties         # Configurações da aplicação
-    └── test/
-        └── ...
+listadetarefas-api/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── br/com/curso/listadetarefas/api/
+│       │       └── ListadetarefasApiApplication.java
+│       └── resources/
+│           └── application.properties
+└── pom.xml
 ```
 
-### 1.3 - Configurando o Banco de Dados
+### \#\#\# ⚙️ Passo 2: Configuração do Projeto
 
-Abra o arquivo `src/main/resources/application.properties` e adicione as seguintes linhas para configurar nosso banco de dados H2 em memória:
+Abra o arquivo `src/main/resources/application.properties` e substitua seu conteúdo por este:
 
 ```properties
-# Nome da aplicação
-spring.application.name=listadetarefas.api
+# Permite que o servidor aceite conexões de qualquer endereço de rede da máquina.
+server.address=0.0.0.0
 
-# Habilita o console web do H2 para visualizarmos o banco
+# Habilita o console web do H2
 spring.h2.console.enabled=true
+# Define o caminho para acessar o console
 spring.h2.console.path=/h2-console
 
-# Configurações de conexão com o banco
+# Configurações do Datasource para H2
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
-
-# Informa ao Hibernate qual "dialeto" SQL usar
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-
-# Garante que as tabelas sejam criadas antes de tentar inserir dados
-spring.jpa.defer-datasource-initialization=true
 ```
 
-## 📦 Módulo 2: A Camada de Dados
+### \#\#\# 📝 Passo 3: Modelagem dos Dados
 
-Nesta etapa, vamos modelar como os dados de uma "Tarefa" serão armazenados.
+Vamos definir a estrutura da nossa tabela de tarefas.
 
-### 2.1 - Criando a Entidade `Tarefa`
+#### Diagrama Entidade-Relacionamento (ER)
 
-Uma **Entidade** é uma classe Java que representa uma tabela no banco de dados.
+```mermaid
+erDiagram
+    TB_TAREFAS {
+        BIGINT id PK "Auto-incremento"
+        VARCHAR descricao
+        BOOLEAN concluida
+    }
+```
 
-1.  Crie um novo pacote chamado `tarefa` dentro de `br.com.curso.listadetarefas.api`.
-2.  Dentro deste pacote, crie a classe `Tarefa.java`.
+1.  Dentro de `src/main/java/br/com/curso/listadetarefas/api`, crie um novo pacote chamado `tarefa`.
+2.  Dentro do pacote `tarefa`, crie a classe `Tarefa.java`.
+
+<!-- end list -->
 
 ```java
+// src/main/java/br/com/curso/listadetarefas/api/tarefa/Tarefa.java
 package br.com.curso.listadetarefas.api.tarefa;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data // Lombok: gera getters, setters, etc.
-@Entity // JPA: Marca como uma entidade
-@Table(name = "tb_tarefas") // JPA: Define o nome da tabela
+@Data
+@Entity
+@Table(name = "tb_tarefas")
 public class Tarefa {
-
-    @Id // JPA: Marca como chave primária
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // JPA: Define a geração automática do ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String titulo;
     private String descricao;
     private boolean concluida;
 }
 ```
 
-### 2.2 - Diagrama Entidade-Relacionamento (ER)
+#### Estrutura de Pastas Após a Criação do Modelo
 
-A classe acima será mapeada para a seguinte estrutura no banco de dados:
+```
+api/
+└── src/main/java/br/com/curso/listadetarefas/api/
+    ├── tarefa/
+    │   └── Tarefa.java  # <- Arquivo criado
+    └── ListadetarefasApiApplication.java
+```
+
+### \#\#\# 🏗️ Passo 4: Construção das Camadas de Serviço
+
+Agora, criaremos as classes que formam a arquitetura da nossa API: `Repository` (acesso a dados), `Service` (regras de negócio) e `Controller` (endpoints HTTP).
+
+#### Diagrama de Classes
 
 ```mermaid
-erDiagram
-    TB_TAREFAS {
-        Long id PK "Chave Primária, Auto-incremento"
-        String titulo "Título da tarefa"
-        String descricao "Descrição detalhada"
-        boolean concluida "Indica se a tarefa foi finalizada"
+classDiagram
+    TarefaController ..> TarefaService : Usa
+    TarefaService ..> TarefaRepository : Usa
+    TarefaRepository ..> Tarefa : Gerencia
+    class TarefaController {
+        +List~Tarefa~ listarTarefas()
+        +Tarefa criarTarefa(Tarefa)
+        +ResponseEntity~Tarefa~ atualizarTarefa(Long, Tarefa)
+        +ResponseEntity~Void~ deletarTarefa(Long)
+    }
+    class TarefaService {
+        +List~Tarefa~ listarTodas()
+        +Tarefa criar(Tarefa)
+        +Tarefa atualizar(Long, Tarefa)
+        +void deletar(Long)
+    }
+    class TarefaRepository {
+        <<Interface>>
+    }
+    class Tarefa {
+        -Long id
+        -String descricao
+        -boolean concluida
     }
 ```
 
-### 2.3 - Criando o Repositório `TarefaRepository`
+1.  Dentro do pacote `tarefa`, crie as seguintes classes e interfaces:
 
-Um **Repositório** é uma interface que abstrai o acesso aos dados. O Spring Data JPA implementará os métodos para nós!
-
-1.  No mesmo pacote `tarefa`, crie a interface `TarefaRepository.java`.
+**`TarefaRepository.java`**
 
 ```java
 package br.com.curso.listadetarefas.api.tarefa;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 }
 ```
 
-E é só isso! Agora já temos métodos como `save()`, `findById()`, `findAll()` e `deleteById()` prontos para usar.
-
-## 🧠 Módulo 3: A Camada de Lógica de Negócios
-
-A camada de **Serviço** orquestra as operações e contém as regras de negócio da nossa aplicação.
-
-1.  No pacote `tarefa`, crie a classe `TarefaService.java`.
+**`TarefaService.java`**
 
 ```java
 package br.com.curso.listadetarefas.api.tarefa;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service // Spring: Marca como um componente de serviço
+@Service
 public class TarefaService {
+    @Autowired
+    private TarefaRepository tarefaRepository;
 
-    private final TarefaRepository tarefaRepository;
-
-    // Injeção de dependência via construtor (prática recomendada)
-    public TarefaService(TarefaRepository tarefaRepository) {
-        this.tarefaRepository = tarefaRepository;
-    }
-
-    public List<Tarefa> listarTodas() {
-        return tarefaRepository.findAll();
-    }
-
-    // Outros métodos (criar, atualizar, etc.) virão aqui...
-}
-```
-
-## 🔌 Módulo 4: Expondo a API com o Controller
-
-O **Controller** é a porta de entrada da nossa API. Ele recebe as requisições HTTP e as direciona para a camada de serviço.
-
-1.  No pacote `tarefa`, crie a classe `TarefaController.java`.
-
-```java
-package br.com.curso.listadetarefas.api.tarefa;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-
-@RestController // Spring: Define que esta classe é um controller REST
-@RequestMapping("/tarefas") // Define a URL base para todos os métodos: http://localhost:8080/tarefas
-public class TarefaController {
-
-    private final TarefaService tarefaService;
-
-    public TarefaController(TarefaService tarefaService) {
-        this.tarefaService = tarefaService;
-    }
-
-    @GetMapping // Mapeia requisições HTTP GET para este método
-    public List<Tarefa> listarTarefas() {
-        return tarefaService.listarTodas();
-    }
-}
-```
-
-### 4.1 - Testando o Primeiro Endpoint
-
-1.  **Execute a aplicação**: Rode a classe `listadetarefasApiApplication.java`.
-2.  **Acesse no navegador**: Abra a URL `http://localhost:8080/tarefas`.
-
-Você deverá ver uma lista vazia `[]`, pois ainda não temos dados. Vamos adicionar alguns dados de exemplo! Crie o arquivo `src/main/resources/data.sql`:
-
-```sql
-INSERT INTO TB_TAREFAS (TITULO, DESCRICAO, CONCLUIDA) VALUES ('Configurar o Backend', 'Criar a entidade e o repositório da Tarefa.', true);
-INSERT INTO TB_TAREFAS (TITULO, DESCRICAO, CONCLUIDA) VALUES ('Criar a API REST', 'Desenvolver o endpoint para listar as tarefas.', false);
-```
-
-Reinicie a aplicação e acesse a URL novamente. Agora você verá os dados em formato JSON!
-
-
----
-
-O tutorial cobre de forma exemplar a configuração do projeto e a implementação da funcionalidade de **Leitura (Read)** do CRUD.
-
-Para dar continuidade e atingir o objetivo de ter um CRUD completo, podemos agora implementar as operações de **Criar (Create), Atualizar (Update) e Deletar (Delete)**. Abaixo, apresento a continuação do seu projeto, seguindo o mesmo formato e didática.
-
------
-
-## Módulo 5: Implementando as Operações de Escrita (Create & Update)
-
-Agora que já conseguimos listar nossas tarefas, vamos adicionar a capacidade de criar novas e modificar as existentes.
-
-### 5.1 - Adicionando o Método de Criação no `TarefaService`
-
-Vamos adicionar a lógica para salvar uma nova tarefa no banco de dados.
-
-1.  Abra a classe `TarefaService.java`.
-2.  Adicione o método `criarTarefa`.
-
-<!-- end list -->
-
-```java
-// ... (dentro da classe TarefaService)
-
-    // ... (método listarTodas existente)
-
-    public Tarefa criarTarefa(Tarefa tarefa) {
-        // Aqui poderíamos adicionar regras de negócio,
-        // como validações, antes de salvar.
-        return tarefaRepository.save(tarefa);
-    }
-```
-
-### 5.2 - Criando o Endpoint de Criação no `TarefaController`
-
-Agora, vamos expor o método do serviço através de um novo endpoint na API. Usaremos o método HTTP `POST`.
-
-1.  Abra a classe `TarefaController.java`.
-2.  Adicione as importações necessárias e o novo método.
-
-<!-- end list -->
-
-```java
-package br.com.curso.listadetarefas.api.tarefa;
-
-// Novas importações
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-
-@RestController
-@RequestMapping("/tarefas")
-public class TarefaController {
-
-    private final TarefaService tarefaService;
-
-    public TarefaController(TarefaService tarefaService) {
-        this.tarefaService = tarefaService;
-    }
-
-    @GetMapping
-    public List<Tarefa> listarTarefas() {
-        return tarefaService.listarTodas();
-    }
-
-    // NOVO MÉTODO
-    @PostMapping // Mapeia requisições HTTP POST
-    @ResponseStatus(HttpStatus.CREATED) // Retorna o status 201 Created em caso de sucesso
-    public Tarefa criarTarefa(@RequestBody Tarefa tarefa) {
-        // @RequestBody indica que os dados da tarefa virão no corpo da requisição
-        return tarefaService.criarTarefa(tarefa);
-    }
-}
-```
-
-**Para testar:** Use uma ferramenta como o Postman ou Insomnia para enviar uma requisição `POST` para `http://localhost:8080/tarefas` com o seguinte corpo (JSON):
-
-```json
-{
-    "titulo": "Estudar Spring Boot",
-    "descricao": "Implementar o restante do CRUD.",
-    "concluida": false
-}
-```
-
-### 5.3 - Adicionando os Métodos de Atualização
-
-A atualização seguirá uma lógica parecida, mas precisamos identificar *qual* tarefa será atualizada.
-
-1.  **No `TarefaService.java`**:
-
-<!-- end list -->
-
-```java
-// ... (dentro da classe TarefaService)
-import java.util.Optional; // Importe esta classe
-
-// ... (outros métodos)
-
-    public Optional<Tarefa> atualizarTarefa(Long id, Tarefa tarefaAtualizada) {
-        // Busca a tarefa pelo ID para garantir que ela existe
+    public List<Tarefa> listarTodas() { return tarefaRepository.findAll(); }
+    public Tarefa criar(Tarefa tarefa) { return tarefaRepository.save(tarefa); }
+    public Tarefa atualizar(Long id, Tarefa tarefaAtualizada) {
         return tarefaRepository.findById(id)
             .map(tarefaExistente -> {
-                tarefaExistente.setTitulo(tarefaAtualizada.getTitulo());
                 tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
                 tarefaExistente.setConcluida(tarefaAtualizada.isConcluida());
                 return tarefaRepository.save(tarefaExistente);
-            });
+            }).orElseThrow(() -> new RuntimeException("Tarefa não encontrada com o id: " + id));
     }
-```
-
-2.  **No `TarefaController.java`**:
-
-<!-- end list -->
-
-```java
-// ... (dentro da classe TarefaController)
-
-// Novas importações
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-
-// ...
-
-    // NOVO MÉTODO
-    @PutMapping("/{id}") // Mapeia requisições HTTP PUT para /tarefas/{id}
-    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
-        // @PathVariable extrai o 'id' da URL
-        return tarefaService.atualizarTarefa(id, tarefa)
-                .map(tarefaAtualizada -> ResponseEntity.ok(tarefaAtualizada))
-                .orElse(ResponseEntity.notFound().build()); // Retorna 404 se não encontrar
-    }
-```
-
-**Para testar:** Envie uma requisição `PUT` para `http://localhost:8080/tarefas/3` (assumindo que o ID 3 foi criado) com um corpo JSON contendo os dados atualizados.
-
-## 🗑️ Módulo 6: Implementando a Operação de Deleção (Delete)
-
-Finalmente, vamos permitir que uma tarefa seja removida.
-
-### 6.1 - Adicionando o Método de Deleção no `TarefaService`
-
-Este método verificará se a tarefa existe antes de deletá-la.
-
-1.  **No `TarefaService.java`**:
-
-<!-- end list -->
-
-```java
-// ... (dentro da classe TarefaService)
-
-    public boolean deletarTarefa(Long id) {
-        if (tarefaRepository.existsById(id)) {
-            tarefaRepository.deleteById(id);
-            return true; // Deletado com sucesso
+    public void deletar(Long id) {
+        if (!tarefaRepository.existsById(id)) {
+            throw new RuntimeException("Tarefa não encontrada com o id: " + id);
         }
-        return false; // Tarefa não encontrada
+        tarefaRepository.deleteById(id);
     }
+}
 ```
 
-### 6.2 - Criando o Endpoint de Deleção no `TarefaController`
-
-Este endpoint receberá o ID da tarefa a ser deletada pela URL.
-
-1.  **No `TarefaController.java`**:
-
-<!-- end list -->
+**`TarefaController.java`**
 
 ```java
-// ... (dentro da classe TarefaController)
+package br.com.curso.listadetarefas.api.tarefa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-// Nova importação
-import org.springframework.web.bind.annotation.DeleteMapping;
+@RestController
+@RequestMapping("/api/tarefas")
+@CrossOrigin(origins = "*")
+public class TarefaController {
+    @Autowired
+    private TarefaService tarefaService;
 
-// ...
-
-    // NOVO MÉTODO
+    @GetMapping
+    public List<Tarefa> listarTarefas() { return tarefaService.listarTodas(); }
+    @PostMapping
+    public Tarefa criarTarefa(@RequestBody Tarefa tarefa) { return tarefaService.criar(tarefa); }
+    @PutMapping("/{id}")
+    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+        try {
+            Tarefa atualizada = tarefaService.atualizar(id, tarefa);
+            return ResponseEntity.ok(atualizada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
-        if (tarefaService.deletarTarefa(id)) {
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content (sucesso, sem corpo)
+        try {
+            tarefaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build(); // Retorna 404 Not Found
     }
+}
 ```
 
-**Para testar:** Envie uma requisição `DELETE` para `http://localhost:8080/tarefas/3`. Se a operação for bem-sucedida, você receberá o status `204 No Content`.
+#### Estrutura de Pastas Final do Backend
 
-## ✅ Resumo Final
+```
+api/
+└── src/main/java/br/com/curso/listadetarefas/api/
+    ├── tarefa/
+    │   ├── Tarefa.java
+    │   ├── TarefaController.java
+    │   ├── TarefaRepository.java
+    │   └── TarefaService.java
+    └── ListadetarefasApiApplication.java
+```
 
-Com esses novos módulos, sua `TarefaController` e `TarefaService` estarão completas com todas as operações CRUD. Você construiu uma API RESTful robusta e funcional, pronta para ser consumida por qualquer aplicação front-end.
+### \#\#\# ✅ Passo 5: Execução e Teste da API
 
-**Próximos Passos Sugeridos:**
+#### Diagrama de Casos de Uso da API
 
-1.  **Validações**: Adicionar validações nos dados de entrada (ex: o título não pode ser vazio).
-2.  **Tratamento de Exceções**: Criar um handler global para tratar erros de forma mais elegante.
-3.  **Paginação**: Implementar paginação no endpoint de listagem para lidar com grandes volumes de dados.
-4.  **Banco de Dados Real**: Trocar o H2 por um banco de dados como PostgreSQL ou MySQL.
----
+```mermaid
+usecaseDiagram
+    Usuário as "Usuário (via Cliente)"
+    package "Sistema de Tarefas" {
+        usecase "Listar todas as tarefas" as UC1
+        usecase "Adicionar nova tarefa" as UC2
+        usecase "Atualizar uma tarefa" as UC3
+        usecase "Deletar uma tarefa" as UC4
+    }
+    Usuário --> UC1
+    Usuário --> UC2
+    Usuário --> UC3
+    Usuário --> UC4
+```
+
+1.  **Execute a Aplicação:**
+
+      * Na sua IDE, execute a classe `ListadetarefasApiApplication.java`.
+      * Ou, via terminal na raiz do projeto: `./mvnw spring-boot:run`
+
+2.  **Teste com Cliente REST (ex: Postman):**
+
+      * Use um cliente REST para fazer requisições para `http://localhost:8080/api/tarefas` e verifique todas as operações de CRUD (GET, POST, PUT, DELETE) como detalhado no guia anterior.
+
+3.  **Teste com o Console H2:**
+
+      * Com a API rodando, acesse `http://localhost:8080/h2-console` no navegador.
+      * Use as seguintes credenciais para logar:
+          * **JDBC URL:** `jdbc:h2:mem:testdb`
+          * **User Name:** `sa`
+          * **Password:** (em branco)
+      * Após criar tarefas via API, execute o comando SQL `SELECT * FROM TB_TAREFAS;` para ver os dados diretamente no banco.
+
+-----
 
 ### 🚀 [ricardotecpro.github.io](https://ricardotecpro.github.io/)
 
