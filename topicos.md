@@ -6,7 +6,8 @@
 * [Spring Initialzr](./projetos/listadetarefas_06/backend.zip): (backend zip)
 
 
---
+---
+
 
 * [Gestão de Estoques 01](./projetos/gestaodeestoques_01): Sistema de Gestão de Estoque (Security + JWT)
 * [Spring Initialzr](./projetos/gestaodeestoques_01/gestaodeestoques.zip)

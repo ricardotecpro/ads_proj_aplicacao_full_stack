@@ -33,6 +33,7 @@ mkdir frontend
     - `Spring Data JPA`: Para persistência de dados.
     - `H2 Database`: Banco de dados em memória para desenvolvimento.
     - `Lombok`: Para reduzir código boilerplate (getters, setters, construtores).
+    - `Dev tools`: Hot Reload.
 4.  Clique em "GENERATE" e extraia o conteúdo do arquivo `.zip` para a pasta `backend`.
 
 ---
