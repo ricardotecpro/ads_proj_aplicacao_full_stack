@@ -1,4 +1,4 @@
-# Estrutura do Projeto Lista de Tarefas 06
+# Projeto Lista de Tarefas 06
 
 ## Spring Boot com Vue.js com CORS
 
