@@ -1,21 +1,28 @@
 
 ## Projetos - Aplicações
 
-* **[Gestão de Estoques 01](./projetos/gestaodeestoques_01)**: Login de Usuários JWT)
---- 
-* **[Spring Initialzr](./projetos/gestaodeestoques_01/gestaodeestoques.zip)**
 ---
-* **[Gestão de Estoques Módulo 00](./projetos/gestaodeestoques_01/modulo00.md)**
-* **[Gestão de Estoques Módulo 01](./projetos/gestaodeestoques_01/modulo01.md)**
-* **[Gestão de Estoques Módulo 02](./projetos/gestaodeestoques_01/modulo02.md)**
-* **[Gestão de Estoques Módulo 03](./projetos/gestaodeestoques_01/modulo03.md)**
-* **[Gestão de Estoques Módulo 04](./projetos/gestaodeestoques_01/modulo04.md)**
-* **[Gestão de Estoques Módulo 05](./projetos/gestaodeestoques_01/modulo05.md)** 
-* **[Gestão de Estoques Módulo 06](./projetos/gestaodeestoques_01/modulo06.md)**
-* **[Gestão de Estoques Módulo 07](./projetos/gestaodeestoques_01/modulo07.md)**
-* **[Gestão de Estoques Módulo 08](./projetos/gestaodeestoques_01/modulo08.md)**
-* **[Gestão de Estoques Módulo 09](./projetos/gestaodeestoques_01/modulo09.md)** 
+* **[Login de Usuários 01](./projetos/listadetarefas_06)**: Spring Vue Cors)
+* [Spring Initialzr](./projetos/listadetarefas_06/backend.zip): (backend zip)
 
+
+--
+
+* [Gestão de Estoques 01](./projetos/gestaodeestoques_01): Sistema de Gestão de Estoque (Security + JWT)
+* [Spring Initialzr](./projetos/gestaodeestoques_01/gestaodeestoques.zip)
+
+---
+
+* [Gestão de Estoques Módulo 00](./projetos/gestaodeestoques_01/modulo00.md)
+* [Gestão de Estoques Módulo 01](./projetos/gestaodeestoques_01/modulo01.md)
+* [Gestão de Estoques Módulo 02](./projetos/gestaodeestoques_01/modulo02.md)
+* [Gestão de Estoques Módulo 03](./projetos/gestaodeestoques_01/modulo03.md)
+* [Gestão de Estoques Módulo 04](./projetos/gestaodeestoques_01/modulo04.md)
+* [Gestão de Estoques Módulo 05](./projetos/gestaodeestoques_01/modulo05.md) 
+* [Gestão de Estoques Módulo 06](./projetos/gestaodeestoques_01/modulo06.md)
+* [Gestão de Estoques Módulo 07](./projetos/gestaodeestoques_01/modulo07.md)
+* [Gestão de Estoques Módulo 08](./projetos/gestaodeestoques_01/modulo08.md)
+* [Gestão de Estoques Módulo 09](./projetos/gestaodeestoques_01/modulo09.md) 
 
 ---
 
