@@ -781,7 +781,7 @@ server.port=8088
 # Define um prefixo para todos os endpoints da aplicacao.
 # Ajuda a organizar as rotas e a evitar colisoes, especialmente em ambientes com proxy.
 # Ex: http://localhost:8088/api/tarefas em vez de http://localhost:8088/tarefas
-#server.servlet.context-path=/api
+server.servlet.context-path=/api
 
 # ===================================================================
 # CONFIGURACAO DO BANCO DE DADOS (DATASOURCE)

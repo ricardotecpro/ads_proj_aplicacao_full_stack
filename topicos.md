@@ -2,9 +2,8 @@
 ## Projetos - Aplicações
 
 ---
-* **[Login de Usuários 01](./projetos/listadetarefas_06)**: Spring Vue Cors)
+* **[Lista de Tarefas 06](./projetos/listadetarefas_06)**: Spring Boot Vue.js (CORS)
 * [Spring Initialzr](./projetos/listadetarefas_06/backend.zip): (backend zip)
-
 
 ---
 

@@ -34,10 +34,10 @@ Toda grande jornada de software começa com a configuração correta. O **Spring
       * **Project Metadata:**
 
           * **Group:** `br.com.aula`
-          * **Artifact:** `gestao.estoque`
-          * **Name:** `gestao.estoque`
+          * **Artifact:** `gestaodeestoques`
+          * **Name:** `gestaodeestoques`
           * **Description:** `Projeto Didático de Gestão de Estoque`
-          * **Package name:** `br.com.aula.gestao.estoque`
+          * **Package name:** `br.com.aula.gestaodeestoques`
 
       * **Packaging:** `Jar`
 
