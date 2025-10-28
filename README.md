@@ -6,17 +6,17 @@ Em uma analogia com um restaurante, o desenvolvedor Full Stack seria o chef de c
 
 É crucial entender que ser "Full Stack" **não significa ser um especialista em tudo**. Significa ter uma visão holística do sistema, ser capaz de construir e manter uma aplicação de ponta a ponta e contribuir de forma significativa em qualquer parte do processo. Muitos desenvolvedores Full Stack se encaixam no perfil **"T-shaped"**: possuem um conhecimento amplo em várias áreas, mas uma especialização profunda em uma ou duas delas.
 
----
-
-## 🔗 Tópicos
-
-* **[Tópicos](/topicos.md)**: Trilhas de Aprendizagem.
-
 -----
 
 # ⚒️ Projetos
 
 * **[Projetos](./projetos/)**: Projetos: Estudo de Casos
+
+---
+
+## 🔗 Tópicos
+
+* **[Tópicos](/topicos.md)**: Trilhas de Aprendizagem.
 
 ---
 
