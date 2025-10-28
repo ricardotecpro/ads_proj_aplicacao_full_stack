@@ -16,7 +16,7 @@ Em uma analogia com um restaurante, o desenvolvedor Full Stack seria o chef de c
 
 ## 🔗 Tópicos
 
-* **[Tópicos](/topicos.md)**: Trilhas de Aprendizagem.
+* **[Tópicos](/projetos2.md)**: Trilhas de Aprendizagem.
 
 ---
 
