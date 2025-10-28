@@ -1,12 +1,15 @@
 
 ## Projetos - Aplicações
 
+
+* **[Balanceamento de Carga 01](./projetos/balanceamento_carga_01)**: Node Nginx
+
 ---
+
 * **[Lista de Tarefas 06](./projetos/listadetarefas_06)**: Spring Boot Vue.js (CORS)
 * [Spring Initialzr](./projetos/listadetarefas_06/backend.zip): (backend zip)
 
 ---
-
 
 * [Gestão de Estoques 01](./projetos/gestaodeestoques_01): Sistema de Gestão de Estoque (Security + JWT)
 * [Spring Initialzr](./projetos/gestaodeestoques_01/gestaodeestoques.zip)

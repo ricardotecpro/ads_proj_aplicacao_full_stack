@@ -1,0 +1,22 @@
+# /docker-compose.yml
+
+services:
+  api-01:
+    build:
+      context: .
+      dockerfile: ./api-01/Dockerfile
+
+  api-02:
+    build:
+      context: .
+      dockerfile: ./api-02/Dockerfile
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api-01
+      - api-02

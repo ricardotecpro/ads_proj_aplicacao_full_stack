@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizador de Carga Nginx</title>
+    <script src="chart.js"></script>
+    <style>
+        body { font-family: sans-serif; display: grid; place-items: center; background: #f4f4f4; }
+        #chart-container { width: 500px; }
+        h1 { color: #333; }
+        h2 { margin: 5px 0; }
+        #api-01 { color: #36A2EB; }
+        #api-02 { color: #FF6384; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard de Balanceamento de Carga</h1>
+    <div id="chart-container">
+        <canvas id="loadChart"></canvas>
+    </div>
+    <h2 id="api-01">API-01: 0</h2>
+    <h2 id="api-02">API-02: 0</h2>
+    <h3>Total: <span id="total">0</span></h3>
+
+    <script>
+        const ctx = document.getElementById('loadChart').getContext('2d');
+        const counters = { 'API-01': 0, 'API-02': 0 };
+        let total = 0;
+
+        const h2_api1 = document.getElementById('api-01');
+        const h2_api2 = document.getElementById('api-02');
+        const span_total = document.getElementById('total');
+
+        // Configuração do Gráfico de Pizza
+        const loadChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['API-01', 'API-02'],
+                datasets: [{
+                    data: [0, 0],
+                    backgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            },
+            options: { responsive: true, animation: { duration: 500 } }
+        });
+
+        // Função para fazer requisições
+        async function fetchData() {
+            try {
+                // O Nginx está servindo esta página, então /api é o caminho correto
+                const response = await fetch('/api/dashboard'); 
+
+                if (!response.ok) throw new Error('Falha na rede');
+
+                const data = await response.json();
+
+                // Atualiza contadores
+                counters[data.servidor]++;
+                total++;
+
+                // Atualiza HTML
+                h2_api1.innerText = `API-01: ${counters['API-01']}`;
+                h2_api2.innerText = `API-02: ${counters['API-02']}`;
+                span_total.innerText = total;
+
+                // Atualiza Gráfico
+                loadChart.data.datasets[0].data = [counters['API-01'], counters['API-02']];
+                loadChart.update();
+
+            } catch (error) {
+                console.error('Erro ao buscar API:', error);
+            }
+        }
+
+        // Inicia o "teste de carga" leve do próprio dashboard
+        // Faz 5 requisições por segundo
+        setInterval(fetchData, 200);
+    </script>
+</body>
+</html>
