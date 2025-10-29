@@ -312,6 +312,22 @@ Abra seu navegador e vá para: **`http://localhost`**
 Você verá o dashboard. Ele já começará a fazer requisições lentamente, e o gráfico de pizza deve mostrar uma divisão de ~50% para cada API.
 
 **4. Execute o Teste de Carga:**
+
+# K6 Load Testing for API on Windows 11 🚀
+
+K6 é uma poderosa ferramenta open-source para testes de carga de APIs. Abaixo estão os passos para configurar e executar o K6 no Windows 11.
+
+## 1. Instalar o K6 no Windows 11 🖥️
+
+1. Abra um terminal (Prompt de Comando, PowerShell ou Bash).
+
+2. Use o Gerenciador de Pacotes do Windows (Winget) para instalar o K6:
+
+   ```bash
+   winget install k6 --source winget
+
+---
+
 Em **outro** terminal, execute o k6:
 ```bash
 k6 run load-test.js
