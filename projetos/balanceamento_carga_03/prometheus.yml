@@ -1,0 +1,16 @@
+# prometheus.yml
+global:
+  scrape_interval: 10s # Intervalo de coleta
+
+scrape_configs:
+  # Coleta métricas do Serviço A (Pedidos)
+  - job_name: 'servico-a'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8081'] # 'host.docker.internal' permite ao Docker acessar o host local
+
+  # Coleta métricas do Serviço B (Estoque)
+  - job_name: 'servico-b'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8082']

@@ -65,7 +65,15 @@ public class ProdutoServiceImpl implements ProdutoService {
         findCategoriaOrThrow(produtoFormDTO.categoriaId());
         findFornecedorOrThrow(produtoFormDTO.fornecedorId());
 
-        Produto produtoParaAtualizar = produtoMapper.toEntity(produtoFormDTO);
+        Produto produtoParaAtualizar = new Produto(
+            id, 
+            produtoFormDTO.nome(), 
+            produtoFormDTO.quantidade(), 
+            produtoFormDTO.preco(), 
+            produtoFormDTO.categoriaId(), 
+            produtoFormDTO.fornecedorId()
+        );
+
         Produto produtoAtualizado = produtoRepository.save(produtoParaAtualizar);
         return mapToProdutoDTO(produtoAtualizado);
     }

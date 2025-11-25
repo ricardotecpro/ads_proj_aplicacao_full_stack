@@ -1,12 +1,20 @@
 ## Projetos - Aplicações
 
 
-* **[Balanceamento de Carga 01](balanceamento_carga_01)**: Node Nginx
+* **[Lista de Tarefas 06](listadetarefas_06_vue)**: Spring Boot Vue.js (CORS)
+  - [Spring Initialzr](listadetarefas_06_vue/backend.zip): (backend zip)
 
 ---
 
-* **[Lista de Tarefas 06](listadetarefas_06)**: Spring Boot Vue.js (CORS)
-* [Spring Initialzr](listadetarefas_06/backend.zip): (backend zip)
+* **[Lista de Tarefas 07](listadetarefas_07_angular)**: Spring Boot Vue.js (CORS)
+
+---
+
+* **[Lista de Tarefas 08](listadetarefas_08_react)**: Spring Boot Vue.js (CORS)
+
+---
+
+* **[Balanceamento de Carga 01](balanceamento_carga_01)**: Node Nginx
 
 ---
 
@@ -29,22 +37,31 @@
 ---
 
 * **[Login de Usuários 01](loginusuarios_01)**: Login de Usuários)
-* --[Spring Initialzr](loginusuarios_01/loginusuarios01.zip) 
+    - [Spring Initialzr](loginusuarios_01/loginusuarios01.zip)
+ 
 
-* **[Login de Usuários 01](loginusuarios_01)**: Login de Usuários)
-* --[Spring Initialzr](loginusuarios_01/loginusuarios01.zip) 
+
+  * **[Login de Usuários 02](loginusuarios_02)**: Login de Usuários)
+    - [Spring Initialzr](loginusuarios_02) 
+
+
+  * **[Login de Usuários 03](loginusuarios_03)**: Login de Usuários)
+    - [Spring Initialzr](loginusuarios_03) 
 
 ---
 
 * **[Biblioteca de Jogos 01](./bibliotecajogos_01/)**: Biblioteca de Jogos 01
-* --[Spring Initialzr](bibliotecajogos_01/bibliotecajogos.zip)
+    - [Spring Initialzr](bibliotecajogos_01/bibliotecajogos.zip)
 
 ---
 
 * **[Controle de Gastos 01](./controledegastos_01/)**: Controle de Gastos 01
+
+ 
 * **[Controle de Gastos 02](./controledegastos_02/)**: Controle de Gastos 02
  
---- 
+---
+
 * **[Lista de Tarefa 01](./listadetarefas_01/)**: Lista de Tarefas 01
 * **[Lista de Tarefa 02](./listadetarefas_02/)**: Lista de Tarefas 02
 * **[Lista de Tarefa 03](./listadetarefas_03/)**: Lista de Tarefas 03 

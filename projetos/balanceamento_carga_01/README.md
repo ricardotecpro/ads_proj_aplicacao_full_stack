@@ -325,6 +325,7 @@ K6 é uma poderosa ferramenta open-source para testes de carga de APIs. Abaixo e
 
    ```bash
    winget install k6 --source winget
+    ```
 
 ---
 

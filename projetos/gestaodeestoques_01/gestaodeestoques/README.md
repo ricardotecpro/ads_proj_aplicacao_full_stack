@@ -1,87 +1,126 @@
-    # 💎 Gestão de Estoques
-
----
-Excelente pergunta. Como especialista em engenharia de software e educador, a forma como estruturamos o conhecimento é tão importante quanto o próprio conhecimento. Para transformar o processo completo de construção da nossa aplicação em um guia didático eficaz para alunos, a melhor abordagem é dividir o conteúdo em módulos bem definidos, onde cada um representa um marco de aprendizado claro e constrói sobre o anterior.
-
-Considerando a complexidade e a variedade de conceitos que abordamos (do banco de dados ao JWT e ao frontend), a separação ideal seria em **8 módulos**.
-
-Esta divisão permite que os alunos foquem em um conjunto coeso de habilidades por vez, desde a fundação do backend até a criação da interface do usuário e o deploy, facilitando a absorção e a prática.
+# 💎 Gestão de Estoques
 
 ---
 
-## 📚 Estrutura Modular Proposta para o Guia Didático
+## 🎯 Objetivo de Aprendizagem
 
-Aqui está o detalhamento de como os 8 módulos podem ser organizados para maximizar o aprendizado.
+Ao final deste guia, você terá construído um projeto de portfólio impressionante e, mais importante, terá dominado os seguintes conceitos:
 
-### Módulo 1: 🏛️ Fundamentos e Persistência de Dados
-**Objetivo:** Construir a base da aplicação. Ao final, o aluno terá uma aplicação que se conecta a um banco de dados e entende a estrutura dos dados, mas ainda sem lógica de negócio ou interface.
--   **Aula 1.1:** Gênese do Projeto (Configuração no Spring Initializr).
--   **Aula 1.2:** Modelagem do Banco de Dados (Criação do `schema.sql` e Diagrama ER).
--   **Aula 1.3:** Mapeamento Objeto-Relacional (Criação das entidades `record` no pacote `model`).
--   **Aula 1.4:** A Camada de Acesso a Dados (Implementação das interfaces `Repository` com Spring Data).
-
-### Módulo 2: 🧠 Lógica de Negócio e Arquitetura de Serviços
-**Objetivo:** Isolar as regras de negócio do resto do código, aplicando princípios de design de software (SOLID). O aluno aprenderá a criar o "cérebro" da aplicação.
--   **Aula 2.1:** A Importância da Camada de Serviço (Introdução ao Princípio da Responsabilidade Única - SRP).
--   **Aula 2.2:** Desacoplando as Camadas com DTOs (Data Transfer Objects) e Mappers.
--   **Aula 2.3:** Programando para Interfaces (Definição da `ProdutoService` e o Princípio da Inversão de Dependência - DIP).
--   **Aula 2.4:** Implementando a Lógica de Negócio (Criação da classe `ProdutoServiceImpl`).
-
-### Módulo 3: 🔌 Construindo a API REST
-**Objetivo:** Expor a lógica de negócio para o mundo exterior através de endpoints HTTP. Ao final, o aluno terá uma API funcional, porém ainda insegura.
--   **Aula 3.1:** Introdução a APIs REST e `@RestController`.
--   **Aula 3.2:** Mapeando Verbos HTTP (GET, POST, PUT, DELETE) para operações de CRUD.
--   **Aula 3.3:** Manipulando Respostas HTTP com `ResponseEntity` (Status codes: 200, 201, 404, etc.).
--   **Aula 3.4:** Implementando os `Controllers` para Produtos, Categorias e Fornecedores.
-
-### Módulo 4: 🔒 Segurança de APIs com Spring Security e JWT
-**Objetivo:** Proteger a API. Este é um módulo denso e crucial que ensina o padrão de mercado para segurança em arquiteturas desacopladas.
--   **Aula 4.1:** Teoria: Autenticação Stateless vs. Stateful e o Fluxo JWT (com Diagrama de Sequência).
--   **Aula 4.2:** Implementando o `JwtTokenProvider` (Geração e validação dos tokens).
--   **Aula 4.3:** O Filtro de Autenticação (Implementação do `JwtAuthenticationFilter`).
--   **Aula 4.4:** Refatorando o `SecurityConfig` para uma API Stateless.
--   **Aula 4.5:** Criando o Endpoint de Login (`AuthenticationController`).
-
-### Módulo 5:  professionalism professionalizando a API: Documentação e Erros
-**Objetivo:** Transformar a API funcional em uma API profissional, fácil de usar e previsível.
--   **Aula 5.1:** Documentação Interativa com OpenAPI (`springdoc-openapi`).
--   **Aula 5.2:** Enriquecendo a Documentação do Swagger (Anotações `@Operation`, `@ApiResponse`, etc.).
--   **Aula 5.3:** A Importância de Respostas de Erro Padronizadas (Criando um `ErrorResponseDTO`).
--   **Aula 5.4:** Tratamento de Exceções Global com `@RestControllerAdvice`.
-
-### Módulo 6: ✅ Garantia de Qualidade com Testes
-**Objetivo:** Ensinar o aluno a validar a própria lógica e garantir que futuras alterações não quebrem o código existente.
--   **Aula 6.1:** Fundamentos de Testes (JUnit 5 e o conceito de Mocks com Mockito).
--   **Aula 6.2:** Testes Unitários para a Camada de Serviço (`ProdutoServiceImplTest`).
--   **Aula 6.3:** (Avançado) Testes de Integração para a Camada de Controller (`@WebMvcTest`).
-
-### Módulo 7: 🎨 Introdução ao Frontend SPA (Single Page Application)
-**Objetivo:** Mostrar como o backend robusto que foi construído pode ser consumido por um cliente moderno. Este módulo foca nos conceitos, usando JavaScript puro ("vanilla").
--   **Aula 7.1:** O que é uma SPA? (Comparação com a abordagem de Thymeleaf).
--   **Aula 7.2:** Estruturando o Frontend (Arquivos `index.html`, `login.html`).
--   **Aula 7.3:** Consumindo a API (Usando `fetch` e o módulo `api.js`).
--   **Aula 7.4:** Gerenciando Autenticação no Cliente (`auth.js` e `localStorage` para o JWT).
--   **Aula 7.5:** Roteamento no Lado do Cliente (`router.js`).
-
-### Módulo 8: 🚀 Deployment e Containerização com Docker
-**Objetivo:** Ensinar o aluno a empacotar a aplicação para distribuição e execução em qualquer ambiente.
--   **Aula 8.1:** O que é Docker e por que usar containers?
--   **Aula 8.2:** Criando um `Dockerfile` para a aplicação Spring Boot.
--   **Aula 8.3:** (Avançado) Orquestrando a aplicação com um banco de dados PostgreSQL usando `docker-compose`.
+- **Arquitetura em Camadas:** Organização do código com base em responsabilidades (Controller, Service, Repository).
+- **Princípios SOLID:** Aplicação prática de conceitos como Responsabilidade Única e Inversão de Dependência.
+- **Modelagem de Dados:** Criação de um esquema de banco de dados relacional com relacionamentos 1-N e N-N.
+- **Segurança:** Implementação de autenticação e autorização com Spring Security.
+- **Desenvolvimento Frontend com Thymeleaf:** Criação de UIs dinâmicas, reutilizáveis e com design moderno (Material Design).
+- **Qualidade de Código:** Validação de dados de entrada e escrita de testes unitários.
 
 ---
 
-### Tabela Resumo da Sequência Didática
+## Módulo 0: 🚀 Gênese do Projeto (Spring Initializr)
 
-| Módulo | Título                                               | Conceitos-Chave                                       | Resultado Esperado                                               | Próxima Etapa            |
-| :----: | :--------------------------------------------------- | :---------------------------------------------------- | :--------------------------------------------------------------- | :----------------------- |
-| **1** | Fundamentos e Persistência de Dados                  | Spring Initializr, JDBC, SQL, Entidades, Repositories | Uma aplicação com camada de dados funcional.                     | Lógica de Negócio        |
-| **2** | Lógica de Negócio e Arquitetura de Serviços          | SOLID, Camada de Serviço, DTOs, Mappers               | Lógica de negócio isolada e organizada.                          | Expor como API           |
-| **3** | Construindo a API REST                               | `@RestController`, `ResponseEntity`, Verbos HTTP      | Endpoints de CRUD funcionais, mas inseguros.                     | Segurança                |
-| **4** | Segurança de APIs com Spring Security e JWT          | Stateless, JWT, Filtros de Segurança, `UserDetailsService` | API com autenticação e autorização robustas.                     | Profissionalização     |
-| **5** | Profissionalizando a API: Documentação e Erros       | OpenAPI/Swagger, `@ControllerAdvice`, DTOs de Erro    | API auto-documentada e com tratamento de erros padronizado.      | Testes                   |
-| **6** | Garantia de Qualidade com Testes                     | Testes Unitários/Integração, JUnit 5, Mockito         | Lógica de negócio validada por uma suíte de testes.              | Interface do Usuário     |
-| **7** | Introdução ao Frontend SPA                           | SPA, `fetch`, `localStorage`, Roteamento no Cliente   | Um protótipo de frontend que consome a API.                      | Deploy                   |
-| **8** | Deployment e Containerização com Docker              | Containers, Dockerfile, `docker-compose`              | Aplicação empacotada e pronta para ser executada em qualquer lugar. | Fim do Curso             |
+Toda grande jornada de software começa com a configuração correta. O **Spring Initializr** é uma ferramenta web que gera a estrutura base do nosso projeto Spring Boot, poupando-nos de configurações manuais complexas.
 
-Esta estrutura de **8 módulos** garante uma progressão lógica, abordando teoria e prática em doses equilibradas, o que é ideal para um ambiente de sala de aula.
+### \#\#\# Aula 0.1: Montando o Esqueleto da Aplicação
+
+1.  **Acesse o site:** Abra o seu navegador e vá para [**start.spring.io**](https://start.spring.io).
+
+2.  **Configure os Metadados do Projeto:** Na seção à esquerda, preencha os campos exatamente como mostrado abaixo. Estes campos definem a identidade do nosso projeto no ecossistema Maven.
+
+    - **Project:** `Maven`
+
+    - **Language:** `Java`
+
+    - **Spring Boot:** `3.2.5` (ou a versão estável mais recente não-SNAPSHOT)
+
+    - **Project Metadata:**
+
+      - **Group:** `br.com.aula`
+      - **Artifact:** `gestaodeestoques`
+      - **Name:** `gestaodeestoques`
+      - **Description:** `Projeto Didático de Gestão de Estoque`
+      - **Package name:** `br.com.aula.gestaodeestoques`
+
+    - **Packaging:** `Jar`
+
+    - **Java:** `21`
+
+    [Imagem de A interface do Spring Initializr com os campos de metadados do projeto preenchidos.]
+
+3.  **Adicione as Dependências:** No lado direito, clique no botão **"ADD DEPENDENCIES..."** e adicione uma por uma as seguintes dependências. Elas são os "blocos de construção" que darão funcionalidades à nossa aplicação.
+
+    - `Spring Web`: Essencial para criar aplicações web, incluindo APIs REST e MVC.
+    - `Thymeleaf`: O nosso motor de templates para renderizar as páginas HTML no lado do servidor.
+    - `Spring Data JDBC`: Para facilitar o acesso a bancos de dados relacionais usando o padrão JDBC.
+    - `H2 Database`: Um banco de dados em memória, perfeito para desenvolvimento e testes rápidos.
+    - `Spring Security`: Para adicionar a camada de autenticação e autorização.
+    - `Spring Boot DevTools`: Ferramenta de produtividade que reinicia a aplicação automaticamente quando alteramos o código.
+    - `Validation`: Para adicionar validações aos nossos dados de entrada (ex: `@NotBlank`).
+
+    [Imagem de A seção de dependências do Spring Initializr mostrando a lista de dependências adicionadas.]
+
+4.  **Gere o Projeto:** Após preencher tudo, clique no botão **"GENERATE"** na parte inferior da tela. Um arquivo `gestao.estoque.zip` será baixado.
+
+5.  **Importe na sua IDE:** Descompacte o arquivo `.zip` em um local de sua preferência e abra o projeto na sua IDE (IntelliJ IDEA, VS Code, Eclipse). A IDE irá reconhecer o arquivo `pom.xml` e baixar todas as dependências que acabamos de selecionar.
+
+---
+
+## Módulo 1: 🏛️ A Fundação - Estrutura e Persistência de Dados
+
+_(O conteúdo deste módulo e dos subsequentes permanece o mesmo da versão anterior, pois já estava completo e na sequência didática correta.)_
+
+### \#\#\# 1.1 🗺️ Estrutura de Pastas e Arquivos
+
+_(Estrutura completa de pastas e arquivos)_
+
+### \#\#\# 1.2 🏗️ Diagrama da Arquitetura em Camadas
+
+_(Diagrama Mermaid da arquitetura)_
+
+---
+
+## 💻 Parte 2: Construção Passo a Passo (Códigos Completos)
+
+### \#\#\# Módulo 2: Fundação (Core Backend)
+
+_(Códigos completos para `pom.xml`, `application.properties`, `schema.sql`, Entidades e Repositórios)_
+
+### \#\#\# Módulo 3: Lógica de Negócio e Segurança
+
+_(Códigos completos para DTOs, Mapper, Exceptions, Services e Configurações de Segurança)_
+
+### \#\#\# Módulo 4: Interface com o Usuário (Frontend)
+
+_(Códigos completos para Controllers e os templates Thymeleaf com Material Design e Modo Noturno)_
+
+### \#\#\# Módulo 5: Garantia de Qualidade
+
+_(Código completo para os Testes Unitários com JUnit e Mockito)_
+
+---
+
+## ▶️ Parte 3: Execução e Próximos Passos
+
+### \#\#\# Como Executar o Projeto
+
+1.  Após importar o projeto gerado pelo Initializr, aguarde o Maven baixar todas as dependências.
+2.  Execute a classe principal `GestaoEstoqueApplication.java`.
+3.  Acesse [http://localhost:8080](http://localhost:8080) em seu navegador.
+
+**Credenciais para Teste (criadas pelo `DataSeeder`):**
+
+- **Admin:** `admin` / `admin123`
+- **Usuário:** `user` / `user123`
+
+### \#\#\# Conclusão e Próximos Passos
+
+---
+
+./mvnw spring-boot:run
+
+---
+
+docker-compose up --build
+
+    docker-compose down
+    
+    docker-compose down -v
+    

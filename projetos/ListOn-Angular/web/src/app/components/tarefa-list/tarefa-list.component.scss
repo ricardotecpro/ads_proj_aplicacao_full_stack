@@ -1,0 +1,44 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-card {
+  transition: box-shadow 0.3s;
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+}
+
+.task-checkbox {
+  margin-right: 16px;
+}
+
+.task-completed {
+  text-decoration: line-through;
+  color: #9e9e9e;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.fab-bottom-right {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}

@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ isEditMode ? 'Editar Tarefa' : 'Nova Tarefa' }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="tarefaForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="titulo" placeholder="Ex: Estudar Angular">
+        <mat-error *ngIf="tarefaForm.get('titulo')?.invalid">
+          {{ getErrorMessage('titulo') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Descrição (Opcional)</mat-label>
+        <textarea matInput formControlName="descricao" rows="3"></textarea>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="concluida" color="primary">
+        Concluída
+      </mat-checkbox>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="tarefaForm.invalid">
+      Salvar
+    </button>
+    <button mat-button (click)="cancelar()">
+      Cancelar
+    </button>
+  </mat-card-actions>
+</mat-card>

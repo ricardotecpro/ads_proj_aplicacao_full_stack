@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="header">
+    <h1>Minhas Tarefas</h1>
+  </div>
+
+  <div *ngIf="tarefas$ | async as tarefas; else loading" class="task-list">
+    <!-- Mensagem de erro -->
+    <mat-card *ngIf="errorLoading" class="error-card">
+      <mat-card-title>Erro de Conexão</mat-card-title>
+      <mat-card-content>
+        <p>Não foi possível carregar as tarefas. Verifique se a API está em execução e acessível.</p>
+        <button mat-raised-button color="primary" (click)="carregarTarefas()">Tentar Novamente</button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Mensagem de lista vazia -->
+    <mat-card *ngIf="!errorLoading && tarefas.length === 0" class="empty-card">
+      <mat-card-title>Nenhuma Tarefa Encontrada</mat-card-title>
+      <mat-card-content>
+        <p>Clique no botão '+' para adicionar sua primeira tarefa!</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Lista de tarefas -->
+    <mat-card *ngFor="let tarefa of tarefas" class="task-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-checkbox [checked]="tarefa.concluida" (change)="toggleConcluida(tarefa)" class="task-checkbox"></mat-checkbox>
+          <span [class.task-completed]="tarefa.concluida">{{ tarefa.titulo }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>
+          Criada em: {{ tarefa.dataCriacao | date:'dd/MM/yyyy' }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button mat-icon-button color="primary" (click)="editar(tarefa.id)" aria-label="Editar tarefa">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletar(tarefa.id)" aria-label="Excluir tarefa">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+      <p>Carregando tarefas...</p>
+    </div>
+  </ng-template>
+</div>
+
+<button mat-fab color="primary" class="fab-bottom-right" (click)="novaTarefa()" aria-label="Adicionar nova tarefa">
+  <mat-icon>add</mat-icon>
+</button>

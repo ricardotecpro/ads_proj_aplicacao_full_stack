@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Minhas Tarefas</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="(tarefas$ | async) || []" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let t"> {{t.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef> Título </th>
+        <td mat-cell *matCellDef="let t"> {{t.titulo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="concluida">
+        <th mat-header-cell *matHeaderCellDef> Concluída </th>
+        <td mat-cell *matCellDef="let t">
+          <mat-checkbox [checked]="t.concluida" disabled="true"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dataCriacao">
+        <th mat-header-cell *matHeaderCellDef> Criada em </th>
+        <td mat-cell *matCellDef="let t">
+          {{t.dataCriacao | date: 'dd/MM/yyyy HH:mm'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let t">
+          <button mat-icon-button color="primary" (click)="editar(t.id)" aria-label="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletar(t.id)" aria-label="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [routerLink]="['/novo']">
+      <mat-icon>add</mat-icon>
+      Nova Tarefa
+    </button>
+  </mat-card-actions>
+</mat-card>

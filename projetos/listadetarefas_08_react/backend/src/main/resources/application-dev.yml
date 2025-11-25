@@ -1,0 +1,15 @@
+# Perfil de Desenvolvimento (H2 em Memória)
+spring:
+  h2:
+    console:
+      enabled: true # Habilita o console H2 em http://localhost:8080/h2-console
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:listondb # Banco em memória
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update # Cria/atualiza tabelas automaticamente
