@@ -1,0 +1,22 @@
+<div class="container">
+    <h2>{{ isEdicao ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+
+    <form (ngSubmit)="salvar()">
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" [(ngModel)]="tarefa.titulo" name="titulo" required class="form-control">
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label>
+                <input type="checkbox" [(ngModel)]="tarefa.concluida" name="concluida">
+                Concluída
+            </label>
+        </div>
+
+        <div class="acoes">
+            <button type="submit" class="btn-save" [disabled]="!tarefa.titulo">Salvar</button>
+            <button routerLink="/tarefas" type="button" class="btn-cancel">Cancelar</button>
+        </div>
+    </form>
+</div>

@@ -5,37 +5,37 @@ import br.com.liston.api.repository.TarefaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile; // Importante!
+import org.springframework.context.annotation.Profile; // Important!
 
 import java.util.List;
 
 @Configuration
-@Profile("dev") // 1. Garante que este bean só será criado no perfil 'dev' (H2)
+@Profile("dev") // 1. Ensures this bean is only created in 'dev' profile (H2)
 public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private TarefaRepository tarefaRepository;
 
-    // 2. Este método 'run' será executado assim que a aplicação iniciar
+    // 2. This 'run' method will be executed as soon as the application starts
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println("--- INICIALIZANDO DADOS DE TESTE (SEED) ---");
+        System.out.println("--- INITIALIZING TEST DATA (SEED) ---");
 
-        // Limpa o banco (caso haja algo)
+        // Clears the database (if there is anything)
         tarefaRepository.deleteAll();
 
-        // Cria as tarefas iniciais
-        Tarefa t1 = new Tarefa("Estudar Spring Boot", "Concluir o guia de API REST");
-        t1.setConcluida(true); // Marca a primeira como concluída
+        // Creates initial tasks
+        Tarefa t1 = new Tarefa("Study Spring Boot", "Finish REST API guide");
+        t1.setConcluida(true); // Marks the first one as completed
 
-        Tarefa t2 = new Tarefa("Estudar Angular", "Aprender sobre componentes Standalone");
+        Tarefa t2 = new Tarefa("Study React", "Learn about React Components");
 
-        Tarefa t3 = new Tarefa("Estudar Ionic", "Preparar o ambiente mobile");
+        Tarefa t3 = new Tarefa("Study React Native", "Prepare mobile environment");
 
-        // Salva todas de uma vez
+        // Saves all at once
         tarefaRepository.saveAll(List.of(t1, t2, t3));
 
-        System.out.println("--- DADOS DE TESTE INSERIDOS COM SUCESSO ---");
+        System.out.println("--- TEST DATA INSERTED SUCCESSFULLY ---");
     }
 }

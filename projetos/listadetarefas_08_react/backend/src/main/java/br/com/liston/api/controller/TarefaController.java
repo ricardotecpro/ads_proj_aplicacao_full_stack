@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
-@RestController // Define a classe como um Controller REST
-@RequestMapping("/api/tarefas") // Mapeia todas as requisições para este endpoint
+@RestController // Defines the class as a REST Controller
+@RequestMapping("/api/tarefas") // Maps all requests to this endpoint
 public class TarefaController {
 
     @Autowired
@@ -19,12 +19,12 @@ public class TarefaController {
     @GetMapping
     public ResponseEntity<List<TarefaResponseDTO>> listarTodasTarefas() {
         List<TarefaResponseDTO> tarefas = service.listarTodas();
-        return ResponseEntity.ok(tarefas); // Retorna 200 OK
+        return ResponseEntity.ok(tarefas); // Returns 200 OK
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TarefaResponseDTO> buscarTarefaPorId(@PathVariable Long id) {
-        // Tratamento de exceção (EntityNotFoundException) será feito globalmente depois
+        // Exception handling (EntityNotFoundException) will be done globally later
         TarefaResponseDTO tarefa = service.buscarPorId(id);
         return ResponseEntity.ok(tarefa);
     }
@@ -33,7 +33,7 @@ public class TarefaController {
     public ResponseEntity<TarefaResponseDTO> criarTarefa(@RequestBody TarefaRequestDTO dto) {
         TarefaResponseDTO novaTarefa = service.criar(dto);
 
-        // Retorna 201 Created com a URL do novo recurso no header 'Location'
+        // Returns 201 Created with the new resource URL in the 'Location' header
         URI location = URI.create("/api/tarefas/" + novaTarefa.id());
         return ResponseEntity.created(location).body(novaTarefa);
     }
@@ -47,6 +47,6 @@ public class TarefaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
         service.deletar(id);
-        return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        return ResponseEntity.noContent().build(); // Returns 204 No Content
     }
 }

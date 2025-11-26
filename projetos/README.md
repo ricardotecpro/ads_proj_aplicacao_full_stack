@@ -1,16 +1,16 @@
 ## Projetos - Aplicações
 
 
-* **[Lista de Tarefas 06](listadetarefas_06_vue)**: Spring Boot Vue.js (CORS)
+* **[Lista de Tarefas 06](listadetarefas_06_vue)**: Spring Boot Vue.js
   - [Spring Initialzr](listadetarefas_06_vue/backend.zip): (backend zip)
 
 ---
 
-* **[Lista de Tarefas 07](listadetarefas_07_angular)**: Spring Boot Vue.js (CORS)
+* **[Lista de Tarefas 07](listadetarefas_07_angular)**: Spring Boot Angular
 
 ---
 
-* **[Lista de Tarefas 08](listadetarefas_08_react)**: Spring Boot Vue.js (CORS)
+* **[Lista de Tarefas 08](listadetarefas_08_react)**: Spring Boot React
 
 ---
 

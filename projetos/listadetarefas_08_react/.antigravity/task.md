@@ -1,0 +1,21 @@
+# Lista de Tarefas
+
+- [x] Configuração Inicial
+    - [x] Criar diretório .antigravity
+    - [x] Criar artefatos de planejamento
+- [x] Refatoração Backend
+    - [x] Separar application.properties em perfis
+    - [x] Remover acentos e caracteres especiais
+    - [x] Revisar código (SOLID, Clean Code)
+    - [x] Verificar arquitetura MVC
+- [x] Refatoração Frontend
+    - [x] Inicializar projeto React
+    - [x] Implementar componentes e páginas
+    - [x] Integrar com Backend
+- [ ] Implementação Mobile (React Native)
+    - [ ] Inicializar projeto com Expo
+    - [ ] Configurar serviços (Axios)
+    - [ ] Implementar telas (Lista e Formulário)
+    - [ ] Testar em dispositivo/emulador
+- [x] Documentação
+    - [x] Atualizar README.md

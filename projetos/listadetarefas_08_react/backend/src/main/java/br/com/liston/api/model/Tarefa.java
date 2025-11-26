@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
-@Entity // Marca esta classe como uma entidade JPA (tabela no banco)
-@Table(name = "tarefas") // Nome da tabela
-@Data // Lombok: gera getters, setters, equals, hashCode e toString
-@NoArgsConstructor // Lombok: gera um construtor vazio (exigido pelo JPA)
+@Entity // Marks this class as a JPA entity (table in database)
+@Table(name = "tarefas") // Table name
+@Data // Lombok: generates getters, setters, equals, hashCode and toString
+@NoArgsConstructor // Lombok: generates an empty constructor (required by JPA)
 public class Tarefa {
 
     @Id
@@ -22,7 +22,7 @@ public class Tarefa {
     private String descricao;
 
     @Column(nullable = false)
-    private boolean concluida = false; // Valor padrão
+    private boolean concluida = false; // Default value
 
     @Column(name = "data_criacao", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
@@ -30,14 +30,14 @@ public class Tarefa {
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
-    // Garante que a data de criação seja definida antes de salvar
+    // Ensures creation date is set before saving
     @PrePersist
     protected void onCreate() {
         this.dataCriacao = LocalDateTime.now();
         this.dataAtualizacao = LocalDateTime.now();
     }
 
-    // Garante que a data de atualização seja definida antes de atualizar
+    // Ensures update date is set before updating
     @PreUpdate
     protected void onUpdate() {
         this.dataAtualizacao = LocalDateTime.now();

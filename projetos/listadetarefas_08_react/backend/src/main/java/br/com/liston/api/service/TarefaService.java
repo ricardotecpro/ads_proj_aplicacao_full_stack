@@ -12,39 +12,39 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service // Marca como um componente de serviço (onde fica a lógica)
+@Service // Marks as a service component (where logic resides)
 public class TarefaService {
 
-    @Autowired // Injeção de dependência do repositório
+    @Autowired // Repository dependency injection
     private TarefaRepository repository;
 
-    // Busca todas as tarefas e converte para DTO
-    @Transactional(readOnly = true) // Transação apenas de leitura
+    // Fetches all tasks and converts to DTO
+    @Transactional(readOnly = true) // Read-only transaction
     public List<TarefaResponseDTO> listarTodas() {
         return repository.findAll()
                 .stream()
-                .map(TarefaResponseDTO::new) // Converte Tarefa -> TarefaResponseDTO
+                .map(TarefaResponseDTO::new) // Converts Tarefa -> TarefaResponseDTO
                 .collect(Collectors.toList());
     }
 
-    // Busca por ID
+    // Search by ID
     @Transactional(readOnly = true)
     public TarefaResponseDTO buscarPorId(Long id) {
         Tarefa tarefa = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada com id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + id));
         return new TarefaResponseDTO(tarefa);
     }
 
-    // Cria uma nova tarefa
+    // Creates a new task
     @Transactional
     public TarefaResponseDTO criar(TarefaRequestDTO dto) {
         if (dto.titulo() == null || dto.titulo().isBlank()) {
-            throw new IllegalArgumentException("Título é obrigatório.");
+            throw new IllegalArgumentException("Title is required.");
         }
 
         Tarefa novaTarefa = new Tarefa(dto.titulo(), dto.descricao());
 
-        // Se 'concluida' foi enviado no DTO, usa o valor. Senão, mantém o padrão (false).
+        // If 'concluida' was sent in DTO, use it. Otherwise, keep default (false).
         if (dto.concluida() != null) {
             novaTarefa.setConcluida(dto.concluida());
         }
@@ -53,13 +53,13 @@ public class TarefaService {
         return new TarefaResponseDTO(tarefaSalva);
     }
 
-    // Atualiza uma tarefa existente
+    // Updates an existing task
     @Transactional
     public TarefaResponseDTO atualizar(Long id, TarefaRequestDTO dto) {
         Tarefa tarefaExistente = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada com id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + id));
 
-        // Atualiza apenas os campos fornecidos
+        // Updates only provided fields
         if (dto.titulo() != null && !dto.titulo().isBlank()) {
             tarefaExistente.setTitulo(dto.titulo());
         }
@@ -74,11 +74,11 @@ public class TarefaService {
         return new TarefaResponseDTO(tarefaAtualizada);
     }
 
-    // Deleta uma tarefa
+    // Deletes a task
     @Transactional
     public void deletar(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Tarefa não encontrada com id: " + id);
+            throw new EntityNotFoundException("Task not found with id: " + id);
         }
         repository.deleteById(id);
     }

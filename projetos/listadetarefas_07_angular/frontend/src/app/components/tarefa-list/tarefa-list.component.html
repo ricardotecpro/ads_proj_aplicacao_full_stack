@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Lista de Tarefas</h2>
+  <button routerLink="/tarefas/nova" class="btn-add">Nova Tarefa</button>
+
+  <ul class="tarefa-list">
+    <li *ngFor="let tarefa of tarefas" [class.concluida]="tarefa.concluida">
+      <div class="tarefa-info">
+        <input type="checkbox" [checked]="tarefa.concluida" (change)="alterarStatus(tarefa)">
+        <span class="titulo">{{ tarefa.titulo }}</span>
+      </div>
+      <div class="acoes">
+        <button [routerLink]="['/tarefas/editar', tarefa.id]" class="btn-edit">Editar</button>
+        <button (click)="deletar(tarefa.id!)" class="btn-delete">Deletar</button>
+      </div>
+    </li>
+  </ul>
+</div>

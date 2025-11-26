@@ -1,9 +1,10 @@
 package br.com.liston.api.dto;
 
-// Usamos 'record' do Java 21 para DTOs imutáveis e concisos
-// jakarta.validation será usado futuramente para validar (@NotEmpty, @Size)
+// We use Java 21 'record' for immutable and concise DTOs
+// jakarta.validation will be used in the future for validation (@NotEmpty, @Size)
 public record TarefaRequestDTO(
-        String titulo,
-        String descricao,
-        Boolean concluida // Usamos Boolean (objeto) para permitir nulo se quisermos
-) {}
+                String titulo,
+                String descricao,
+                Boolean concluida // We use Boolean (object) to allow null if desired
+) {
+}

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 
-    // O Spring Data JPA cria a query automaticamente pelo nome do método
+    // Spring Data JPA automatically creates the query by method name
     List<Tarefa> findByTituloContainingIgnoreCase(String titulo);
 }
