@@ -48,7 +48,6 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -66,8 +65,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - tables
-  - pymdownx.snippets:
-      base_path: docs
+#  - pymdownx.snippets:
+#      base_path: docs
   - pymdownx.arithmatex:
       generic: true
 
