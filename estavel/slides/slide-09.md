@@ -51,7 +51,7 @@
 
 ## 5. Fluxo de Login 🌊
 
-1. Envia credenciais -> 2. Servidor valida -> 3. Gera JWT -> 4. Frontend guarda o Token -> 5. Envia no Header em cada requisição. <!-- .element: class="fragment" -->
+1. Envia credenciais -> 2. Servidor valida -> 3. Gera JWT -> 4. Frontend guarda o Token -> 5. Envia no Header em cada requisição.
 
 ---
 
