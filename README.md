@@ -60,4 +60,8 @@ Este projeto utiliza [MkDocs](https://www.mkdocs.org/) com o tema [Material](htt
 3.  Acesse `http://localhost:8000` no seu navegador.
 
 ---
-Feito com ❤️ por [Ricardo Pires](https://ricardotecpro.github.io/)
+Feito com por [Ricardo Pires](https://ricardotecpro.github.io/)
+
+# ⚒️ Projetos Legados
+
+* **[Projetos](./_legado/README.md)**: Projetos: Estudo de Casos

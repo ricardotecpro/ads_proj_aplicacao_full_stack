@@ -1,0 +1,13 @@
+site_name: Plano Mestre - Debug
+theme:
+  name: material
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+
+nav:
+  - Início: index.md
+  - Aulas:
+      - 'Aula 01': aulas/aula-01.md

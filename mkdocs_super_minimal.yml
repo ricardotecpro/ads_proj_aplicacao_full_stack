@@ -1,0 +1,6 @@
+site_name: Super Minimal Debug
+theme:
+  name: mkdocs # Default theme to avoid Material complexity
+
+nav:
+  - Início: index.md

@@ -1,0 +1,99 @@
+HERE= C:\Python\Python313\Lib\site-packages\mkdocs_revealjs
+DIRNAME= docs/revealjs
+WARNING -  Config value 'plugins': Plugin 'mkdocs-revealjs' option 'revealjs_config': Unrecognised configuration name: revealjs_config
+INFO    -  [macros] - No default module `main` found
+INFO    -  [macros] - Config variables: ['extra', 'config', 'environment', 'plugin', 'git', 'social', 'version', 'site_description', 'macros', 'filters', 'filters_builtin']
+INFO    -  [macros] - Config macros: ['context', 'macros_info', 'now', 'fix_url']
+INFO    -  [macros] - Config filters: ['pretty', 'relative_url']
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: D:\SourceCode\REPOS\github.io\ads_proj_aplicacao_full_stack\site
+INFO    -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
+  - aulas\index.md
+WARNING -  A reference to 'exercicios/index.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-01.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-02.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-03.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-04.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-05.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-06.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-07.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-08.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-09.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-10.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-11.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-12.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-13.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-14.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-15.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'exercicios/exercicio-16.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/index.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-01.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-02.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-03.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-04.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-05.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-06.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-07.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-08.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-09.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-10.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-11.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-12.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-13.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-14.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-15.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'projetos/projeto-16.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'setups/index.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'setups/setup-01.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  A reference to 'setups/setup-02.md' is included in the 'nav' configuration, which is not found in the documentation files.
+WARNING -  Doc file 'index.md' contains a link 'projetos/index.md', but the target is not found among documentation files.
+WARNING -  Doc file 'aulas/aula-01.md' contains a link '../setups/setup-01.md', but the target 'setups/setup-01.md' is not found among documentation files.
+WARNING -  Doc file 'aulas/aula-02.md' contains a link '../exercicios/exercicio-02.md', but the target 'exercicios/exercicio-02.md' is not found among documentation files.
+ERROR   -  Error reading page 'aulas/aula-12.md': we should not get here!
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Python\Python313\Scripts\mkdocs.exe\__main__.py", line 6, in <module>
+    sys.exit(cli())
+             ~~~^^
+  File "C:\Python\Python313\Lib\site-packages\click\core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\click\core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "C:\Python\Python313\Lib\site-packages\click\core.py", line 1697, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\click\core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\click\core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "C:\Python\Python313\Lib\site-packages\mkdocs\__main__.py", line 288, in build_command
+    build.build(cfg, dirty=not clean)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\mkdocs\commands\build.py", line 310, in build
+    _populate_page(file.page, config, files, dirty)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\mkdocs\commands\build.py", line 167, in _populate_page
+    page.render(config, files)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\mkdocs\structure\pages.py", line 285, in render
+    self.content = md.convert(self.markdown)
+                   ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\markdown\core.py", line 354, in convert
+    self.lines = prep.run(self.lines)
+                 ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\site-packages\mkdocs\structure\pages.py", line 529, in run
+    parser.feed('\n'.join(lines))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python\Python313\Lib\html\parser.py", line 111, in feed
+    self.goahead(0)
+    ~~~~~~~~~~~~^^^
+  File "C:\Python\Python313\Lib\html\parser.py", line 171, in goahead
+    k = self.parse_starttag(i)
+  File "C:\Python\Python313\Lib\html\parser.py", line 303, in parse_starttag
+    endpos = self.check_for_whole_start_tag(i)
+  File "C:\Python\Python313\Lib\html\parser.py", line 376, in check_for_whole_start_tag
+    raise AssertionError("we should not get here!")
+AssertionError: we should not get here!
