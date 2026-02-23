@@ -69,7 +69,8 @@ Se um serviço está falhando, não adianta continuar mandando requisições par
 
 O Gateway recebe uma requisição central e a distribui para os serviços internos.
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 # Requisição para o Gateway (Porta 8080)
 $ curl http://localhost:8080/users
 # O Gateway redireciona internamente para User-Service (Porta 3001)

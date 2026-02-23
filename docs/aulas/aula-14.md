@@ -79,7 +79,8 @@ function PerfilGithub() {
 
 ### Consumindo API (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ curl https://api.github.com/users/ricardotecpro
 {
   "login": "ricardotecpro",

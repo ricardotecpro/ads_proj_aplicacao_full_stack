@@ -81,7 +81,8 @@ Para que o Controller não tenha que "criar" outras classes, ele as recebe pront
 
 ### Testando com cURL (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ curl -X GET http://localhost:3000/usuarios
 [{"id": 1, "nome": "Ricardo"}]
 

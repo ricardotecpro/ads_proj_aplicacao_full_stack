@@ -73,7 +73,8 @@ graph TD
 
 Simulando o acesso de um usuário comum tentando entrar em uma área de Admin.
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 # Usuário tenta acessar rota de Admin
 $ curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all
 # Resposta do servidor (Middleware barrou)

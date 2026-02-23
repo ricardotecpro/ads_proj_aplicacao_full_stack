@@ -81,7 +81,8 @@ Isso permite que toda a equipe tenha sempre a mesma estrutura de banco.
 
 ### Migrações no Terminal (Exemplo)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npx knex migrate:make criar_tabela_usuarios
 Created: 20240101_criar_tabela_usuarios.js
 

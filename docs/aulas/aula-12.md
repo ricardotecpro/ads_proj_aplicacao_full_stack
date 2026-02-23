@@ -37,7 +37,8 @@ Para criar um projeto React, usamos o **Vite**. Ele é extremamente rápido para
 
 ### Criando Projeto (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npm create vite@latest meu-app -- --template react
 $ cd meu-app
 $ npm install

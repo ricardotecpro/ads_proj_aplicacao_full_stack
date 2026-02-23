@@ -73,7 +73,8 @@ Para quem já desenvolveu no Frontend, o Service no Backend é similar ao papel 
 
 ### Migrações no Terminal (Exemplo)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npx knex migrate:make criar_tabela_usuarios
 Created: 20240101_criar_tabela_usuarios.js
 

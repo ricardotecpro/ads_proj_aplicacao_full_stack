@@ -64,7 +64,8 @@ Parabéns! Você saiu do básico de requisições HTTP e hoje é capaz de constr
 
 ### Finalização (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npm run build
 $ npx serve -s dist
 serving /dist on http://localhost:3000

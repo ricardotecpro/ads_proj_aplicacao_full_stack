@@ -60,7 +60,8 @@ O que fazer quando o Frontend precisa de uma API que o Backend ainda não termin
 
 ### 🎭 Simulando Mocks no Terminal
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 # Rodando um servidor de Mock a partir de um arquivo OpenAPI
 $ npx prism mock storage.yaml
 

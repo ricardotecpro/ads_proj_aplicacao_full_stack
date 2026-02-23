@@ -14,7 +14,8 @@ graph TD
 
 ### Instalando Router (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npm install react-router-dom
 added 3 packages, and audited 47 packages in 2s
 ```

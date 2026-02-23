@@ -77,7 +77,8 @@ Diferente de um app mobile, um ecossistema de microsserviços geralmente é orga
 
 ### Visão de Pastas (Padrão Backend)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ ls -R backend-master
 auth-service/ (Nodejs)
 ├── src/

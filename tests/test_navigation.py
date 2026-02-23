@@ -75,5 +75,5 @@ class TestNavigation:
         
         # Verifica se chegou na página correta
         expect(page).to_have_url(re.compile(r".*/aulas/aula-01/?$"))
-        # H1 is "Aula 01 - Intro Microsserviços"
-        expect(page.locator("h1")).to_contain_text("Intro Microsserviços")
+        # H1 is "Aula 01 - Introdução a Serviços e Microsserviços 🌐"
+        expect(page.locator("h1")).to_contain_text("Introdução a Serviços e Microsserviços")

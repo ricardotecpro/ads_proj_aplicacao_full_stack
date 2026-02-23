@@ -78,7 +78,8 @@ Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança m�
 
 ### Verificando Token no Terminal
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ export TOKEN="seu_jwt_aqui"
 $ curl -H "Authorization: Bearer $TOKEN" http://localhost:3000/perfil
 {"nome": "Ricardo", "role": "admin"}

@@ -36,8 +36,8 @@ def test_homepage_structure(page: Page, base_url):
     # Check navigation cards exist
     # Material uses .md-typeset .grid.cards
     # The cards might be inside a div with class "grid cards"
-    # We can check for the existence of the text "Microsserviços" which is in the first card
-    expect(page.get_by_text("Microsserviços")).to_be_visible()
+    # We use exact=True or a more specific locator to avoid strict mode violations
+    expect(page.get_by_role("heading", name="🧱 Módulo 1: Serviços e Microsserviços")).to_be_visible()
 
 # Test 3: Navigation to Lesson 01
 def test_lesson_01_page(page: Page, base_url):
@@ -50,7 +50,7 @@ def test_lesson_01_page(page: Page, base_url):
     
     # Check main heading
     heading = page.locator("h1")
-    expect(heading).to_contain_text("Aula 01 - Intro Microsserviços")
+    expect(heading).to_contain_text("Introdução a Serviços e Microsserviços")
     
     # Check quiz containers exist
     quiz_containers = page.locator(".quiz-container")

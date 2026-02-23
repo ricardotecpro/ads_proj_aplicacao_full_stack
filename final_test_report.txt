@@ -1,0 +1,53 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.0, pytest-9.0.1, pluggy-1.6.0
+baseurl: http://127.0.0.1:8766
+rootdir: D:\SourceCode\REPOS\github.io\ads_proj_aplicacao_full_stack
+configfile: pyproject.toml
+plugins: anyio-4.11.0, base-url-2.1.0, cov-7.0.0, mock-3.15.1, playwright-0.7.2
+collected 102 items
+
+tests\test_assets.py .                                                   [  0%]
+tests\test_course_structure.py ........                                  [  8%]
+tests\test_fullscreen.py .                                               [  9%]
+tests\test_layout.py .......                                             [ 16%]
+tests\test_navigation.py .....                                           [ 21%]
+tests\test_quizzes.py ......                                             [ 27%]
+tests\test_slides.py ......                                              [ 33%]
+tests\test_termynal_copy.py .                                            [ 34%]
+tests\test_layout.py .                                                   [ 35%]
+tests\test_mermaid_syntax.py .......................                     [ 57%]
+tests\test_quizzes.py .                                                  [ 58%]
+tests\test_slides.py .                                                   [ 59%]
+tests\test_quizzes.py .                                                  [ 60%]
+tests\test_slides.py .                                                   [ 61%]
+tests\test_quizzes.py .                                                  [ 62%]
+tests\test_slides.py .                                                   [ 63%]
+tests\test_quizzes.py .                                                  [ 64%]
+tests\test_slides.py .                                                   [ 65%]
+tests\test_quizzes.py .                                                  [ 66%]
+tests\test_slides.py .                                                   [ 67%]
+tests\test_quizzes.py .                                                  [ 68%]
+tests\test_slides.py .                                                   [ 69%]
+tests\test_quizzes.py .                                                  [ 70%]
+tests\test_slides.py .                                                   [ 71%]
+tests\test_quizzes.py .                                                  [ 72%]
+tests\test_slides.py .                                                   [ 73%]
+tests\test_quizzes.py .                                                  [ 74%]
+tests\test_slides.py .                                                   [ 75%]
+tests\test_quizzes.py .                                                  [ 76%]
+tests\test_slides.py .                                                   [ 77%]
+tests\test_quizzes.py .                                                  [ 78%]
+tests\test_slides.py .                                                   [ 79%]
+tests\test_quizzes.py .                                                  [ 80%]
+tests\test_slides.py .                                                   [ 81%]
+tests\test_quizzes.py .                                                  [ 82%]
+tests\test_slides.py .                                                   [ 83%]
+tests\test_quizzes.py .                                                  [ 84%]
+tests\test_slides.py .                                                   [ 85%]
+tests\test_quizzes.py .                                                  [ 86%]
+tests\test_slides.py .                                                   [ 87%]
+tests\test_site_structure.py ...                                         [ 90%]
+tests\test_slide_build.py .....                                          [ 95%]
+tests\test_slide_generation.py .....                                     [100%]
+
+======================= 102 passed in 177.63s (0:02:57) =======================

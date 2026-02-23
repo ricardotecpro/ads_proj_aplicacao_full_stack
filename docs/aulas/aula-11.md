@@ -67,7 +67,8 @@ Se um hacker tentar 1 milhão de senhas por segundo, ele vai acabar entrando.
 
 ### Testando Segurança (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ curl -I http://localhost:3000
 HTTP/1.1 200 OK
 X-Content-Type-Options: nosniff

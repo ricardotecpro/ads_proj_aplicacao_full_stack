@@ -104,7 +104,8 @@ Isso avisa ao React: "Ei, os dados mudaram! Desenha a tela de novo!".
 
 ### 💻 Ambiente de Desenvolvimento (Terminal)
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 $ npm run dev
 VITE v5.0.0  ready in 150ms
 

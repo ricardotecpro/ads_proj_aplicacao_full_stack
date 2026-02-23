@@ -88,7 +88,8 @@ O JSON (**JavaScript Object Notation**) é o padrão de facto para troca de dado
 
 ### 🖥️ Testando Verbos no Terminal
 
-```termynal {markdown="1"}
+<!-- termynal -->
+```termynal
 # Listar produtos
 $ curl -X GET http://localhost:3000/produtos
 
