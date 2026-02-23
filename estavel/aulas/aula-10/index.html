@@ -4052,11 +4052,8 @@
 <hr>
 <h2 id="5-testando-permissoes-no-terminal">5. Testando Permissões no Terminal 💻</h2>
 <p>Simulando o acesso de um usuário comum tentando entrar em uma área de Admin.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Usuário tenta acessar rota de Admin
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$ curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a># Resposta do servidor (Middleware barrou)
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>&gt; 403 Forbidden: Acesso Negado
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Usuário tenta acessar rota de Admin</span><span data-ty="input" data-ty-prompt="$">curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all</span><span class="termynal-comment" data-ty># Resposta do servidor (Middleware barrou)</span><span data-ty>&gt; 403 Forbidden: Acesso Negado<br></span></div>
+
 <hr>
 <h2 id="6-mini-projeto-o-gerente-de-notificacoes">6. Mini-Projeto: O Gerente de Notificações 📢</h2>
 <p>Imagine um app escolar.

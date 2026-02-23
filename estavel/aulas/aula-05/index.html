@@ -4133,12 +4133,8 @@ O Controller deve garantir:
 <li>Use o Postman para testar se os dados estão sendo recebidos e enviados corretamente.</li>
 </ol>
 <h3 id="testando-com-curl-terminal">Testando com cURL (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ curl -X GET http://localhost:3000/usuarios
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[{"id": 1, "nome": "Ricardo"}]
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$ curl -X POST http://localhost:3000/usuarios -d '{"nome": "Ana"}'
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>{"status": "Criado"}
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">curl -X GET http://localhost:3000/usuarios</span><span data-ty>[{"id": 1, "nome": "Ricardo"}]<br></span><span data-ty="input" data-ty-prompt="$">curl -X POST http://localhost:3000/usuarios -d '{"nome": "Ana"}'</span><span data-ty>{"status": "Criado"}<br></span></div>
+
 <hr>
 <h2 id="7-exercicio-de-fixacao">7. Exercício de Fixação 🧠</h2>
 <ol>

@@ -4144,15 +4144,8 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="testando-verbos-no-terminal">🖥️ Testando Verbos no Terminal</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Listar produtos
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$ curl -X GET http://localhost:3000/produtos
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a># Criar um produto
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>$ curl -X POST http://localhost:3000/produtos -d '{"nome": "Mouse"}'
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a># Deletar um produto
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>$ curl -X DELETE http://localhost:3000/produtos/123
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Listar produtos</span><span data-ty="input" data-ty-prompt="$">curl -X GET http://localhost:3000/produtos</span><span data-ty></span><span class="termynal-comment" data-ty># Criar um produto</span><span data-ty="input" data-ty-prompt="$">curl -X POST http://localhost:3000/produtos -d '{"nome": "Mouse"}'</span><span data-ty></span><span class="termynal-comment" data-ty># Deletar um produto</span><span data-ty="input" data-ty-prompt="$">curl -X DELETE http://localhost:3000/produtos/123</span><span data-ty></span></div>
+
 <hr>
 <h2 id="6-mini-projeto-desenhando-um-contrato">6. Mini-Projeto: Desenhando um Contrato ✍️</h2>
 <p>Imagine que você está criando uma API para uma <strong>Biblioteca</strong>.</p>

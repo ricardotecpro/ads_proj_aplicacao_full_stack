@@ -4116,13 +4116,8 @@
 <h3 id="o-que-e-um-mock">O que é um Mock?</h3>
 <p>É um servidor "fake" que simula o comportamento da API real. Ele recebe a requisição e retorna um dado estático pré-definido, conforme o contrato.</p>
 <h3 id="simulando-mocks-no-terminal">🎭 Simulando Mocks no Terminal</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Rodando um servidor de Mock a partir de um arquivo OpenAPI
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$ npx prism mock storage.yaml
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a># Acessando o endpoint mockado
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>$ curl http://localhost:4010/produtos
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>&gt; [{"id": 1, "nome": "Produto Mockado"}]
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Rodando um servidor de Mock a partir de um arquivo OpenAPI</span><span data-ty="input" data-ty-prompt="$">npx prism mock storage.yaml</span><span data-ty></span><span class="termynal-comment" data-ty># Acessando o endpoint mockado</span><span data-ty="input" data-ty-prompt="$">curl http://localhost:4010/produtos</span><span data-ty>&gt; [{"id": 1, "nome": "Produto Mockado"}]<br></span></div>
+
 <hr>
 <h2 id="4-developer-experience-dx">4. Developer Experience (DX) 🚀</h2>
 <p>DX é o equivalente ao UX (User Experience), mas focado no programador. Uma API com boa DX possui:

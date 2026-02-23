@@ -4064,12 +4064,8 @@ Usamos <strong>DTOs</strong> para filtrar o que entra e o que sai do sistema.</p
 <h3 id="comparacao-componentes-no-frontend">🆚 Comparação: Componentes no Frontend</h3>
 <p>Para quem já desenvolveu no Frontend, o Service no Backend é similar ao papel de um <strong>Hook customizado</strong> ou uma <strong>Store de Estado</strong>: ambos concentram a lógica de negócio e os dados, permitindo que a "View" (ou o Controller no nosso caso) foque apenas na interação/transporte.</p>
 <h3 id="migracoes-no-terminal-exemplo">Migrações no Terminal (Exemplo)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ npx knex migrate:make criar_tabela_usuarios
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Created: 20240101_criar_tabela_usuarios.js
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$ npx knex migrate:latest
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Batch 1 run: 1 migrations
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npx knex migrate:make criar_tabela_usuarios</span><span data-ty>Created: 20240101_criar_tabela_usuarios.js<br></span><span data-ty="input" data-ty-prompt="$">npx knex migrate:latest</span><span data-ty>Batch 1 run: 1 migrations<br></span></div>
+
 <hr>
 <h2 id="5-mini-projeto-refatorando-para-service">5. Mini-Projeto: Refatorando para Service 🛠️</h2>
 <p>Imagine o sistema de <strong>Transferência Bancária</strong>.

@@ -4142,15 +4142,8 @@
 <hr>
 <h2 id="5-simulacao-de-api-gateway-no-terminal">5. Simulação de API Gateway no Terminal 💻</h2>
 <p>O Gateway recebe uma requisição central e a distribui para os serviços internos.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Requisição para o Gateway (Porta 8080)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$ curl http://localhost:8080/users
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a># O Gateway redireciona internamente para User-Service (Porta 3001)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>&gt; Roteando para: http://internal-service:3001/users
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>$ curl http://localhost:8080/orders
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a># O Gateway redireciona internamente para Order-Service (Porta 3002)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>&gt; Roteando para: http://internal-service:3002/orders
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Requisição para o Gateway (Porta 8080)</span><span data-ty="input" data-ty-prompt="$">curl http://localhost:8080/users</span><span class="termynal-comment" data-ty># O Gateway redireciona internamente para User-Service (Porta 3001)</span><span data-ty>&gt; Roteando para: http://internal-service:3001/users<br></span><span data-ty="input" data-ty-prompt="$">curl http://localhost:8080/orders</span><span class="termynal-comment" data-ty># O Gateway redireciona internamente para Order-Service (Porta 3002)</span><span data-ty>&gt; Roteando para: http://internal-service:3002/orders<br></span></div>
+
 <hr>
 <h2 id="6-mini-projeto-simulando-um-gateway">6. Mini-Projeto: Simulando um Gateway 🚀</h2>
 <p>Vamos simular o comportamento de um Gateway usando o Postman:</p>

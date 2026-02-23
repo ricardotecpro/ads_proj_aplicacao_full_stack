@@ -4160,20 +4160,8 @@
 <h2 id="5-estrutura-de-um-projeto-moderno">5. Estrutura de um Projeto Moderno 📂</h2>
 <p>Diferente de um app mobile, um ecossistema de microsserviços geralmente é organizado em <strong>Mono-repos</strong> ou <strong>Multi-repos</strong>.</p>
 <h3 id="visao-de-pastas-padrao-backend">Visão de Pastas (Padrão Backend)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ ls -R backend-master
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>auth-service/ (Nodejs)
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── src/
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── package.json
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>└── Dockerfile
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>catalog-service/ (Java/Spring)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── src/
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├── pom.xml
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>└── Dockerfile
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>api-gateway/ (Go)
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>└── main.go
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">ls -R backend-master</span><span data-ty>auth-service/ (Nodejs)<br>├── src/<br>├── package.json<br>└── Dockerfile<br><br>catalog-service/ (Java/Spring)<br>├── src/<br>├── pom.xml<br>└── Dockerfile<br><br>api-gateway/ (Go)<br>└── main.go<br></span></div>
+
 <hr>
 <h2 id="6-mini-projeto-configurando-o-cinto-de-utilidades">6. Mini-Projeto: Configurando o Cinto de Utilidades 🚀</h2>
 <p>Sua missão é preparar o ambiente para o desenvolvimento backend:</p>

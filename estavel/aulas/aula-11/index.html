@@ -4083,12 +4083,8 @@
 *   <strong>Rate Limit</strong>: Limitamos que o mesmo IP só pode tentar o login 5 vezes a cada minuto.
 *   Se passar disso, o IP é bloqueado temporariamente.</p>
 <h3 id="testando-seguranca-terminal">Testando Segurança (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ curl -I http://localhost:3000
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>HTTP/1.1 200 OK
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>X-Content-Type-Options: nosniff
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>X-Frame-Options: SAMEORIGIN
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Strict-Transport-Security: max-age=15552000; includeSubDomains
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">curl -I http://localhost:3000</span><span data-ty>HTTP/1.1 200 OK<br>X-Content-Type-Options: nosniff<br>X-Frame-Options: SAMEORIGIN<br>Strict-Transport-Security: max-age=15552000; includeSubDomains<br></span></div>
+
 <hr>
 <h2 id="5-xss-e-sql-injection-revisao">5. XSS e SQL Injection (Revisão) ⚔️</h2>
 <ul>

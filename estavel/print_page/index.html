@@ -5143,20 +5143,8 @@
 <h2 id="aulas-aula-01-5-estrutura-de-um-projeto-moderno">5. Estrutura de um Projeto Moderno 📂</h2>
 <p>Diferente de um app mobile, um ecossistema de microsserviços geralmente é organizado em <strong>Mono-repos</strong> ou <strong>Multi-repos</strong>.</p>
 <h3 id="aulas-aula-01-visao-de-pastas-padrao-backend">Visão de Pastas (Padrão Backend)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-01-__codelineno-0-1"></a>$ ls -R backend-master
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-01-__codelineno-0-2"></a>auth-service/ (Nodejs)
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-01-__codelineno-0-3"></a>├── src/
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#aulas-aula-01-__codelineno-0-4"></a>├── package.json
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#aulas-aula-01-__codelineno-0-5"></a>└── Dockerfile
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#aulas-aula-01-__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#aulas-aula-01-__codelineno-0-7"></a>catalog-service/ (Java/Spring)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#aulas-aula-01-__codelineno-0-8"></a>├── src/
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#aulas-aula-01-__codelineno-0-9"></a>├── pom.xml
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#aulas-aula-01-__codelineno-0-10"></a>└── Dockerfile
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#aulas-aula-01-__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#aulas-aula-01-__codelineno-0-12"></a>api-gateway/ (Go)
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#aulas-aula-01-__codelineno-0-13"></a>└── main.go
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">ls -R backend-master</span><span data-ty>auth-service/ (Nodejs)<br>├── src/<br>├── package.json<br>└── Dockerfile<br><br>catalog-service/ (Java/Spring)<br>├── src/<br>├── pom.xml<br>└── Dockerfile<br><br>api-gateway/ (Go)<br>└── main.go<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-01-6-mini-projeto-configurando-o-cinto-de-utilidades">6. Mini-Projeto: Configurando o Cinto de Utilidades 🚀</h2>
 <p>Sua missão é preparar o ambiente para o desenvolvimento backend:</p>
@@ -5234,15 +5222,8 @@
 <hr>
 <h2 id="aulas-aula-02-5-simulacao-de-api-gateway-no-terminal">5. Simulação de API Gateway no Terminal 💻</h2>
 <p>O Gateway recebe uma requisição central e a distribui para os serviços internos.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-02-__codelineno-0-1"></a># Requisição para o Gateway (Porta 8080)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-02-__codelineno-0-2"></a>$ curl http://localhost:8080/users
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-02-__codelineno-0-3"></a># O Gateway redireciona internamente para User-Service (Porta 3001)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#aulas-aula-02-__codelineno-0-4"></a>&gt; Roteando para: http://internal-service:3001/users
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#aulas-aula-02-__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#aulas-aula-02-__codelineno-0-6"></a>$ curl http://localhost:8080/orders
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#aulas-aula-02-__codelineno-0-7"></a># O Gateway redireciona internamente para Order-Service (Porta 3002)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#aulas-aula-02-__codelineno-0-8"></a>&gt; Roteando para: http://internal-service:3002/orders
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Requisição para o Gateway (Porta 8080)</span><span data-ty="input" data-ty-prompt="$">curl http://localhost:8080/users</span><span class="termynal-comment" data-ty># O Gateway redireciona internamente para User-Service (Porta 3001)</span><span data-ty>&gt; Roteando para: http://internal-service:3001/users<br></span><span data-ty="input" data-ty-prompt="$">curl http://localhost:8080/orders</span><span class="termynal-comment" data-ty># O Gateway redireciona internamente para Order-Service (Porta 3002)</span><span data-ty>&gt; Roteando para: http://internal-service:3002/orders<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-02-6-mini-projeto-simulando-um-gateway">6. Mini-Projeto: Simulando um Gateway 🚀</h2>
 <p>Vamos simular o comportamento de um Gateway usando o Postman:</p>
@@ -5377,15 +5358,8 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#aulas-aula-03-__codelineno-0-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="aulas-aula-03-testando-verbos-no-terminal">🖥️ Testando Verbos no Terminal</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-03-__codelineno-1-1"></a># Listar produtos
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-03-__codelineno-1-2"></a>$ curl -X GET http://localhost:3000/produtos
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-03-__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-03-__codelineno-1-4"></a># Criar um produto
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-03-__codelineno-1-5"></a>$ curl -X POST http://localhost:3000/produtos -d '{"nome": "Mouse"}'
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-03-__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#aulas-aula-03-__codelineno-1-7"></a># Deletar um produto
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#aulas-aula-03-__codelineno-1-8"></a>$ curl -X DELETE http://localhost:3000/produtos/123
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Listar produtos</span><span data-ty="input" data-ty-prompt="$">curl -X GET http://localhost:3000/produtos</span><span data-ty></span><span class="termynal-comment" data-ty># Criar um produto</span><span data-ty="input" data-ty-prompt="$">curl -X POST http://localhost:3000/produtos -d '{"nome": "Mouse"}'</span><span data-ty></span><span class="termynal-comment" data-ty># Deletar um produto</span><span data-ty="input" data-ty-prompt="$">curl -X DELETE http://localhost:3000/produtos/123</span><span data-ty></span></div>
+
 <hr>
 <h2 id="aulas-aula-03-6-mini-projeto-desenhando-um-contrato">6. Mini-Projeto: Desenhando um Contrato ✍️</h2>
 <p>Imagine que você está criando uma API para uma <strong>Biblioteca</strong>.</p>
@@ -5455,13 +5429,8 @@
 <h3 id="aulas-aula-04-o-que-e-um-mock">O que é um Mock?</h3>
 <p>É um servidor "fake" que simula o comportamento da API real. Ele recebe a requisição e retorna um dado estático pré-definido, conforme o contrato.</p>
 <h3 id="aulas-aula-04-simulando-mocks-no-terminal">🎭 Simulando Mocks no Terminal</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-04-__codelineno-1-1"></a># Rodando um servidor de Mock a partir de um arquivo OpenAPI
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-04-__codelineno-1-2"></a>$ npx prism mock storage.yaml
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-04-__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-04-__codelineno-1-4"></a># Acessando o endpoint mockado
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-04-__codelineno-1-5"></a>$ curl http://localhost:4010/produtos
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-04-__codelineno-1-6"></a>&gt; [{"id": 1, "nome": "Produto Mockado"}]
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Rodando um servidor de Mock a partir de um arquivo OpenAPI</span><span data-ty="input" data-ty-prompt="$">npx prism mock storage.yaml</span><span data-ty></span><span class="termynal-comment" data-ty># Acessando o endpoint mockado</span><span data-ty="input" data-ty-prompt="$">curl http://localhost:4010/produtos</span><span data-ty>&gt; [{"id": 1, "nome": "Produto Mockado"}]<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-04-4-developer-experience-dx">4. Developer Experience (DX) 🚀</h2>
 <p>DX é o equivalente ao UX (User Experience), mas focado no programador. Uma API com boa DX possui:
@@ -5584,12 +5553,8 @@ O Controller deve garantir:
 <li>Use o Postman para testar se os dados estão sendo recebidos e enviados corretamente.</li>
 </ol>
 <h3 id="aulas-aula-05-testando-com-curl-terminal">Testando com cURL (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-05-__codelineno-1-1"></a>$ curl -X GET http://localhost:3000/usuarios
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-05-__codelineno-1-2"></a>[{"id": 1, "nome": "Ricardo"}]
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-05-__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-05-__codelineno-1-4"></a>$ curl -X POST http://localhost:3000/usuarios -d '{"nome": "Ana"}'
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-05-__codelineno-1-5"></a>{"status": "Criado"}
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">curl -X GET http://localhost:3000/usuarios</span><span data-ty>[{"id": 1, "nome": "Ricardo"}]<br></span><span data-ty="input" data-ty-prompt="$">curl -X POST http://localhost:3000/usuarios -d '{"nome": "Ana"}'</span><span data-ty>{"status": "Criado"}<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-05-7-exercicio-de-fixacao">7. Exercício de Fixação 🧠</h2>
 <ol>
@@ -5654,12 +5619,8 @@ Usamos <strong>DTOs</strong> para filtrar o que entra e o que sai do sistema.</p
 <h3 id="aulas-aula-06-comparacao-componentes-no-frontend">🆚 Comparação: Componentes no Frontend</h3>
 <p>Para quem já desenvolveu no Frontend, o Service no Backend é similar ao papel de um <strong>Hook customizado</strong> ou uma <strong>Store de Estado</strong>: ambos concentram a lógica de negócio e os dados, permitindo que a "View" (ou o Controller no nosso caso) foque apenas na interação/transporte.</p>
 <h3 id="aulas-aula-06-migracoes-no-terminal-exemplo">Migrações no Terminal (Exemplo)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-06-__codelineno-2-1"></a>$ npx knex migrate:make criar_tabela_usuarios
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-06-__codelineno-2-2"></a>Created: 20240101_criar_tabela_usuarios.js
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-06-__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-06-__codelineno-2-4"></a>$ npx knex migrate:latest
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-06-__codelineno-2-5"></a>Batch 1 run: 1 migrations
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npx knex migrate:make criar_tabela_usuarios</span><span data-ty>Created: 20240101_criar_tabela_usuarios.js<br></span><span data-ty="input" data-ty-prompt="$">npx knex migrate:latest</span><span data-ty>Batch 1 run: 1 migrations<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-06-5-mini-projeto-refatorando-para-service">5. Mini-Projeto: Refatorando para Service 🛠️</h2>
 <p>Imagine o sistema de <strong>Transferência Bancária</strong>.
@@ -5735,12 +5696,8 @@ O Service pede os dados para o <strong>Repository</strong>.</p>
 *   "Remover coluna de descrição".</p>
 <p>Isso permite que toda a equipe tenha sempre a mesma estrutura de banco.</p>
 <h3 id="aulas-aula-07-migracoes-no-terminal-exemplo">Migrações no Terminal (Exemplo)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-07-__codelineno-1-1"></a>$ npx knex migrate:make criar_tabela_usuarios
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-07-__codelineno-1-2"></a>Created: 20240101_criar_tabela_usuarios.js
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-07-__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-07-__codelineno-1-4"></a>$ npx knex migrate:latest
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-07-__codelineno-1-5"></a>Batch 1 run: 1 migrations
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npx knex migrate:make criar_tabela_usuarios</span><span data-ty>Created: 20240101_criar_tabela_usuarios.js<br></span><span data-ty="input" data-ty-prompt="$">npx knex migrate:latest</span><span data-ty>Batch 1 run: 1 migrations<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-07-6-mini-projeto-modelando-o-banco">6. Mini-Projeto: Modelando o Banco 🏗️</h2>
 <p>Imagine um sistema de <strong>Livraria</strong>.
@@ -5893,10 +5850,8 @@ O Service pede os dados para o <strong>Repository</strong>.</p>
 *   <strong>Cookies (HttpOnly)</strong>: Mais seguros, pois o Javascript não consegue lê-los, protegendo contra roubo de token via script malicioso.
 Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança mínima!</p>
 <h3 id="aulas-aula-09-verificando-token-no-terminal">Verificando Token no Terminal</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-09-__codelineno-1-1"></a>$ export TOKEN="seu_jwt_aqui"
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-09-__codelineno-1-2"></a>$ curl -H "Authorization: Bearer $TOKEN" http://localhost:3000/perfil
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-09-__codelineno-1-3"></a>{"nome": "Ricardo", "role": "admin"}
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">export TOKEN="seu_jwt_aqui"</span><span data-ty="input" data-ty-prompt="$">curl -H "Authorization: Bearer $TOKEN" http://localhost:3000/perfil</span><span data-ty>{"nome": "Ricardo", "role": "admin"}<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-09-6-mini-projeto-gerador-de-tokens">6. Mini-Projeto: Gerador de Tokens 🛠️</h2>
 <ol>
@@ -5968,11 +5923,8 @@ Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança m�
 <hr>
 <h2 id="aulas-aula-10-5-testando-permissoes-no-terminal">5. Testando Permissões no Terminal 💻</h2>
 <p>Simulando o acesso de um usuário comum tentando entrar em uma área de Admin.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-10-__codelineno-1-1"></a># Usuário tenta acessar rota de Admin
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-10-__codelineno-1-2"></a>$ curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-10-__codelineno-1-3"></a># Resposta do servidor (Middleware barrou)
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-10-__codelineno-1-4"></a>&gt; 403 Forbidden: Acesso Negado
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span class="termynal-comment" data-ty># Usuário tenta acessar rota de Admin</span><span data-ty="input" data-ty-prompt="$">curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all</span><span class="termynal-comment" data-ty># Resposta do servidor (Middleware barrou)</span><span data-ty>&gt; 403 Forbidden: Acesso Negado<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-10-6-mini-projeto-o-gerente-de-notificacoes">6. Mini-Projeto: O Gerente de Notificações 📢</h2>
 <p>Imagine um app escolar.
@@ -6040,12 +5992,8 @@ Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança m�
 *   <strong>Rate Limit</strong>: Limitamos que o mesmo IP só pode tentar o login 5 vezes a cada minuto.
 *   Se passar disso, o IP é bloqueado temporariamente.</p>
 <h3 id="aulas-aula-11-testando-seguranca-terminal">Testando Segurança (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-11-__codelineno-2-1"></a>$ curl -I http://localhost:3000
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-11-__codelineno-2-2"></a>HTTP/1.1 200 OK
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-11-__codelineno-2-3"></a>X-Content-Type-Options: nosniff
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-11-__codelineno-2-4"></a>X-Frame-Options: SAMEORIGIN
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-11-__codelineno-2-5"></a>Strict-Transport-Security: max-age=15552000; includeSubDomains
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">curl -I http://localhost:3000</span><span data-ty>HTTP/1.1 200 OK<br>X-Content-Type-Options: nosniff<br>X-Frame-Options: SAMEORIGIN<br>Strict-Transport-Security: max-age=15552000; includeSubDomains<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-11-5-xss-e-sql-injection-revisao">5. XSS e SQL Injection (Revisão) ⚔️</h2>
 <ul>
@@ -6099,22 +6047,19 @@ Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança m�
 <h2 id="aulas-aula-12-3-vite-a-ferramenta-de-proxima-geracao">3. Vite: A Ferramenta de Próxima Geração ⚡</h2>
 <p>Para criar um projeto React, usamos o <strong>Vite</strong>. Ele é extremamente rápido para o desenvolvedor (o código carrega instantaneamente enquanto você edita).</p>
 <h3 id="aulas-aula-12-criando-projeto-terminal">Criando Projeto (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-12-__codelineno-0-1"></a>$ npm create vite@latest meu-app -- --template react
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-12-__codelineno-0-2"></a>$ cd meu-app
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-12-__codelineno-0-3"></a>$ npm install
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#aulas-aula-12-__codelineno-0-4"></a>$ npm run dev
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npm create vite@latest meu-app -- --template react</span><span data-ty="input" data-ty-prompt="$">cd meu-app</span><span data-ty="input" data-ty-prompt="$">npm install</span><span data-ty="input" data-ty-prompt="$">npm run dev</span><span data-ty></span></div>
+
 <hr>
 <h2 id="aulas-aula-12-4-o-coracao-do-react-componentes">4. O Coração do React: Componentes 🧩</h2>
 <p>Um componente é apenas uma função Javascript que retorna algo parecido com HTML (chamado de <strong>JSX</strong>).</p>
-<div class="language-jsx highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-12-__codelineno-1-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Saudacao</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-12-__codelineno-1-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-12-__codelineno-1-3"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">"card"</span><span class="p">&gt;</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-12-__codelineno-1-4"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Olá</span><span class="p">,</span><span class="w"> </span><span class="nx">Mundo</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-12-__codelineno-1-5"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Este</span><span class="w"> </span><span class="nx">é</span><span class="w"> </span><span class="nx">meu</span><span class="w"> </span><span class="nx">primeiro</span><span class="w"> </span><span class="nx">componente</span><span class="w"> </span><span class="nx">React</span><span class="p">.&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-12-__codelineno-1-6"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#aulas-aula-12-__codelineno-1-7"></a><span class="w">  </span><span class="p">);</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#aulas-aula-12-__codelineno-1-8"></a><span class="p">}</span>
+<div class="language-jsx highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-12-__codelineno-0-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Saudacao</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-12-__codelineno-0-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-12-__codelineno-0-3"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">"card"</span><span class="p">&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#aulas-aula-12-__codelineno-0-4"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Olá</span><span class="p">,</span><span class="w"> </span><span class="nx">Mundo</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#aulas-aula-12-__codelineno-0-5"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="nx">Este</span><span class="w"> </span><span class="nx">é</span><span class="w"> </span><span class="nx">meu</span><span class="w"> </span><span class="nx">primeiro</span><span class="w"> </span><span class="nx">componente</span><span class="w"> </span><span class="nx">React</span><span class="p">.&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#aulas-aula-12-__codelineno-0-6"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#aulas-aula-12-__codelineno-0-7"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#aulas-aula-12-__codelineno-0-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="aulas-aula-12-regras-do-jsx">Regras do JSX:</h3>
 <ol>
@@ -6124,12 +6069,12 @@ Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança m�
 <hr>
 <h2 id="aulas-aula-12-5-props-passando-dados">5. Props: Passando Dados 🎁</h2>
 <p>Assim como passamos argumentos para funções, passamos <strong>Props</strong> para componentes.</p>
-<div class="language-jsx highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-12-__codelineno-2-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Usuario</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-12-__codelineno-2-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">Bem</span><span class="o">-</span><span class="nx">vindo</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">nome</span><span class="p">}</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-12-__codelineno-2-3"></a><span class="p">}</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-12-__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-12-__codelineno-2-5"></a><span class="c1">// Usando o componente:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#aulas-aula-12-__codelineno-2-6"></a><span class="sb">`&amp;lt;Usuario nome="Ricardo" /&amp;gt;`</span>
+<div class="language-jsx highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-12-__codelineno-1-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Usuario</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-12-__codelineno-1-2"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">Bem</span><span class="o">-</span><span class="nx">vindo</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">nome</span><span class="p">}</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-12-__codelineno-1-3"></a><span class="p">}</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-12-__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-12-__codelineno-1-5"></a><span class="c1">// Usando o componente:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-12-__codelineno-1-6"></a><span class="sb">`&amp;lt;Usuario nome="Ricardo" /&amp;gt;`</span>
 </span></code></pre></div>
 <hr>
 <h2 id="aulas-aula-12-6-mini-projeto-dashboard-de-vendas">6. Mini-Projeto: Dashboard de Vendas 📊</h2>
@@ -6232,12 +6177,8 @@ Isso avisa ao React: "Ei, os dados mudaram! Desenha a tela de novo!".</p>
 <li>Como limpamos um campo de input após o usuário clicar em um botão de enviar?</li>
 </ol>
 <h3 id="aulas-aula-13-ambiente-de-desenvolvimento-terminal">💻 Ambiente de Desenvolvimento (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-13-__codelineno-2-1"></a>$ npm run dev
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-13-__codelineno-2-2"></a>VITE v5.0.0  ready in 150ms
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-13-__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-13-__codelineno-2-4"></a>  ➜  Local:   http://localhost:5173/
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-13-__codelineno-2-5"></a>  ➜  Network: use --host to expose
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npm run dev</span><span data-ty>VITE v5.0.0  ready in 150ms<br><br>  ➜  Local:   http://localhost:5173/<br>  ➜  Network: use --host to expose<br></span></div>
+
 <hr>
 <p><strong>Próxima Aula</strong>: Ciclo de Vida e APIs! <a href="#aulas-aula-14">Hook: useEffect</a> 🕒</p></body></html></section><section class="print-page" id="aulas-aula-14" heading-number="3.15"><html><head>
         <script type="text/javascript">
@@ -6305,13 +6246,8 @@ Isso avisa ao React: "Ei, os dados mudaram! Desenha a tela de novo!".</p>
 </span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#aulas-aula-14-__codelineno-1-18"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="aulas-aula-14-consumindo-api-terminal">Consumindo API (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-14-__codelineno-2-1"></a>$ curl https://api.github.com/users/ricardotecpro
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-14-__codelineno-2-2"></a>{
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-14-__codelineno-2-3"></a>  "login": "ricardotecpro",
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-14-__codelineno-2-4"></a>  "name": "Ricardo Tec Pro",
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-14-__codelineno-2-5"></a>  "bio": "Desenvolvedor Full Stack"
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#aulas-aula-14-__codelineno-2-6"></a>}
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">curl https://api.github.com/users/ricardotecpro</span><span data-ty>{<br>  "login": "ricardotecpro",<br>  "name": "Ricardo Tec Pro",<br>  "bio": "Desenvolvedor Full Stack"<br>}<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-14-5-boas-praticas-loading-e-error">5. Boas Práticas: Loading e Error 🛡️</h2>
 <p>Sempre que fizermos uma chamada de rede, devemos tratar três estados:
@@ -6350,9 +6286,8 @@ Isso avisa ao React: "Ei, os dados mudaram! Desenha a tela de novo!".</p>
     Browser -- /sobre --&gt; Sobre([Sobre Component])
     Browser -- /perfil --&gt; Perfil([Perfil Component])</code></pre>
 <h3 id="aulas-aula-15-instalando-router-terminal">Instalando Router (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-15-__codelineno-0-1"></a>$ npm install react-router-dom
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-15-__codelineno-0-2"></a>added 3 packages, and audited 47 packages in 2s
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npm install react-router-dom</span><span data-ty>added 3 packages, and audited 47 packages in 2s<br></span></div>
+
 <hr>
 <h2 id="aulas-aula-15-1-por-que-precisamos-de-um-roteador">1. Por que precisamos de um Roteador? 🧭</h2>
 <p>En uma Single Page Application (SPA), o navegador nunca "recarrega" de verdade. Se você clicar em um link comum, ele tenta buscar um novo arquivo HTML no servidor.
@@ -6362,47 +6297,47 @@ O <strong>React Router</strong> intercepta os cliques e troca apenas o component
 <p>O roteador não vem no React por padrão. Precisamos instalar:
 <code>npm install react-router-dom</code></p>
 <p>No seu <code>App.jsx</code>, configuramos a estrutura básica:
-</p><div class="language-jsx highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-15-__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BrowserRouter</span><span class="p">,</span><span class="w"> </span><span class="nx">Routes</span><span class="p">,</span><span class="w"> </span><span class="nx">Route</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-15-__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-15-__codelineno-1-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-15-__codelineno-1-4"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-15-__codelineno-1-5"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">BrowserRouter</span><span class="p">&gt;</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-15-__codelineno-1-6"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Routes</span><span class="p">&gt;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#aulas-aula-15-__codelineno-1-7"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"/"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">Home</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#aulas-aula-15-__codelineno-1-8"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"/sobre"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">Sobre</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#aulas-aula-15-__codelineno-1-9"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"*"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">NotFound</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#aulas-aula-15-__codelineno-1-10"></a><span class="w">      </span><span class="p">&lt;/</span><span class="nt">Routes</span><span class="p">&gt;</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#aulas-aula-15-__codelineno-1-11"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">BrowserRouter</span><span class="p">&gt;</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#aulas-aula-15-__codelineno-1-12"></a><span class="w">  </span><span class="p">);</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#aulas-aula-15-__codelineno-1-13"></a><span class="p">}</span>
+</p><div class="language-jsx highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-15-__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BrowserRouter</span><span class="p">,</span><span class="w"> </span><span class="nx">Routes</span><span class="p">,</span><span class="w"> </span><span class="nx">Route</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-15-__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-15-__codelineno-0-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#aulas-aula-15-__codelineno-0-4"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#aulas-aula-15-__codelineno-0-5"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">BrowserRouter</span><span class="p">&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#aulas-aula-15-__codelineno-0-6"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Routes</span><span class="p">&gt;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#aulas-aula-15-__codelineno-0-7"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"/"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">Home</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#aulas-aula-15-__codelineno-0-8"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"/sobre"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">Sobre</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#aulas-aula-15-__codelineno-0-9"></a><span class="w">        </span><span class="p">&lt;</span><span class="nt">Route</span><span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s">"*"</span><span class="w"> </span><span class="na">element</span><span class="o">=</span><span class="p">{&lt;</span><span class="nt">NotFound</span><span class="w"> </span><span class="p">/&gt;}</span><span class="w"> </span><span class="p">/&gt;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#aulas-aula-15-__codelineno-0-10"></a><span class="w">      </span><span class="p">&lt;/</span><span class="nt">Routes</span><span class="p">&gt;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#aulas-aula-15-__codelineno-0-11"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">BrowserRouter</span><span class="p">&gt;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#aulas-aula-15-__codelineno-0-12"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#aulas-aula-15-__codelineno-0-13"></a><span class="p">}</span>
 </span></code></pre></div><p></p>
 <hr>
 <h2 id="aulas-aula-15-3-navegando-entre-paginas">3. Navegando entre Páginas 🏃‍♂️</h2>
 <p>Para mudar de página, <strong>nunca</strong> use a tag <code>&amp;lt;a&amp;gt;</code> comum, pois ela recarrega o site do zero. Use o componente <code>&amp;lt;Link&amp;gt;</code>:</p>
-<div class="language-jsx highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-15-__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Link</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-15-__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-15-__codelineno-2-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Navbar</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-15-__codelineno-2-4"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-15-__codelineno-2-5"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#aulas-aula-15-__codelineno-2-6"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">"/"</span><span class="p">&gt;</span><span class="nx">Início</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#aulas-aula-15-__codelineno-2-7"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">"/sobre"</span><span class="p">&gt;</span><span class="nx">Sobre</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#aulas-aula-15-__codelineno-2-8"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#aulas-aula-15-__codelineno-2-9"></a><span class="w">  </span><span class="p">);</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#aulas-aula-15-__codelineno-2-10"></a><span class="p">}</span>
+<div class="language-jsx highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#aulas-aula-15-__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Link</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#aulas-aula-15-__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#aulas-aula-15-__codelineno-1-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Navbar</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#aulas-aula-15-__codelineno-1-4"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#aulas-aula-15-__codelineno-1-5"></a><span class="w">    </span><span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#aulas-aula-15-__codelineno-1-6"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">"/"</span><span class="p">&gt;</span><span class="nx">Início</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#aulas-aula-15-__codelineno-1-7"></a><span class="w">      </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">to</span><span class="o">=</span><span class="s">"/sobre"</span><span class="p">&gt;</span><span class="nx">Sobre</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#aulas-aula-15-__codelineno-1-8"></a><span class="w">    </span><span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#aulas-aula-15-__codelineno-1-9"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#aulas-aula-15-__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr>
 <h2 id="aulas-aula-15-4-navegacao-programatica">4. Navegação Programática 🚀</h2>
 <p>Às vezes, queremos mudar de página via código (ex: após um login com sucesso). Para isso, usamos o hook <code>useNavigate</code>:</p>
-<div class="language-jsx highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#aulas-aula-15-__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNavigate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#aulas-aula-15-__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#aulas-aula-15-__codelineno-3-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Login</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#aulas-aula-15-__codelineno-3-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">navigate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useNavigate</span><span class="p">();</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#aulas-aula-15-__codelineno-3-5"></a>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#aulas-aula-15-__codelineno-3-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#aulas-aula-15-__codelineno-3-7"></a><span class="w">    </span><span class="c1">// ... lógica de login</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#aulas-aula-15-__codelineno-3-8"></a><span class="w">    </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">"/dashboard"</span><span class="p">);</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#aulas-aula-15-__codelineno-3-9"></a><span class="w">  </span><span class="p">};</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#aulas-aula-15-__codelineno-3-10"></a><span class="p">}</span>
+<div class="language-jsx highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#aulas-aula-15-__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useNavigate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#aulas-aula-15-__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#aulas-aula-15-__codelineno-2-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Login</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#aulas-aula-15-__codelineno-2-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">navigate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useNavigate</span><span class="p">();</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#aulas-aula-15-__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#aulas-aula-15-__codelineno-2-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handleLogin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#aulas-aula-15-__codelineno-2-7"></a><span class="w">    </span><span class="c1">// ... lógica de login</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#aulas-aula-15-__codelineno-2-8"></a><span class="w">    </span><span class="nx">navigate</span><span class="p">(</span><span class="s2">"/dashboard"</span><span class="p">);</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#aulas-aula-15-__codelineno-2-9"></a><span class="w">  </span><span class="p">};</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#aulas-aula-15-__codelineno-2-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr>
 <h2 id="aulas-aula-15-5-parametros-de-url-hooks">5. Parâmetros de URL (Hooks) 🆔</h2>
@@ -6411,12 +6346,12 @@ O <strong>React Router</strong> intercepta os cliques e troca apenas o component
 <li><strong>Rota</strong>: <code>&amp;lt;Route path="/produto/:id" element={&amp;lt;Detalhes /&amp;gt;} /&amp;gt;</code></li>
 <li><strong>Captura</strong>: No componente <code>Detalhes</code>, usamos o hook <code>useParams</code>.</li>
 </ul>
-<div class="language-jsx highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#aulas-aula-15-__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useParams</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#aulas-aula-15-__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#aulas-aula-15-__codelineno-4-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Detalhes</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#aulas-aula-15-__codelineno-4-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useParams</span><span class="p">();</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#aulas-aula-15-__codelineno-4-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Exibindo</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="nx">produto</span><span class="w"> </span><span class="nx">ID</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">id</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#aulas-aula-15-__codelineno-4-6"></a><span class="p">}</span>
+<div class="language-jsx highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#aulas-aula-15-__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useParams</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'react-router-dom'</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#aulas-aula-15-__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#aulas-aula-15-__codelineno-3-3"></a><span class="kd">function</span><span class="w"> </span><span class="nx">Detalhes</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#aulas-aula-15-__codelineno-3-4"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useParams</span><span class="p">();</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#aulas-aula-15-__codelineno-3-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Exibindo</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="nx">produto</span><span class="w"> </span><span class="nx">ID</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">id</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#aulas-aula-15-__codelineno-3-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr>
 <h2 id="aulas-aula-15-6-mini-projeto-blog-de-tecpro">6. Mini-Projeto: Blog de TecPro 📰</h2>
@@ -6433,9 +6368,9 @@ O <strong>React Router</strong> intercepta os cliques e troca apenas o component
 <li>Se você quiser criar uma área de "Perfil do Usuário" onde a URL é <code>/u/ricardo</code>, como ficaria a definição do <code>path</code> no componente <code>Route</code>?</li>
 </ol>
 <h3 id="aulas-aula-15-finalizacao-terminal">Finalização (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#aulas-aula-15-__codelineno-5-1"></a>$ npm run build
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#aulas-aula-15-__codelineno-5-2"></a>$ npx serve -s dist
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#aulas-aula-15-__codelineno-5-3"></a>serving /dist on http://localhost:3000
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#aulas-aula-15-__codelineno-4-1"></a>$ npm run build
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#aulas-aula-15-__codelineno-4-2"></a>$ npx serve -s dist
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#aulas-aula-15-__codelineno-4-3"></a>serving /dist on http://localhost:3000
 </span></code></pre></div>
 <hr>
 <p><strong>FIM DO CURSO</strong> 🚀🚀🚀
@@ -6493,10 +6428,8 @@ Desejamos muito sucesso na sua jornada como Desenvolvedor Full-Stack!</p></body>
 <p>"A tecnologia é apenas uma ferramenta. Em termos de conseguir que as pessoas trabalhem juntas e as motivem, o desenvolvedor é o artista."</p>
 </blockquote>
 <h3 id="aulas-aula-16-finalizacao-terminal">Finalização (Terminal)</h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#aulas-aula-16-__codelineno-0-1"></a>$ npm run build
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#aulas-aula-16-__codelineno-0-2"></a>$ npx serve -s dist
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#aulas-aula-16-__codelineno-0-3"></a>serving /dist on http://localhost:3000
-</span></code></pre></div>
+<div class="termy" data-termynal data-ty-macos data-ty-title="shell"><span data-ty="input" data-ty-prompt="$">npm run build</span><span data-ty="input" data-ty-prompt="$">npx serve -s dist</span><span data-ty>serving /dist on http://localhost:3000<br></span></div>
+
 <hr>
 <p><strong>FIM DO CURSO</strong> 🚀🚀🚀
 Desejamos muito sucesso na sua jornada como Desenvolvedor Full-Stack!</p></body></html></section></section>
