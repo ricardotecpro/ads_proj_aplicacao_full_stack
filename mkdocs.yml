@@ -74,27 +74,23 @@ plugins:
   - search:
       lang: pt
   - tags
-  - social
-  - mkdocs-revealjs:
-      revealjs_config:
-        transition: slide
-        backgroundTransition: fade
-        slideNumber: true
+  # - social
+  - mkdocs-revealjs
   - mkdocs-jupyter
   - glightbox
   - mkdocs_quiz
-  - git-authors:
-      show_contribution: true
-      show_line_count: true
-      count_empty_lines: false
-      fallback_to_empty: false
-      sort_authors_by: contribution
-      authorship_threshold_percent: 10
-      exclude:
-        - index.md
-  - git-revision-date-localized:
-      enable_creation_date: true
-      type: datetime
+  # - git-authors:
+  #     show_contribution: true
+  #     show_line_count: true
+  #     count_empty_lines: false
+  #     fallback_to_empty: false
+  #     sort_authors_by: contribution
+  #     authorship_threshold_percent: 10
+  #     exclude:
+  #       - index.md
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
+  #     type: datetime
   - macros
   - mkdocs-video
   - termynal:
@@ -102,10 +98,10 @@ plugins:
       buttons: macos
       prompt_literal_start:
         - "$"
-  - rss:
-      match_path: .*
-      date_from_meta:
-        datetime_format: '%Y-%m-%d %H:%M:%S'
+  # - rss:
+  #     match_path: .*
+  #     date_from_meta:
+  #       datetime_format: '%Y-%m-%d %H:%M:%S'
   - print-site:
       add_to_navigation: false
       print_page_title: 'Versão para Impressão'
@@ -140,15 +136,26 @@ extra:
       link: https://linkedin.com/in/ricardotecpro
     - icon: fontawesome/solid/globe
       link: https://ricardotecpro.github.io/
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@ricardotecpro
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/ricardotecpro
   version:
     provider: mike
     default: estavel
   site_description: "Curso completo de Aplicação Full Stack - Desenvolvimento Modular e Moderno"
 
+exclude_docs: |
+  quizzes/src/*
+  slides/src/*
+  temp_docs/*
+
+
 nav:
   - Início: index.md
   - Plano de Ensino: plano-ensino.md
   - Aulas:
+      - 'Visão Geral': aulas/index.md
       - 'Aula 01 - Intro Microsserviços': aulas/aula-01.md
       - 'Aula 02 - Arquitetura e Gateway': aulas/aula-02.md
       - 'Aula 03 - Modelagem REST': aulas/aula-03.md

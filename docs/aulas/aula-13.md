@@ -12,16 +12,6 @@ graph TD
     DOM -- Update --> UI([Interface do Usuário])
 ```
 
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
-
 ---
 
 ## 1. O que é o "Estado" (State)? 🧠
@@ -29,16 +19,6 @@ VITE v5.0.0  ready in 150ms
 Imagine um botão de curtir. O número de curtidas muda. No React, variáveis comuns NÃO fazem a tela atualizar. Para isso, usamos o **Estado**.
 *   **Variável Comum**: Se o valor muda, a tela continua igual.
 *   **Estado (State)**: Se o valor muda, o React redesenha (re-renderiza) o componente na tela.
-
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
 
 ---
 
@@ -64,16 +44,6 @@ function Contador() {
 }
 ```
 
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
-
 ---
 
 ## 3. Lidando com Eventos ⚡
@@ -82,16 +52,6 @@ No React, os eventos são muito parecidos com o HTML, mas usamos **CamelCase**:
 *   `onclick` ➔ `onClick`
 *   `onchange` ➔ `onChange`
 *   `onsubmit` ➔ `onSubmit`
-
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
 
 ---
 
@@ -117,16 +77,6 @@ function Formulario() {
 }
 ```
 
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
-
 ---
 
 ## 5. A Regra de Ouro: Nunca mude o estado diretamente ❌
@@ -134,16 +84,6 @@ VITE v5.0.0  ready in 150ms
 Você **nunca** deve fazer isto: `valor = valor + 1;`.
 Você deve sempre usar a função disparadora: `setValor(valor + 1);`.
 Isso avisa ao React: "Ei, os dados mudaram! Desenha a tela de novo!".
-
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
 
 ---
 
@@ -154,16 +94,6 @@ VITE v5.0.0  ready in 150ms
 3.  Ao clicar, adicione o texto do input no array usando `setLista([...lista, novoItem])`.
 4.  Exiba a lista usando `.map()`.
 
-### Contador Interativo (Terminal)
-
-```termynal {markdown="1"}
-$ npm run dev
-VITE v5.0.0  ready in 150ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-```
-
 ---
 
 ## 7. Exercício de Fixação 🧠
@@ -172,7 +102,7 @@ VITE v5.0.0  ready in 150ms
 2.  Para que serve o segundo item retornado pelo `useState` (a função `set...`)?
 3.  Como limpamos um campo de input após o usuário clicar em um botão de enviar?
 
-### Contador Interativo (Terminal)
+### 💻 Ambiente de Desenvolvimento (Terminal)
 
 ```termynal {markdown="1"}
 $ npm run dev

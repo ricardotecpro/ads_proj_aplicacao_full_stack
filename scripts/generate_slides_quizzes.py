@@ -19,7 +19,7 @@ def generate_slide_html(lesson_number: int) -> str:
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula {lesson_number:02d} - Desenvolvimento Mobile Nativo</title>
+    <title>Aula {lesson_number:02d} - Aplicação Full Stack</title>
     
     <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reset.css">
     <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.5.0/dist/reveal.css">
@@ -189,7 +189,7 @@ def generate_all_quizzes():
 
 
 def main():
-    print("[bold]🚀 Automação de Conteúdo: Mobile Nativo[/bold]")
+    print("[bold]🚀 Automação de Conteúdo: Aplicação Full Stack[/bold]")
     print("=" * 50)
     
     generate_all_slides()

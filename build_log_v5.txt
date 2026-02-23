@@ -1,0 +1,461 @@
+HERE= C:\Python\Python313\Lib\site-packages\mkdocs_revealjs
+DIRNAME= docs/revealjs
+INFO    -  [macros] - No default module `main` found
+INFO    -  [macros] - Config variables: ['extra', 'config', 'environment', 'plugin', 'git', 'social', 'version', 'site_description', 'macros', 'filters', 'filters_builtin']
+INFO    -  [macros] - Config macros: ['context', 'macros_info', 'now', 'fix_url']
+INFO    -  [macros] - Config filters: ['pretty', 'relative_url']
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: D:\SourceCode\REPOS\github.io\ads_proj_aplicacao_full_stack\site
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+WARNING -  Required dependencies of "social" plugin not found:
+- ModuleNotFoundError("No module named 'cairosvg'")
+
+--> Install with: pip install "mkdocs-material[imaging]"
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/index.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/index.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/materiais.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/materiais.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/plano-ensino.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/plano-ensino.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/print_page.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/print_page.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/project_roadmap.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/project_roadmap.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/sobre.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/sobre.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\index.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Cindex.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-01.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-01.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-02.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-02.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-03.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-03.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-04.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-04.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-05.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-05.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-06.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-06.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-07.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-07.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-08.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-08.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-09.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-09.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-10.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-10.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-11.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-11.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-12.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-12.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-13.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-13.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas\aula-15.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/aulas%5Caula-15.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\index.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cindex.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-01.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-01.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-02.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-02.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-03.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-03.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-04.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-04.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-05.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-05.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-06.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-06.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-07.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-07.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-08.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-08.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-09.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-09.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-10.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-10.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-11.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-11.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-12.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-12.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-13.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-13.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-14.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-14.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-15.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-15.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios\exercicio-16.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/exercicios%5Cexercicio-16.png
+INFO    -  [RSS-plugin]: Remote image is not reachable: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/projetos\index.png after 2 attempts. Trace: 404 Client Error: Not Found for url: https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack/assets/images/social/projetos%5Cindex.png
+Copiando slides HTML...
+  ÔåÆ slide-01.html
+  ÔåÆ slide-02.html
+  ÔåÆ slide-03.html
+  ÔåÆ slide-04.html
+  ÔåÆ slide-05.html
+  ÔåÆ slide-06.html
+  ÔåÆ slide-07.html
+  ÔåÆ slide-08.html
+  ÔåÆ slide-09.html
+  ÔåÆ slide-10.html
+  ÔåÆ slide-11.html
+  ÔåÆ slide-12.html
+  ÔåÆ slide-13.html
+  ÔåÆ slide-14.html
+  ÔåÆ slide-15.html
+  ÔåÆ slide-16.html
+Copiando slides Markdown...
+  ÔåÆ slide-01.md
+  ÔåÆ slide-02.md
+  ÔåÆ slide-03.md
+  ÔåÆ slide-04.md
+  ÔåÆ slide-05.md
+  ÔåÆ slide-06.md
+  ÔåÆ slide-07.md
+  ÔåÆ slide-08.md
+  ÔåÆ slide-09.md
+  ÔåÆ slide-10.md
+  ÔåÆ slide-11.md
+  ÔåÆ slide-12.md
+  ÔåÆ slide-13.md
+  ÔåÆ slide-14.md
+  ÔåÆ slide-15.md
+  ÔåÆ slide-16.md
+Ô£ô 16 slide(s) HTML copiados
+Ô£ô 16 slide(s) Markdown copiados
+
+Aborted with 94 warnings in strict mode!

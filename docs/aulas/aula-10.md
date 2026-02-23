@@ -69,6 +69,19 @@ graph TD
 
 ---
 
+## 5. Testando Permissões no Terminal 💻
+
+Simulando o acesso de um usuário comum tentando entrar em uma área de Admin.
+
+```termynal {markdown="1"}
+# Usuário tenta acessar rota de Admin
+$ curl -H "Authorization: Bearer TOKEN_USUARIO" http://localhost:3000/admin/delete-all
+# Resposta do servidor (Middleware barrou)
+> 403 Forbidden: Acesso Negado
+```
+
+---
+
 ## 6. Mini-Projeto: O Gerente de Notificações 📢
 
 Imagine um app escolar.

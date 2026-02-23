@@ -13,7 +13,17 @@ O **Controller** é o "maestro" de uma rota. Sua única responsabilidade é:
 3.  Chamar a lógica de negócio (que veremos na próxima aula).
 4.  Retornar a resposta correta (Status Code + JSON).
 
-> **Analogie**: O Controller é o garçom de um restaurante. Ele anota o pedido, leva para a cozinha e traz o prato pronto. Ele não cozinha!
+> **Analogia**: O Controller é o garçom de um restaurante. Ele anota o pedido, leva para a cozinha e traz o prato pronto. Ele não cozinha!
+
+### 🗺️ O Papel do Controller (Mermaid)
+
+```mermaid
+graph LR
+    User([Usuário]) -- Request --> C[Controller]
+    C -- "Call Service (Cozinha)" --> S[Service]
+    S -- "Data (Prato)" --> C
+    C -- "JSON Response" --> User
+```
 
 ---
 

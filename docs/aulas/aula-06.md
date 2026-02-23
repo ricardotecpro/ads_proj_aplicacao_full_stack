@@ -68,8 +68,8 @@ try {
 Muitas vezes, não queremos devolver todos os dados do banco para o cliente (ex: não queremos devolver a senha!).
 Usamos **DTOs** para filtrar o que entra e o que sai do sistema.
 
-### 🆚 Comparação: MVVM (Mobile/Frontend)
-Se você já ouviu falar de **MVVM**, o Service no Backend é muito similar ao papel do **ViewModel** no Frontend: ambos lidam com a lógica e os dados, deixando a "View" (ou Controller) limpa de complexidade.
+### 🆚 Comparação: Componentes no Frontend
+Para quem já desenvolveu no Frontend, o Service no Backend é similar ao papel de um **Hook customizado** ou uma **Store de Estado**: ambos concentram a lógica de negócio e os dados, permitindo que a "View" (ou o Controller no nosso caso) foque apenas na interação/transporte.
 
 ### Migrações no Terminal (Exemplo)
 

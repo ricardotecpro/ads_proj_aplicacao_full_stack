@@ -65,7 +65,24 @@ Se um serviço está falhando, não adianta continuar mandando requisições par
 
 ---
 
-## 5. Mini-Projeto: Simulando um Gateway 🚀
+## 5. Simulação de API Gateway no Terminal 💻
+
+O Gateway recebe uma requisição central e a distribui para os serviços internos.
+
+```termynal {markdown="1"}
+# Requisição para o Gateway (Porta 8080)
+$ curl http://localhost:8080/users
+# O Gateway redireciona internamente para User-Service (Porta 3001)
+> Roteando para: http://internal-service:3001/users
+
+$ curl http://localhost:8080/orders
+# O Gateway redireciona internamente para Order-Service (Porta 3002)
+> Roteando para: http://internal-service:3002/orders
+```
+
+---
+
+## 6. Mini-Projeto: Simulando um Gateway 🚀
 
 Vamos simular o comportamento de um Gateway usando o Postman:
 

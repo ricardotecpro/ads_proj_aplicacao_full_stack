@@ -55,14 +55,17 @@ Não devemos colocar `try/catch` em todas as funções. O ideal é ter um **Midd
 *   **Funções Pequenas**: Se uma função faz 10 coisas, ela deve ser dividida.
 *   **Princípio DRY**: *Don't Repeat Yourself* (Não se repita). Se você usa o mesmo código em dois lugares, ele deve virar uma função ou utilitário.
 
-### 🆚 Comparação: Clean Architecture no Mobile
-Separar as regras de interface da lógica de validação é fundamental. O **Clean Code** é uma linguagem universal que separa o programador amador do profissional.
+### 🧩 Arquitetura de Validação (Mermaid)
+Um bom fluxo de dados garante que apenas informações limpas cheguem ao core da sua aplicação.
 
-### Testando Validação (Terminal)
-
-```termynal {markdown="1"}
-$ curl -X POST http://localhost:3000/produtos -d '{"preco": -10}'
-{"erro": "O preço deve ser maior que zero"}
+```mermaid
+graph LR
+    User([Usuário]) --> Client([Frontend])
+    Client -- "Dados Sujos" --> API([API Gateway/Controller])
+    API -- "Schema Validation" --> V{Validador}
+    V -- "Inválido" --> E[Erro 400]
+    V -- "Válido (Limpo)" --> B[(Banco de Dados)]
+    E --> User
 ```
 
 ---
@@ -74,14 +77,6 @@ Crie o esquema de validação para o cadastro de um **Produto de E-commerce**.
 *   `preco`: Obrigatório, deve ser maior que zero.
 *   `estoque`: Inteiro, não pode ser negativo.
 *   `categoria`: Deve ser uma das opções: 'Eletrônicos', 'Roupas' ou 'Alimentos'.
-
-### Verificando Token no Terminal
-
-```termynal {markdown="1"}
-$ export TOKEN="seu_jwt_aqui"
-$ curl -H "Authorization: Bearer $TOKEN" http://localhost:3000/perfil
-{"nome": "Ricardo", "role": "admin"}
-```
 
 ---
 

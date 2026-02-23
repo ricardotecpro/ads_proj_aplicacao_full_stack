@@ -33,6 +33,25 @@ O grande poder do SQL é ligar tabelas:
 *   **1:N (Um para Muitos)**: Um *Usuário* tem muitos *Pedidos*.
 *   **N:N (Muitos para Muitos)**: Um *Estudante* está em muitos *Cursos*, e um *Curso* tem muitos *Estudantes*.
 
+### 🔗 Diagrama de Relacionamento (Mermaid)
+
+```mermaid
+erDiagram
+    USUARIO ||--o{ PEDIDO : "realiza"
+    PEDIDO ||--|{ ITEM_PEDIDO : "contém"
+    PRODUTO ||--o{ ITEM_PEDIDO : "é incluído"
+```
+
+### 📐 Performance: Teorema de CAP
+Em sistemas distribuídos (como microsserviços), lidamos com o Teorema de CAP:
+
+$$ C + A + P \implies \text{Escolha apenas dois} $$
+
+Onde:
+- **C** (Consistency): Consistência.
+- **A** (Availability): Disponibilidade.
+- **P** (Partition Tolerance): Tolerância a Partições.
+
 ---
 
 ## 4. O Padrão Repository 📥

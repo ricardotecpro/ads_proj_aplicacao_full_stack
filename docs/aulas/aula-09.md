@@ -70,10 +70,11 @@ Usamos bibliotecas como `jsonwebtoken` para assinar e validar os tokens.
 const token = jwt.sign({ id: user.id }, 'CHAVE_SUPER_SECRETA', { expiresIn: '1d' });
 ```
 
-### 🆚 Comparação: Keychain / EncryptedSharedPreferences (Mobile)
-No Mobile, o JWT deve ser guardado com segurança máxima.
-*   **Web**: Usamos `Cookies` (HttpOnly) ou `localStorage` (com cautela).
-Nunca guarde o JWT em texto simples no dispositivo!
+### 🔒 Onde armazenar o JWT no Frontend?
+No desenvolvimento Web, temos duas opções principais para guardar o token:
+*   **LocalStorage**: Fácil de usar, mas vulnerável a ataques XSS (Cross-Site Scripting).
+*   **Cookies (HttpOnly)**: Mais seguros, pois o Javascript não consegue lê-los, protegendo contra roubo de token via script malicioso.
+Nunca guarde o JWT em texto simples ou em locais sem proteção de segurança mínima!
 
 ### Verificando Token no Terminal
 

@@ -1,10 +1,10 @@
 # APIs e Microsserviços 🌐
 
-[![Build Status](https://github.io/ricardotecpro/ads_mod_07_backend_e_apis/actions/workflows/ci.yml/badge.svg)](https://github.io/ricardotecpro/ads_mod_07_backend_e_apis/actions)
+[![Build Status](https://github.com/ricardotecpro/ads_proj_aplicacao_full_stack/actions/workflows/ci.yml/badge.svg)](https://github.com/ricardotecpro/ads_proj_aplicacao_full_stack/actions)
 
 Curso avançado focado na arquitetura de Microsserviços, desenvolvimento de APIs RESTful profissionais e frontends modernos utilizando o padrão SPA (Single Page Application).
 
-🔗 **Acesse o curso online**: [https://ricardotecpro.github.io/ads_mod_07_backend_e_apis](https://ricardotecpro.github.io/ads_mod_07_backend_e_apis)
+🔗 **Acesse o curso online**: [https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack](https://ricardotecpro.github.io/ads_proj_aplicacao_full_stack)
 
 ---
 

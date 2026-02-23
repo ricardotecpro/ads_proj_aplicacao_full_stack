@@ -10,10 +10,18 @@
 REST (**Representational State Transfer**) não é uma linguagem nem um framework, mas um **estilo arquitetural** para sistemas distribuídos.
 
 ### Princípios Fundamentais:
-1.  **Client-Server**: Separação clara entre quem pede (frontend/mobile) e quem atende (backend).
+1.  **Client-Server**: Separação clara entre quem pede (Frontend) e quem atende (Backend).
 2.  **Stateless**: Cada requisição deve conter toda a informação necessária. O servidor não "lembra" do cliente entre chamadas.
 3.  **Cacheable**: As respostas podem (e devem) ser cacheadas para melhorar a performance.
 4.  **Interface Uniforme**: Uso padronizado de recursos, métodos e identificadores (URIs).
+
+### 🏛️ Arquitetura Client-Server (Mermaid)
+
+```mermaid
+graph LR
+    C[Client - SPA] -- "Request (HTTP + JSON)" --> S[Server - API]
+    S -- "Response (Status + JSON)" --> C
+```
 
 ---
 
@@ -76,6 +84,19 @@ O JSON (**JavaScript Object Notation**) é o padrão de facto para troca de dado
   "disponivel": true,
   "categorias": ["Eletrônicos", "Ofertas"]
 }
+```
+
+### 🖥️ Testando Verbos no Terminal
+
+```termynal {markdown="1"}
+# Listar produtos
+$ curl -X GET http://localhost:3000/produtos
+
+# Criar um produto
+$ curl -X POST http://localhost:3000/produtos -d '{"nome": "Mouse"}'
+
+# Deletar um produto
+$ curl -X DELETE http://localhost:3000/produtos/123
 ```
 
 ---

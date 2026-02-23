@@ -24,6 +24,20 @@ O **OpenAPI** (antigamente chamado de Swagger) é o padrão mundial para descrev
 *   **Arquivo YAML/JSON**: Um arquivo que descreve rotas, parâmetros, modelos de dados e respostas.
 *   **Swagger UI**: Uma ferramenta visual que transforma esse arquivo em uma página interativa onde você pode testar a API.
 
+### 🔄 Fluxo de Desenvolvimento Paralelo (Mermaid)
+Com contratos bem definidos, o time de Frontend não precisa esperar o Backend terminar.
+
+```mermaid
+graph TD
+    Contract[Contrato OpenAPI] --> Frontend[Time Frontend]
+    Contract --> Backend[Time Backend]
+    Frontend --> Mock[Usa API Mock]
+    Backend --> Real[Cria API Real]
+    Mock -.-> Real[Troca p/ API Real quando pronta]
+```
+
+---
+
 ```yaml
 # Exemplo simplificado de OpenAPI
 paths:
@@ -44,10 +58,16 @@ O que fazer quando o Frontend precisa de uma API que o Backend ainda não termin
 ### O que é um Mock?
 É um servidor "fake" que simula o comportamento da API real. Ele recebe a requisição e retorna um dado estático pré-definido, conforme o contrato.
 
-### Ferramentas de Mock:
-1.  **Swagger Hub**: Cria mocks automáticos a partir da documentação.
-2.  **Mockoon / Prism**: Servidores locais para rodar mocks.
-3.  **Postman Mock Servers**: Transforma uma collection em um servidor online.
+### 🎭 Simulando Mocks no Terminal
+
+```termynal {markdown="1"}
+# Rodando um servidor de Mock a partir de um arquivo OpenAPI
+$ npx prism mock storage.yaml
+
+# Acessando o endpoint mockado
+$ curl http://localhost:4010/produtos
+> [{"id": 1, "nome": "Produto Mockado"}]
+```
 
 ---
 
